@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1、修改css&#x2F;main.css文件调整oscarlist.html中的表格样式 (1) 将所有偶数行背景色改为#dddddd 12345#main_table tr:nth-child(2n)&amp;#123;  background-color: #dddddd;&amp;#125;  (2) 利用CSS伪类选择器，鼠标移上偶数行背景色改为#3dc1f1，鼠标移上奇数行背景色改为#bbedff 使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web-experiment">
+<meta property="og:url" content="http://example.com/2023/04/23/web-experiment/index.html">
+<meta property="og:site_name" content="宣胤星球">
+<meta property="og:description" content="1、修改css&#x2F;main.css文件调整oscarlist.html中的表格样式 (1) 将所有偶数行背景色改为#dddddd 12345#main_table tr:nth-child(2n)&amp;#123;  background-color: #dddddd;&amp;#125;  (2) 利用CSS伪类选择器，鼠标移上偶数行背景色改为#3dc1f1，鼠标移上奇数行背景色改为#bbedff 使">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-23T08:26:26.000Z">
+<meta property="article:modified_time" content="2023-04-23T09:01:09.831Z">
+<meta property="article:author" content="宣胤">
+<meta property="article:tag" content="测试">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/04/23/web-experiment/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>web-experiment | 宣胤星球</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="宣胤星球" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">宣胤星球</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/23/web-experiment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="宣胤">
+      <meta itemprop="description" content="人生总是充满遗憾，学会在遗憾中成长">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宣胤星球">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          web-experiment
+        </h1>
+
+        <div class="post-meta">
+           
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-04-23 16:26:26 / 修改时间：17:01:09" itemprop="dateCreated datePublished" datetime="2023-04-23T16:26:26+08:00">2023-04-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>1、修改css&#x2F;main.css文件调整oscarlist.html中的表格样式</p>
+<p>(1) 将所有偶数行背景色改为#dddddd</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#main_table</span> <span class="selector-tag">tr</span><span class="selector-pseudo">:nth-child</span>(<span class="number">2</span>n)&#123;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#dddddd</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(2) 利用CSS伪类选择器，鼠标移上偶数行背景色改为#3dc1f1，鼠标移上奇数行背景色改为#bbedff</p>
+<p>使用的伪类构造器是:hover</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#main_table</span> <span class="selector-tag">tr</span><span class="selector-pseudo">:nth-child</span>(<span class="number">2</span>n)<span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#3dc1f1</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#main_table</span> <span class="selector-tag">tr</span><span class="selector-pseudo">:nth-child</span>(<span class="number">2</span>n-<span class="number">1</span>)<span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#bbedff</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、引用jQuery包，编写jQuery代码</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;js/jquery-3.1.1.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>为表格添加最后一列，该列所有单元格均放置一个“查看”链接，点击链接后在新页面打开detail.html，并构造get参数放入链接所在行所有的内容。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  $(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">​    $(<span class="string">&quot;tr:gt(0)&quot;</span>).<span class="title function_">each</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;  <span class="comment">//gt(0)指从第二行开始到最后一行</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">​      <span class="keyword">var</span> url = <span class="string">&quot;detail.html&quot;</span> <span class="comment">//构造url即get参数</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">​      url += <span class="string">&quot;?year=&quot;</span> + $(<span class="variable language_">this</span>).<span class="title function_">find</span>(<span class="string">&quot;td&quot;</span>).<span class="title function_">eq</span>(<span class="number">0</span>).<span class="title function_">text</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">​      url += <span class="string">&quot;&amp;number=&quot;</span> + <span class="built_in">encodeURIComponent</span>($(<span class="variable language_">this</span>).<span class="title function_">find</span>(<span class="string">&quot;td&quot;</span>).<span class="title function_">eq</span>(<span class="number">1</span>).<span class="title function_">text</span>());</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">​      url += <span class="string">&quot;&amp;cnname=&quot;</span> + <span class="built_in">encodeURIComponent</span>($(<span class="variable language_">this</span>).<span class="title function_">find</span>(<span class="string">&quot;td&quot;</span>).<span class="title function_">eq</span>(<span class="number">2</span>).<span class="title function_">text</span>());</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">​      url += <span class="string">&quot;&amp;enname=&quot;</span> + <span class="built_in">encodeURIComponent</span>($(<span class="variable language_">this</span>).<span class="title function_">find</span>(<span class="string">&quot;td&quot;</span>).<span class="title function_">eq</span>(<span class="number">3</span>).<span class="title function_">text</span>());</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">​      url += <span class="string">&quot;&amp;showyear=&quot;</span> + $(<span class="variable language_">this</span>).<span class="title function_">find</span>(<span class="string">&quot;td&quot;</span>).<span class="title function_">eq</span>(<span class="number">4</span>).<span class="title function_">text</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">​      $(<span class="variable language_">this</span>).<span class="title function_">append</span>(<span class="string">&quot;&lt;td&gt;&lt;a href=&#x27;&quot;</span>+url+<span class="string">&quot;&#x27; target=&#x27;_blank&#x27;&gt;查看&lt;/a&gt;&lt;/td&gt;&quot;</span>)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">​    &#125;)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  &#125;)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>参数说明：year获奖年份，number届数，cnname影片中文名，enname影片英文名，showyear上映年份（number、cnname、enname进行了UrlEncode编码）</p>
+<p>3、修改detail.html代码，引用jQuery包，编写jQuery代码</p>
+<p>(1) 接收URL中的get参数，原理：先提取URL，然后再使用正则表达式识别URL中的各参数值</p>
+<p>(2) 通过jQuery的html方法将所有的get参数渲染到表格对应的单元格中，再将影片的中文名写入到网页的title中</p>
+<p>(3) 通过jQuery显示对应的剧照图片，只需修改图片的src属性即可，图片路径格式为”images&#x2F;获奖年份.jpg”</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;js/jquery-3.1.1.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    <span class="keyword">var</span> parms = <span class="variable language_">document</span>.<span class="property">location</span>.<span class="property">href</span>.<span class="title function_">split</span>(<span class="string">&quot;?&quot;</span>)[<span class="number">1</span>].<span class="title function_">split</span>(<span class="string">&quot;&amp;&quot;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    year = parms[<span class="number">0</span>].<span class="title function_">split</span>(<span class="string">&quot;=&quot;</span>)[<span class="number">1</span>]</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    $(<span class="string">&quot;#year&quot;</span>).<span class="title function_">html</span>(year)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    <span class="keyword">if</span> (year == <span class="number">2023</span>)&#123;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            ​      $(<span class="string">&quot;#moviepic&quot;</span>).<span class="title function_">attr</span>(<span class="string">&quot;src&quot;</span>,<span class="string">&quot;images/&quot;</span>+<span class="number">2023</span>+<span class="string">&quot;.png&quot;</span>)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            ​    &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    <span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            ​      $(<span class="string">&quot;#moviepic&quot;</span>).<span class="title function_">attr</span>(<span class="string">&quot;src&quot;</span>,<span class="string">&quot;images/&quot;</span>+year+<span class="string">&quot;.jpg&quot;</span>)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            ​    &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    number = <span class="built_in">decodeURIComponent</span>(parms[<span class="number">1</span>].<span class="title function_">split</span>(<span class="string">&quot;=&quot;</span>)[<span class="number">1</span>])</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    $(<span class="string">&quot;#number&quot;</span>).<span class="title function_">html</span>(number)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    cnname = <span class="built_in">decodeURIComponent</span>(parms[<span class="number">2</span>].<span class="title function_">split</span>(<span class="string">&quot;=&quot;</span>)[<span class="number">1</span>])</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    $(<span class="string">&quot;#cnname&quot;</span>).<span class="title function_">html</span>(cnname)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    $(<span class="string">&quot;title&quot;</span>).<span class="title function_">html</span>(cnname)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    enname = <span class="built_in">decodeURIComponent</span>(parms[<span class="number">3</span>].<span class="title function_">split</span>(<span class="string">&quot;=&quot;</span>)[<span class="number">1</span>])</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    $(<span class="string">&quot;#enname&quot;</span>).<span class="title function_">html</span>(enname)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    showyear = parms[<span class="number">4</span>].<span class="title function_">split</span>(<span class="string">&quot;=&quot;</span>)[<span class="number">1</span>]</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        ​    $(<span class="string">&quot;#showyear&quot;</span>).<span class="title function_">html</span>(showyear)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    &#125;)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>首先还是引入jQuery包</p>
+<p>然后使用document.location.href方法提取url</p>
+<p>使用split方法根据分隔符“?”获取到参数数组</p>
+<p>再次使用split方法根据分隔符“&amp;”和“&#x3D;”获取到每个属性值</p>
+<p>使用jQuery函数中的html方法根据id将所有的get参数渲染到表格对应的单元格中，根据标签“title”将影片的中文名写入到网页的title中</p>
+<p>由于文件中2023年的电影剧照图片存储格式为png，所以需要判断年份，根据年份的不同，使用jQuery函数的attr方法设置不同是值</p>
+<p><strong>1<strong><strong>、修改实验</strong></strong>3****代码，制作同步注册功能</strong></p>
+<p>(1) 将实验3的main.html复制成main_sync.html，参考《实验5_Web接口文档》1.2节，为对应的表单控件添加name属性（同步提交时，控件的name值与服务器收到的参数名一一对应）；将注册按钮类型改为submit；再添加一个form标记将所有表单控件包围</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://43.136.217.18:8081/registSync&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;name&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content-left&quot;</span>&gt;</span>用户名<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">&quot;content-right&quot;</span> <span class="attr">id</span>=<span class="string">&quot;nameIpt&quot;</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入用户名&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;phone&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content-left&quot;</span>&gt;</span>手机号<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">&quot;content-right&quot;</span> <span class="attr">id</span>=<span class="string">&quot;telIpt&quot;</span> <span class="attr">name</span>=<span class="string">&quot;phone&quot;</span> <span class="attr">type</span>=<span class="string">&quot;tel&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入手机号&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;pwd&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content-left&quot;</span>&gt;</span>密码<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">&quot;content-right&quot;</span> <span class="attr">id</span>=<span class="string">&quot;pwdIpt&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入密码&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;confirmPwd&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content-left&quot;</span>&gt;</span>确认密码<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">&quot;content-right&quot;</span> <span class="attr">id</span>=<span class="string">&quot;confirmPwdIpt&quot;</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请确认密码&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">id</span>=<span class="string">&quot;regist&quot;</span> <span class="attr">value</span>=<span class="string">&quot;注册&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p> <strong>2<strong><strong>、修改实验</strong></strong>3<strong><strong>代码，制作异步（</strong></strong>AJAX****）注册功能</strong></p>
+<p>(1) 将实验3的main.html复制成main_async.html，参考《实验5_Web接口文档》2.2节中的参数名，提取用户名、手机号和密码框中的值并构造成参数对象，对象属性和参数名一一对应</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">      $(<span class="string">&quot;#regist&quot;</span>).<span class="title function_">click</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> errMsg = <span class="string">&quot;&quot;</span></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">//验证输入</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> ($(<span class="string">&quot;#nameIpt&quot;</span>).<span class="title function_">val</span>() == <span class="string">&quot;&quot;</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">          errMsg = <span class="string">&quot;请输入用户名&quot;</span></span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">else</span> <span class="keyword">if</span> ($(<span class="string">&quot;#telIpt&quot;</span>).<span class="title function_">val</span>() == <span class="string">&quot;&quot;</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">          errMsg = <span class="string">&quot;请输入手机号&quot;</span></span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> (errMsg != <span class="string">&quot;&quot;</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="comment">//显示错误</span></span></span><br><span class="line"><span class="language-javascript">          $(<span class="string">&quot;#errorArea&quot;</span>).<span class="title function_">text</span>(errMsg)</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">//通过输入检查，开始提交数据</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">var</span> paras = &#123;<span class="attr">name</span>:$(<span class="string">&quot;#nameIpt&quot;</span>).<span class="title function_">val</span>(), <span class="attr">phone</span>:$(<span class="string">&quot;#telIpt&quot;</span>).<span class="title function_">val</span>(), <span class="attr">password</span>:$(<span class="string">&quot;#pwdIpt&quot;</span>).<span class="title function_">val</span>()&#125;</span></span><br><span class="line"><span class="language-javascript">          <span class="comment">//执行提交</span></span></span><br><span class="line"><span class="language-javascript">          $.<span class="title function_">ajax</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">url</span>:<span class="string">&quot;http://43.136.217.18:8081/registAsync&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">data</span>:paras,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">type</span>:<span class="string">&quot;POST&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">dataType</span>:<span class="string">&quot;json&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">//访问成功，解析json</span></span></span><br><span class="line"><span class="language-javascript">            <span class="attr">success</span>:<span class="keyword">function</span>(<span class="params">data</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">              <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span></span><br><span class="line"><span class="language-javascript">              <span class="keyword">if</span>(data.<span class="property">state</span> == <span class="string">&quot;SUC&quot;</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">//跳转到success.html</span></span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span>=<span class="string">&quot;http://43.136.217.18:8081/success.html&quot;</span></span></span><br><span class="line"><span class="language-javascript">              &#125;</span></span><br><span class="line"><span class="language-javascript">              <span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">//显示出错信息</span></span></span><br><span class="line"><span class="language-javascript">                <span class="title function_">alert</span>(<span class="string">&quot;访问成功，但是出错&quot;</span>)</span></span><br><span class="line"><span class="language-javascript">              &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            &#125;,</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">//访问失败</span></span></span><br><span class="line"><span class="language-javascript">            <span class="attr">error</span>:<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">              <span class="comment">//显示”无法连接到服务器“</span></span></span><br><span class="line"><span class="language-javascript">              <span class="title function_">alert</span>(<span class="string">&quot;无法连接到服务器&quot;</span>)</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">          &#125;)</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">      &#125;)</span></span><br><span class="line"><span class="language-javascript">    &#125;)</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改浏览器URL即可完成跳转，如：window.location.href&#x3D;”新页面URL”</p>
+<p><strong>1****、设计词典布局（美观即可，不要求按设计图精确布局）</strong></p>
+<p>（1）创建网页，创建网页文件dict.html。</p>
+<p>（2）网页布局</p>
+<p>使用div+css按图1进行布局，风格为手机网页，文本框和下面内容区域宽度自适应，搜索按钮宽度固定，搜索栏固定到屏幕最上方。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-id">#wordArea</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">float</span>: left;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-id">#resultArea</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;wordArea&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;enWord&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入英文词汇&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;searchArea&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">id</span>=<span class="string">&quot;searchWord&quot;</span> <span class="attr">value</span>=<span class="string">&quot;查词&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;resultArea&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2****、词典页面操作典事件编程</strong></p>
+<p>（1）相似词汇显示</p>
+<p>当文本框发生改变时显示相似词汇</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;#wordArea input&quot;).on(&quot;input&quot;, function () &#123;</span><br><span class="line">                //this哪个dom元素触发的事件</span><br><span class="line">                //$(this)将dom元素转为jQuery对象</span><br><span class="line">                var wordClip = $(this).val();</span><br><span class="line">                //发起ajax请求，查询相似词汇</span><br><span class="line">                $.ajax(&#123;</span><br><span class="line">                    url: &quot;http://43.136.217.18:8081/getSimilarWords&quot;,</span><br><span class="line">                    data: &#123; word: wordClip, max: 20 &#125;,</span><br><span class="line">                    dataType: &quot;json&quot;,</span><br><span class="line">                    success: function (data) &#123;</span><br><span class="line">                        //解析json</span><br><span class="line">                        if (data.state == &quot;SUC&quot;) &#123;</span><br><span class="line">                            var htmlCode = &quot;<span class="tag">&lt;<span class="name">ul</span>&gt;</span>&quot;;</span><br><span class="line">                            for (var i in data.content) &#123;</span><br><span class="line">                                htmlCode += &quot;<span class="tag">&lt;<span class="name">li</span>&gt;</span>&quot; + data.content[i] + &quot;<span class="tag">&lt;/<span class="name">li</span>&gt;</span>&quot;;</span><br><span class="line">                            &#125;</span><br><span class="line">                            htmlCode += &quot;<span class="tag">&lt;/<span class="name">ul</span>&gt;</span>&quot;;</span><br><span class="line">                            $(&quot;#resultArea&quot;).html(htmlCode)</span><br><span class="line">                            $(&quot;#resultArea li&quot;).click(function () &#123;</span><br><span class="line">                                var word = $(this).text();</span><br><span class="line">                                search(word);</span><br><span class="line">                            &#125;)</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            alert(data.msg)</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    error: function () &#123;</span><br><span class="line">                        alert(&quot;系统错误消息&quot;)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>2****）查询词汇结果显示</strong></p>
+<p>点击图2中的“查词按钮”，按文本框中的词汇进行查询；点击图2中相似词汇列表中的项目，按列表项中的词汇进行查询</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">function search(word) &#123;</span><br><span class="line">            $.ajax(&#123;</span><br><span class="line">                url: &quot;http://43.136.217.18:8081/getWordDetail&quot;,</span><br><span class="line">                data: &#123; word: word &#125;,</span><br><span class="line">                dataType: &quot;json&quot;,</span><br><span class="line">                success: function (resp) &#123;</span><br><span class="line">                    if (resp.state == &quot;SUC&quot;) &#123;</span><br><span class="line">                        //console.log(resp.content)</span><br><span class="line">                        var htmlCode = &quot;<span class="tag">&lt;<span class="name">ul</span>&gt;</span>&quot;;</span><br><span class="line">                        for (var j=0;j&lt;resp.content.length;j++)&#123;</span><br><span class="line">                            var eng = resp.content[j].eng</span><br><span class="line">                            var trans = resp.content[j].trans;</span><br><span class="line">                            for (var i=0;i&lt;trans.length;i++)&#123;</span><br><span class="line">                                var pos = trans[i].pos;</span><br><span class="line">                                pos = pos.join(&quot;&amp;&quot;)</span><br><span class="line">                                var chn = trans[i].chn;</span><br><span class="line">                                htmlCode += &quot;<span class="tag">&lt;<span class="name">li</span>&gt;</span>&quot;+eng+&quot; &quot;+pos+&quot; &quot;+chn+&quot;<span class="tag">&lt;/<span class="name">li</span>&gt;</span>&quot;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        htmlCode += &quot;<span class="tag">&lt;/<span class="name">ul</span>&gt;</span>&quot;</span><br><span class="line">                        console.log(htmlCode);</span><br><span class="line">                        $(&quot;#resultArea&quot;).html(htmlCode)</span><br><span class="line">                    &#125;</span><br><span class="line">                    else &#123;</span><br><span class="line">                        alert(resp.msg)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                error: function () &#123;</span><br><span class="line">                    alert(&quot;系统错误消息&quot;)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"> $(&quot;#searchWord&quot;).click(function()&#123;</span><br><span class="line">       var word = $(&quot;#enWord&quot;).val()</span><br><span class="line">       search(word);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_52566185/article/details/130306648?ops_request_misc=%7B%22request_id%22:%22168224031916800225594774%22,%22scm%22:%2220140713.130102334.pc_all.%22%7D&request_id=168224031916800225594774&biz_id=0&utm_medium=distribute.pc_chrome_plugin_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-130306648-null-null.nonecase&utm_term=%E8%80%83%E8%AF%95%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%9312138&spm=1018.2226.3001.4187">(20条消息) 考试知识点总结12138_biu～～酱的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Jg4y1B7n4/?p=36&spm_id_from=pageDriver&vd_source=a50b239bf10e50694c7aed75933d158f">jQuery-36-级联查询ajax请求省份数据_哔哩哔哩_bilibili</a></p>
+
+    </div>
+
+    
+    
+    
+
+    
+   <div>
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+   </div>
+ 
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>宣胤
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2023/04/23/web-experiment/" title="web-experiment">http://example.com/2023/04/23/web-experiment/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B5%8B%E8%AF%95/" rel="tag"># 测试</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/04/23/Hexo%E4%B8%8A%E4%BC%A0%E7%9A%84%E5%9B%BE%E7%89%87%E5%9C%A8%E7%BD%91%E9%A1%B5%E4%B8%8A%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" rel="prev" title="Hexo上传的图片在网页上无法显示的解决办法">
+      <i class="fa fa-chevron-left"></i> Hexo上传的图片在网页上无法显示的解决办法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81ODM0NC8zNDgwNw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="宣胤"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">宣胤</p>
+  <div class="site-description" itemprop="description">人生总是充满遗憾，学会在遗憾中成长</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuanyin02" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuanyin02" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2833104078@qq.com" title="E-Mail → mailto:2833104078@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="link fa-fw"></i>
+      链接网站
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://baidu.com/" title="https:&#x2F;&#x2F;baidu.com" rel="noopener" target="_blank">百度</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023-4 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">宣胤</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共14.2k字</span>
+</div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
