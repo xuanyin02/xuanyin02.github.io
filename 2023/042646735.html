@@ -5,22 +5,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="那些年我做过的“学习用”项目, 宣胤星球">
-    <meta name="description" content="第一个项目：离线数仓（hadoop+flume+kafka+hive）创建在hive中的按层次分布的数据仓库
+    <meta name="description" content="第一个项目：离线数仓（hadoop+flume+kafka+hive）数据仓库
 
-ADS层
+系统数据流程图
 
-DWS层
-
-DWD层
-
-DIM层
-
-ODS层
-
-启动dolphinscheduler，并通过web ui访问
-
-
-查">
+开始就是安装需要用到的软件：hadoopzookeeperkafkaflumemysqlmaxwelldataxhive
+设置进程启停脚本：">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -380,14 +370,14 @@ ODS层
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-04-26
+                    2023-04-27
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    120
+                    346
                 </div>
                 
 
@@ -414,7 +404,13 @@ ODS层
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="第一个项目：离线数仓（hadoop-flume-kafka-hive）"><a href="#第一个项目：离线数仓（hadoop-flume-kafka-hive）" class="headerlink" title="第一个项目：离线数仓（hadoop+flume+kafka+hive）"></a>第一个项目：离线数仓（hadoop+flume+kafka+hive）</h3><p>创建在hive中的按层次分布的数据仓库</p>
+                <h3 id="第一个项目：离线数仓（hadoop-flume-kafka-hive）"><a href="#第一个项目：离线数仓（hadoop-flume-kafka-hive）" class="headerlink" title="第一个项目：离线数仓（hadoop+flume+kafka+hive）"></a>第一个项目：离线数仓（hadoop+flume+kafka+hive）</h3><p>数据仓库</p>
+<p><img src="/2023/042646735/image-20230426233540128.png" alt="image-20230426233540128"></p>
+<p>系统数据流程图</p>
+<p><img src="/2023/042646735/image-20230426233006098-1682523445038-4.png" alt="image-20230426233006098"></p>
+<p>开始就是安装需要用到的软件：<br>hadoop<br>zookeeper<br>kafka<br>flume<br>mysql<br>maxwell<br>datax<br>hive<br></p>
+<p>设置进程启停脚本：<br>lg.sh：运行hadoop102、hadoop103上生产日志数据的jar包，并把数据写入文件app.date.log文件<br>f1.sh：启动hadoop102、hadoop03上的flume进程，采集日志数据文件app.date.log中的数据到kafka的topic_log主题<br>mxw.sh：启动hadoop102上的maxwell进程，监控mysql中指定数据库的变化（首先需要开启mysql的binlog），将变化的数据写入kafka的topic_db主题<br>f2.sh：启动hadoop104上的flume进程，采集kafka的topic_log主题中的日志数据到hdfs中<br>gen_import_config.py：datax的配置文件生成脚本<br>gen_import_config.sh：datax的批量配置文件生成脚本<br>mysql_to_hdfs_full.sh：mysql全量表数据同步至hdfs的脚本<br>f3.sh：启动hadoop104上的flume进程，采集kafka的topic_db主题中的业务数据到hdfs中<br>mysql_to_kafka_inc_init.sh：mysql增量表首次全量同步业务数据至kafka</p>
+<p>创建在hive中的按层次分布的数据仓库</p>
 <p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426230726666.png" alt="image-20230426230726666"></p>
 <p>ADS层</p>
 <p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426231200000.png" alt="ADS层数据"></p>
@@ -869,7 +865,7 @@ ODS层
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">13.4k</span>
+                        class="white-color">13.6k</span>
             
             
             
