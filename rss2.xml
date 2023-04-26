@@ -9,8 +9,56 @@
     <atom:link href="http://xuanyin02.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>人生总是充满遗憾，学会在遗憾中成长</description>
-    <pubDate>Sun, 23 Apr 2023 09:01:09 GMT</pubDate>
+    <pubDate>Wed, 26 Apr 2023 15:18:05 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>那些年我做过的“学习用”项目</title>
+      <link>http://xuanyin02.github.io/2023/042646735.html</link>
+      <guid>http://xuanyin02.github.io/2023/042646735.html</guid>
+      <pubDate>Wed, 26 Apr 2023 08:34:06 GMT</pubDate>
+      
+        
+        
+      <description>&lt;h3 id=&quot;第一个项目：离线数仓（hadoop-flume-kafka-hive）&quot;&gt;&lt;a href=&quot;#第一个项目：离线数仓（hadoop-flume-kafka-hive）&quot; class=&quot;headerlink&quot; title=&quot;第一个项目：离线数仓（hadoop+flum</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<h3 id="第一个项目：离线数仓（hadoop-flume-kafka-hive）"><a href="#第一个项目：离线数仓（hadoop-flume-kafka-hive）" class="headerlink" title="第一个项目：离线数仓（hadoop+flume+kafka+hive）"></a>第一个项目：离线数仓（hadoop+flume+kafka+hive）</h3><p>创建在hive中的按层次分布的数据仓库</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426230726666.png" alt="image-20230426230726666"></p><p>ADS层</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426231200000.png" alt="ADS层数据"></p><p>DWS层</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/DWS%E5%B1%82%E6%95%B0%E6%8D%AE.png" alt="image-20230426231355375"></p><p>DWD层</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/DWD%E5%B1%82%E6%95%B0%E6%8D%AE.png" alt="image-20230426231507605"></p><p>DIM层</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/DIM%E5%B1%82%E6%95%B0%E6%8D%AE.png" alt="image-20230426231557848"></p><p>ODS层</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/ODS%E5%B1%82%E6%95%B0%E6%8D%AE.png" alt="image-20230426231637998"></p><p>启动dolphinscheduler，并通过web ui访问</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426162836842.png" alt="image-20230426162836842"></p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426162721178.png" alt="image-20230426162721178"></p><p>查看虚拟机进程</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426164046511.png" alt="image-20230426164046511"></p><p>管理项目</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426162905277.png" alt="image-20230426162905277"></p><p>管理工作流</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426162936789.png" alt="image-20230426162936789"></p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426163008508.png" alt="image-20230426163008508"></p><p>为每个步骤添加脚本（这些脚本就是之前在虚拟机中编写的脚本）</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426163045722.png" alt="image-20230426163045722"></p><p>执行任务</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426163824085.png" alt="image-20230426163824085"></p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426163901535.png" alt="image-20230426163901535"></p><p>使用superset进行可视化展示</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426164823994.png" alt="image-20230426164823994"></p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426164844424.png" alt="image-20230426164844424"></p><p>编辑各类表单</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426165147121.png" alt="image-20230426165147121"></p><p>查看离线指标看板</p><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230426165057382.png" alt="image-20230426165057382"></p>]]></content:encoded>
+      
+      
+      
+      <category domain="http://xuanyin02.github.io/tags/%E5%88%86%E4%BA%AB/">分享</category>
+      
+      
+      <comments>http://xuanyin02.github.io/2023/042646735.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>项目中遇到的问题以及解决办法</title>
+      <link>http://xuanyin02.github.io/2023/042428729.html</link>
+      <guid>http://xuanyin02.github.io/2023/042428729.html</guid>
+      <pubDate>Mon, 24 Apr 2023 15:44:35 GMT</pubDate>
+      
+        
+        
+      <description>&lt;h3 id=&quot;第一个项目：离线数仓（hadoop-flume-kafka-hive）&quot;&gt;&lt;a href=&quot;#第一个项目：离线数仓（hadoop-flume-kafka-hive）&quot; class=&quot;headerlink&quot; title=&quot;第一个项目：离线数仓（hadoop+flum</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<h3 id="第一个项目：离线数仓（hadoop-flume-kafka-hive）"><a href="#第一个项目：离线数仓（hadoop-flume-kafka-hive）" class="headerlink" title="第一个项目：离线数仓（hadoop+flume+kafka+hive）"></a>第一个项目：离线数仓（hadoop+flume+kafka+hive）</h3><h3 id="第二个项目：flink实时数仓（flink-kafka-hbase-clickhouse）"><a href="#第二个项目：flink实时数仓（flink-kafka-hbase-clickhouse）" class="headerlink" title="第二个项目：flink实时数仓（flink+kafka+hbase+clickhouse）"></a>第二个项目：flink实时数仓（flink+kafka+hbase+clickhouse）</h3><blockquote><p>问题1：使用Maxwell实现业务数据增量同步时，Maxwell无法启动，日志报错：无法找到监控的数据库–xxx（是在MySQL中建立Maxwell元数据库之后，才创建的xxx数据库），Maxwell元数据库中无xxx数据库信息</p></blockquote><p>解决办法：删除Maxwell元数据库，直接启动Maxwell或（先在MySQL中重新创建Maxwell元数据库再启动Maxwell）  </p><p>问题2：</p><p><a href="%22%5B(21%E6%9D%A1%E6%B6%88%E6%81%AF">🪂参考文章</a> 解决Maxwell报错RuntimeException: Couldn‘t find database xxx_伯利恒教堂的博客-CSDN博客](<a href="https://blog.csdn.net/m0_46503302/article/details/129854142">https://blog.csdn.net/m0_46503302/article/details/129854142</a>)”)</p><hr><h3 id="第三个项目：spark-streaming实时商品推荐系统（大作业）"><a href="#第三个项目：spark-streaming实时商品推荐系统（大作业）" class="headerlink" title="第三个项目：spark streaming实时商品推荐系统（大作业）"></a>第三个项目：spark streaming实时商品推荐系统（大作业）</h3>]]></content:encoded>
+      
+      
+      
+      <category domain="http://xuanyin02.github.io/tags/%E5%88%86%E4%BA%AB/">分享</category>
+      
+      
+      <comments>http://xuanyin02.github.io/2023/042428729.html#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>web-experiment</title>
