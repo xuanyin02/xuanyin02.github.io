@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="hive">
     <meta name="description" content="hive在离线数据仓库中十分常用，那么hive是什么呢？有什么用？它是怎么工作的？怎么使用它？下面这篇文章将一一解答你的问题！
-:one:第1章 hive入门1.1 什么是hivehive是基于hadoop的一个数据仓库工具，可以将结构化的">
+第1章 hive入门1.1 什么是hivehive是基于hadoop的一个数据仓库工具，可以将结构化的数据文件映">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -410,7 +410,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>hive在离线数据仓库中十分常用，那么hive是什么呢？有什么用？它是怎么工作的？怎么使用它？下面这篇文章将一一解答你的问题！</p>
-<h3 id="one-第1章-hive入门"><a href="#one-第1章-hive入门" class="headerlink" title=":one:第1章 hive入门"></a>:one:第1章 hive入门</h3><h4 id="1-1-什么是hive"><a href="#1-1-什么是hive" class="headerlink" title="1.1 什么是hive"></a>1.1 什么是hive</h4><p>hive是基于hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张表，并提供类SQL查询功能（HQL）。</p>
+<h3 id="第1章-hive入门"><a href="#第1章-hive入门" class="headerlink" title="第1章 hive入门"></a>第1章 hive入门</h3><h4 id="1-1-什么是hive"><a href="#1-1-什么是hive" class="headerlink" title="1.1 什么是hive"></a>1.1 什么是hive</h4><p>hive是基于hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张表，并提供类SQL查询功能（HQL）。</p>
 <p>1)hive处理的数据存储在HDFS<br>2)hive分析数据底层的实现是Mapreduce&#x2F;Spark（分布式运行框架）<br>3)执行程序运行在yarn上</p>
 <h4 id="1-2-hive的优缺点"><a href="#1-2-hive的优缺点" class="headerlink" title="1.2 hive的优缺点"></a>1.2 hive的优缺点</h4><h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5><ol>
 <li>操作接口采用类SQL语法，提供快速开发的能力（简单、容易上手）</li>
@@ -461,9 +461,9 @@
 <li>延迟性不同：hive操作延迟性高，不适合低延迟操作；传统数据库延迟性低，适合低延迟操作</li>
 <li>数据规模不同：hive存储在hdfs中，利用Mapreduce进行并行计算，适合大规模数据操作；传统数据库主要采用本地文件系统存储数据，存在容量上限，在本地运行，数据处理能力有限</li>
 </ul>
-<h3 id="two-第2章-hive安装部署"><a href="#two-第2章-hive安装部署" class="headerlink" title=":two:第2章 hive安装部署"></a>:two:第2章 hive安装部署</h3><p>这里附上一篇链接，我就不进行赘述了</p>
+<h3 id="第2章-hive安装部署"><a href="#第2章-hive安装部署" class="headerlink" title="第2章 hive安装部署"></a>第2章 hive安装部署</h3><p>这里附上一篇链接，我就不进行赘述了</p>
 <p>[参考文章]: <a target="_blank" rel="noopener" href="https://blog.csdn.net/W_chuanqi/article/details/130242723">https://blog.csdn.net/W_chuanqi/article/details/130242723</a>	“HIve安装配置（超详细）”</p>
-<h3 id="three-第3章-hive数据类型"><a href="#three-第3章-hive数据类型" class="headerlink" title=":three:第3章 hive数据类型"></a>:three:第3章 hive数据类型</h3><h4 id="3-1-数据类型概述"><a href="#3-1-数据类型概述" class="headerlink" title="3.1 数据类型概述"></a>3.1 数据类型概述</h4><h5 id="3-1-1-基本数据类型"><a href="#3-1-1-基本数据类型" class="headerlink" title="3.1.1 基本数据类型"></a>3.1.1 基本数据类型</h5><p>TINYINT、SMALLINT、INT、BIGINT、BOOLEAN、FLOAT、DOUBLE、STRING、TIMESTAM-时间类型、BINARY-字节数组</p>
+<h3 id="第3章-hive数据类型"><a href="#第3章-hive数据类型" class="headerlink" title="第3章 hive数据类型"></a>第3章 hive数据类型</h3><h4 id="3-1-数据类型概述"><a href="#3-1-数据类型概述" class="headerlink" title="3.1 数据类型概述"></a>3.1 数据类型概述</h4><h5 id="3-1-1-基本数据类型"><a href="#3-1-1-基本数据类型" class="headerlink" title="3.1.1 基本数据类型"></a>3.1.1 基本数据类型</h5><p>TINYINT、SMALLINT、INT、BIGINT、BOOLEAN、FLOAT、DOUBLE、STRING、TIMESTAM-时间类型、BINARY-字节数组</p>
 <h5 id="3-1-2-集合数据类型"><a href="#3-1-2-集合数据类型" class="headerlink" title="3.1.2 集合数据类型"></a>3.1.2 集合数据类型</h5><ul>
 <li><p>STRUCT</p>
 <p>和c语言中的struct类似，都可以通过“点”符号访问元素内容。例如，如果某个列的数据类型是STRUCT{first STRING, last STRING}，那么第1个元素可以通过字段’ .first ‘来引用</p>
@@ -486,7 +486,7 @@
 <h6 id="3-2-5-3-ARRAY举例"><a href="#3-2-5-3-ARRAY举例" class="headerlink" title="3.2.5.3 ARRAY举例"></a>3.2.5.3 ARRAY举例</h6><p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230427183049077.png" alt="image-20230427183049077"></p>
 <h4 id="3-3-类型转换"><a href="#3-3-类型转换" class="headerlink" title="3.3 类型转换"></a>3.3 类型转换</h4><h5 id="3-3-1-隐式转换"><a href="#3-3-1-隐式转换" class="headerlink" title="3.3.1 隐式转换"></a>3.3.1 隐式转换</h5><p>粗粒度–&gt;细粒度</p>
 <h5 id="3-3-2-使用CAST操作"><a href="#3-3-2-使用CAST操作" class="headerlink" title="3.3.2 使用CAST操作"></a>3.3.2 使用CAST操作</h5><p>例如 CAST(‘1’ AS INT)会把字符串’1’转换成整数1；如果强制类型转换失败，如执行 CAST(‘X’ AS INT)，表达式返回空值NULL</p>
-<h3 id="four-第4章-DDL语言"><a href="#four-第4章-DDL语言" class="headerlink" title=":four:第4章 DDL语言"></a>:four:第4章 DDL语言</h3><h4 id="4-1-创建数据库"><a href="#4-1-创建数据库" class="headerlink" title="4.1 创建数据库"></a>4.1 创建数据库</h4><pre class=" language-sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">database</span> <span class="token keyword">if</span> <span class="token operator">not</span> <span class="token keyword">exists</span> db_hive location <span class="token keyword">on</span> <span class="token string">'在hdfs上的位置'</span><span class="token punctuation">;</span>
+<h3 id="第4章-DDL语言"><a href="#第4章-DDL语言" class="headerlink" title="第4章 DDL语言"></a>第4章 DDL语言</h3><h4 id="4-1-创建数据库"><a href="#4-1-创建数据库" class="headerlink" title="4.1 创建数据库"></a>4.1 创建数据库</h4><pre class=" language-sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">database</span> <span class="token keyword">if</span> <span class="token operator">not</span> <span class="token keyword">exists</span> db_hive location <span class="token keyword">on</span> <span class="token string">'在hdfs上的位置'</span><span class="token punctuation">;</span>
 </code></pre>
 <h4 id="4-2-查询数据库"><a href="#4-2-查询数据库" class="headerlink" title="4.2 查询数据库"></a>4.2 查询数据库</h4><pre class=" language-sql"><code class="language-sql"><span class="token comment" spellcheck="true">//显示数据库</span>
 <span class="token keyword">show</span> <span class="token keyword">databases</span><span class="token punctuation">;</span>
