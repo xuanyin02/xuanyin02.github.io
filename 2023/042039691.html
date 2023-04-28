@@ -375,21 +375,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-04-27
+                    2023-04-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.8k
+                    3.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    11 分
+                    15 分
                 </div>
                 
 
@@ -645,22 +645,94 @@ kafkaProducer<span class="token punctuation">.</span><span class="token function
 <span class="token comment" spellcheck="true">// 添加自定义分区器</span>
 properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ProducerConfig<span class="token punctuation">.</span>PARTITIONER_CLASS_CONFIG<span class="token punctuation">,</span><span class="token string">"com.atguigu.kafka.producer.MyPartitioner"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<h5 id="3-5-生产经验–生产者如何提高吞吐量"><a href="#3-5-生产经验–生产者如何提高吞吐量" class="headerlink" title="3.5 生产经验–生产者如何提高吞吐量"></a>3.5 生产经验–生产者如何提高吞吐量</h5><ol>
+<h4 id="3-5-生产经验–生产者如何提高吞吐量"><a href="#3-5-生产经验–生产者如何提高吞吐量" class="headerlink" title="3.5 生产经验–生产者如何提高吞吐量"></a>3.5 生产经验–生产者如何提高吞吐量</h4><ol>
 <li>修改batch.size大小，修改为32k</li>
 <li>修改linger.ms等待时间，修改为5~100ms</li>
 <li>修改compress.type压缩模式，修改为“snappy”</li>
 <li>修改RecordAccumulator缓冲区大小，修改为64M</li>
 </ol>
-<pre><code>// batch.size：批次大小，默认 16K
-properties.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
-// linger.ms：等待时间，默认 0
-properties.put(ProducerConfig.LINGER_MS_CONFIG, 1);
-// RecordAccumulator：缓冲区大小，默认 32M：buffer.memory
-properties.put(ProducerConfig.BUFFER_MEMORY_CONFIG,33554432);
-// compression.type：压缩，默认 none，可配置值 gzip、snappy、lz4 和 zstd
-properties.put(ProducerConfig.COMPRESSION_TYPE_CONFIG,&quot;snappy&quot;);
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// batch.size：批次大小，默认 16K</span>
+properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ProducerConfig<span class="token punctuation">.</span>BATCH_SIZE_CONFIG<span class="token punctuation">,</span> <span class="token number">16384</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// linger.ms：等待时间，默认 0</span>
+properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ProducerConfig<span class="token punctuation">.</span>LINGER_MS_CONFIG<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// RecordAccumulator：缓冲区大小，默认 32M：buffer.memory</span>
+properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ProducerConfig<span class="token punctuation">.</span>BUFFER_MEMORY_CONFIG<span class="token punctuation">,</span><span class="token number">33554432</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// compression.type：压缩，默认 none，可配置值 gzip、snappy、lz4 和 zstd</span>
+properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ProducerConfig<span class="token punctuation">.</span>COMPRESSION_TYPE_CONFIG<span class="token punctuation">,</span><span class="token string">"snappy"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<h5 id="3-6-生产经验–数据可靠性"><a href="#3-6-生产经验–数据可靠性" class="headerlink" title="3.6 生产经验–数据可靠性"></a>3.6 生产经验–数据可靠性</h5>
+<h4 id="3-6-生产经验–数据可靠性"><a href="#3-6-生产经验–数据可靠性" class="headerlink" title="3.6 生产经验–数据可靠性"></a>3.6 生产经验–数据可靠性</h4><blockquote>
+<p>ack应答原理：</p>
+</blockquote>
+<p>ack&#x3D;0：生产者发送过来的数据，不需要等数据落盘应答<br>ack&#x3D;1：生产者发送过来的数据，Leader收到数据后应答<br>ack&#x3D;-1：生产者发送过来的数据，Leader和ISR队列里面的所有节点收齐数据后应答</p>
+<blockquote>
+<p>思考：Leader收到数据，所有Follower都开始同步数据，但有一个Follower，因为某种故障，迟迟不能与Leader进行同步，那这个问题怎么解决呢？</p>
+</blockquote>
+<p>Leader维护了一个动态的in-sync replica set（ISR） ），意为和Leader保持同步的Follower+Leader集合(leader：0，isr:0,1,2)。如果Follower长时间未向Leader发送通信请求或同步数据，则该Follower将被踢出ISR。该时间阈值由replica.lag.time.max.ms参数设定，默认30s。例如2超时，(leader:0, isr:0,1)。</p>
+<p><strong>数据完全可靠条件 &#x3D; ACK级别设置为-1 +  分区副本大于等于2 + ISR里应答的最小副本数量大于等于2</strong></p>
+<blockquote>
+<p>代码配置</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 设置 acks</span>
+properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ProducerConfig<span class="token punctuation">.</span>ACKS_CONFIG<span class="token punctuation">,</span> <span class="token string">"all"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 重试次数 retries，默认是 int 最大值，2147483647</span>
+properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ProducerConfig<span class="token punctuation">.</span>RETRIES_CONFIG<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="3-7-生产经验–数据去重"><a href="#3-7-生产经验–数据去重" class="headerlink" title="3.7 生产经验–数据去重"></a>3.7 生产经验–数据去重</h4><h5 id="3-7-1-数据传递语义"><a href="#3-7-1-数据传递语义" class="headerlink" title="3.7.1 数据传递语义"></a>3.7.1 数据传递语义</h5><ul>
+<li>至少传递一次 &#x3D;  ACK级别设置为-1 +  分区副本大于等于2 + ISR里应答的最小副本数量大于等于2<br>可以保证数据不丢失，但是不能保证数据不重复（在Leader准备应答时，Leader发生故障，但是Follower已经同步数据）</li>
+<li>最多一次 &#x3D; ACK级别设置为0<br>可以保证数据不重复，但是不能保证数据不丢失</li>
+<li>精确一次：对于一些非常重要的信息，比如和钱相关的数据，要求数据既不能重复也不丢失</li>
+</ul>
+<p><strong>Kafka 0.11版本以后，引入了一项重大特性：<em>幂等性和事务</em></strong></p>
+<h5 id="3-7-2-幂等性"><a href="#3-7-2-幂等性" class="headerlink" title="3.7.2 幂等性"></a>3.7.2 幂等性</h5><p><strong>幂等性</strong>就是指Producer不论向Broker发送多少次重复数据，Broker端都只会持久化一条，保证了不重复</p>
+<p>精确一次（ （Exactly Once） ） &#x3D;  幂等性 +  至少一次（ （ ack&#x3D;-1 +  分区副本数&gt;&#x3D;2 + ISR 最小副本数量&gt;&#x3D;2） ）  </p>
+<p>重复数据的判断标准：具有**&lt;PID, Partition, SeqNumber&gt;**相同主键的消息提交时，Broker只会持久化一条。其中PID是Kafka每次重启都会分配一个新的会话ID；Partition 表示分区号；Sequence Number是单调自增的。所以幂等性只能保证的是在单分区单会话内不重复。</p>
+<p>那么如何使用幂等性呢？<em><strong>开启参数 enable.idempotence 默认为 true，false关闭</strong></em></p>
+<h5 id="3-7-3-生产者事务"><a href="#3-7-3-生产者事务" class="headerlink" title="3.7.3 生产者事务"></a>3.7.3 生产者事务</h5><blockquote>
+<p>Kafka事务原理</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230428154752478.png" alt="image-20230428154752478"></p>
+<blockquote>
+<p>代码配置</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 设置事务 id（必须），事务 id 任意起名</span>
+properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ProducerConfig<span class="token punctuation">.</span>TRANSACTIONAL_ID_CONFIG<span class="token punctuation">,</span><span class="token string">"transaction_id_0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">--</span><span class="token operator">-</span>
+<span class="token comment" spellcheck="true">// 1 初始化事务</span>
+<span class="token keyword">void</span> <span class="token function">initTransactions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 2 开启事务</span>
+<span class="token keyword">void</span> <span class="token function">beginTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> ProducerFencedException<span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 3 在事务内提交已经消费的偏移量（主要用于消费者）</span>
+<span class="token keyword">void</span> <span class="token function">sendOffsetsToTransaction</span><span class="token punctuation">(</span>Map<span class="token operator">&lt;</span>TopicPartition<span class="token punctuation">,</span> OffsetAndMetadata<span class="token operator">></span> offsets<span class="token punctuation">,</span>
+String  consumerGroupId<span class="token punctuation">)</span>  <span class="token keyword">throws</span>
+ProducerFencedException<span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 4 提交事务</span>
+<span class="token keyword">void</span> <span class="token function">commitTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> ProducerFencedException<span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 5 放弃事务（类似于回滚事务的操作）</span>
+<span class="token keyword">void</span> <span class="token function">abortTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> ProducerFencedException<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 初始化事务</span>
+kafkaProducer<span class="token punctuation">.</span><span class="token function">initTransactions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 开启事务</span>
+kafkaProducer<span class="token punctuation">.</span><span class="token function">beginTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">try</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 4. 调用 send 方法,发送消息</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 发送消息</span>
+kafkaProducer<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token keyword">new</span>  <span class="token class-name">ProducerRecord</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"first"</span><span class="token punctuation">,</span>
+<span class="token string">"atguigu "</span> <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// int i = 1 / 0;</span>
+<span class="token comment" spellcheck="true">// 提交事务</span>
+kafkaProducer<span class="token punctuation">.</span><span class="token function">commitTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 终止事务</span>
+kafkaProducer<span class="token punctuation">.</span><span class="token function">abortTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">finally</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 5. 关闭资源</span>
+kafkaProducer<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+
                 
             </div>
             <hr/>
@@ -1083,7 +1155,7 @@ properties.put(ProducerConfig.COMPRESSION_TYPE_CONFIG,&quot;snappy&quot;);
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">14.8k</span>
+                        class="white-color">15.7k</span>
             
             
             
