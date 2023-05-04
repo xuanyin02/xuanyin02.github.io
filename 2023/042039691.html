@@ -32,8 +32,12 @@
 <meta property="og:image" content="c:\Users\28331\AppData\Roaming\Typora\typora-user-images\image-20230420115303092.png">
 <meta property="og:image" content="c:\Users\28331\AppData\Roaming\Typora\typora-user-images\image-20230420164903715.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230428154752478.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230503225140019.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230503225259694.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230503231507905-1683126934125-1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230503231437092.png">
 <meta property="article:published_time" content="2023-04-20T03:17:51.000Z">
-<meta property="article:modified_time" content="2023-04-28T07:51:20.442Z">
+<meta property="article:modified_time" content="2023-05-03T15:20:44.203Z">
 <meta property="article:author" content="宣胤">
 <meta property="article:tag" content="kafka">
 <meta name="twitter:card" content="summary">
@@ -233,8 +237,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-28 15:51:20</span>
-            <span class="mobile">2023-04-28 15:51</span>
+            <span class="desktop">2023-05-03 23:20:44</span>
+            <span class="mobile">2023-05-03 23:20</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -267,12 +271,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.7k 字</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>4.2k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>15 分钟</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>17 分钟</span>
         </span>
     
     
@@ -564,7 +568,7 @@ properties<span class="token punctuation">.</span><span class="token function">p
 <p><strong>Kafka 0.11版本以后，引入了一项重大特性：<em>幂等性和事务</em></strong></p>
 <h5 id="3-7-2-幂等性"><a href="#3-7-2-幂等性" class="headerlink" title="3.7.2 幂等性"></a>3.7.2 幂等性</h5><p><strong>幂等性</strong>就是指Producer不论向Broker发送多少次重复数据，Broker端都只会持久化一条，保证了不重复</p>
 <p>精确一次（ （Exactly Once） ） &#x3D;  幂等性 +  至少一次（ （ ack&#x3D;-1 +  分区副本数&gt;&#x3D;2 + ISR 最小副本数量&gt;&#x3D;2） ）  </p>
-<p>重复数据的判断标准：具有**&lt;PID, Partition, SeqNumber&gt;**相同主键的消息提交时，Broker只会持久化一条。其中PID是Kafka每次重启都会分配一个新的会话ID；Partition 表示分区号；Sequence Number是单调自增的。所以幂等性只能保证的是在单分区单会话内不重复。</p>
+<p>重复数据的判断标准：具有**&lt;PID, Partition, SeqNumber&gt;**相同主键的消息提交时，Broker只会持久化一条。其中PID是Kafka每次重启都会分配一个新的会话ID（所以幂等性只能保证的是在单分区单会话内不重复）；Partition 表示分区号；Sequence Number是单调自增的。</p>
 <p>那么如何使用幂等性呢？<em><strong>开启参数 enable.idempotence 默认为 true，false关闭</strong></em></p>
 <h5 id="3-7-3-生产者事务"><a href="#3-7-3-生产者事务" class="headerlink" title="3.7.3 生产者事务"></a>3.7.3 生产者事务</h5><blockquote>
 <p>Kafka事务原理</p>
@@ -611,6 +615,29 @@ kafkaProducer<span class="token punctuation">.</span><span class="token function
 kafkaProducer<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 </code></pre>
+<h4 id="3-8-生产经验–数据有序"><a href="#3-8-生产经验–数据有序" class="headerlink" title="3.8 生产经验–数据有序"></a>3.8 生产经验–数据有序</h4><p>单分区内，有序<br>多分区，分区与分区之间无序</p>
+<h4 id="3-9-生产经验–数据乱序"><a href="#3-9-生产经验–数据乱序" class="headerlink" title="3.9 生产经验–数据乱序"></a>3.9 生产经验–数据乱序</h4><ol>
+<li><p>Kafka在1.x版本之前保证数据单分区有序，条件如下：<br>max.in.flight.requests.per.connection&#x3D;1（不需要考虑是否开启幂等性）</p>
+</li>
+<li><p>Kafka在1.x及以后版本保证数据单分区有序，条件如下：<br>（1）未开启幂等性<br>max.in.flight.requests.per.connection需要设置未1<br>（2）开启幂等性<br>max.in.flight.requests.per.connection需要设置小于等于5<br>原因说明：因为在Kafka1.x以后，启用幂等后，Kafka服务端会缓存producer发来的最近5个request的元数据，故无论如何，都可以保证最近5个request的数据都是有序的</p>
+<p><strong>如果开启了幂等性且缓存的请求个数小于5个，会在服务端重新排序</strong></p>
+</li>
+</ol>
+<h3 id="第4章-Kafka-Broker"><a href="#第4章-Kafka-Broker" class="headerlink" title="第4章 Kafka Broker"></a>第4章 Kafka Broker</h3><h4 id="4-1-Kafka-Broker工作流程"><a href="#4-1-Kafka-Broker工作流程" class="headerlink" title="4.1 Kafka Broker工作流程"></a>4.1 Kafka Broker工作流程</h4><h5 id="4-1-1-Zookeeper存储的Kafka信息"><a href="#4-1-1-Zookeeper存储的Kafka信息" class="headerlink" title="4.1.1 Zookeeper存储的Kafka信息"></a>4.1.1 Zookeeper存储的Kafka信息</h5><p><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230503225140019.png" alt="image-20230503225140019"></p>
+<blockquote>
+<p>注：在0.9版本之前Kafka的offset信息存储在Zookeeper中，在0.9版本之后，存储在Kafka的topic_offsets主题中</p>
+</blockquote>
+<h5 id="4-1-2-Kafka-Broker总体工作流程"><a href="#4-1-2-Kafka-Broker总体工作流程" class="headerlink" title="4.1.2 Kafka Broker总体工作流程"></a>4.1.2 Kafka Broker总体工作流程</h5><p><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230503225259694.png" alt="image-20230503225259694"></p>
+<h4 id="4-2-生产经验–节点服役和退役"><a href="#4-2-生产经验–节点服役和退役" class="headerlink" title="4.2 生产经验–节点服役和退役"></a>4.2 生产经验–节点服役和退役</h4><h4 id="4-3-Kafka副本"><a href="#4-3-Kafka副本" class="headerlink" title="4.3 Kafka副本"></a>4.3 Kafka副本</h4><h5 id="4-3-1-副本基本信息"><a href="#4-3-1-副本基本信息" class="headerlink" title="4.3.1 副本基本信息"></a>4.3.1 副本基本信息</h5><ol>
+<li>Kafka副本作用：提高数据可靠性</li>
+<li>Kafka默认副本1个，生产环境一般配置为2个，保证数据可靠性；太多副本会增加磁盘存储空间，增加网络上数据传输，降低效率</li>
+<li>Kafka中副本分为：Leader 和 Follower。Kafka生产者只会把数据发往Leader，然后Follower找Leader进行同步数据</li>
+<li>Kafka分区中的所有副本统称为AR<br>AR &#x3D; ISR + OSR<br><em><strong>OSR</strong></em>，表示Follower与Leader副本同步时，延迟过多的副本</li>
+</ol>
+<h5 id="4-3-2-Leader选举流程"><a href="#4-3-2-Leader选举流程" class="headerlink" title="4.3.2 Leader选举流程"></a>4.3.2 Leader选举流程</h5><p>Leader选举流程为4.1.2Broker总体工作流程图中的（1）、（2）、（3）、（4）步</p>
+<p><strong>Kafka集群中有一个broker的Controller会被选举为Controller Leader，负责管理集群broker的上下线，所有topic的分区副本分配和Leader选举等工作</strong></p>
+<h5 id="4-3-3-Leader-和-Follower故障处理细节"><a href="#4-3-3-Leader-和-Follower故障处理细节" class="headerlink" title="4.3.3 Leader 和 Follower故障处理细节"></a>4.3.3 Leader 和 Follower故障处理细节</h5><p><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230503231507905-1683126934125-1.png" alt="image-20230503231507905"></p>
+<p><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230503231437092.png" alt="image-20230503231437092"></p>
 
             </div>
 
@@ -623,7 +650,7 @@ kafkaProducer<span class="token punctuation">.</span><span class="token function
         <li><strong>创建于:</strong> 2023-04-20 11:17:51</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-28 15:51:20
+                <strong>更新于:</strong> 2023-05-03 23:20:44
             </li>
         
         <li>
@@ -741,7 +768,7 @@ kafkaProducer<span class="token punctuation">.</span><span class="token function
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">关于消息队列Kafka知识的学习</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0-Kafka%E6%A6%82%E8%BF%B0"><span class="nav-text">第1章 Kafka概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0-Kafka%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="nav-text">第2章 Kafka命令行操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC3%E7%AB%A0-Kafka%E7%94%9F%E4%BA%A7%E8%80%85"><span class="nav-text">第3章 Kafka生产者</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0-Kafka%E6%A6%82%E8%BF%B0"><span class="nav-text">第1章 Kafka概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0-Kafka%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="nav-text">第2章 Kafka命令行操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC3%E7%AB%A0-Kafka%E7%94%9F%E4%BA%A7%E8%80%85"><span class="nav-text">第3章 Kafka生产者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC4%E7%AB%A0-Kafka-Broker"><span class="nav-text">第4章 Kafka Broker</span></a></li></ol>
 
     </div>
 </div>
