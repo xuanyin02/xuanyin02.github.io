@@ -18,12 +18,12 @@
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="第1章 Flume概述1.1 Flume定义Flume是一个高可用，高可靠的，分布式的海量日志采集、聚合和传输的系统Flume基于流式架构，灵活简单Flume最主要的作用就是，实时读取服务器本地磁盘的数据，将数据写入到HDFS 1.2 Flume基础架构 1.2.1 AgentAgent是一个JVM进程，它以事件的形式将数据从源头送至目的地Agent主要有3个部分组成，Source、Channel">
+        <meta name="description" content="第1章 Flume概述1.1 Flume定义Flume是一个高可用，高可靠的，分布式的海量日志采集、聚合和传输的系统Flume基于流式架构，灵活简单Flume最主要的作用就是，实时读取服务器本地磁盘的数据，将数据写入到HDFS 1.2 Flume基础架构image-20230504100830651 1.2.1 AgentAgent是一个JVM进程，它以事件的形式将数据从源头送至目的地Agent主">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于日志采集系统Flume知识的学习">
 <meta property="og:url" content="http://xuanyin02.github.io/2023/050462077.html">
 <meta property="og:site_name" content="宣胤星球">
-<meta property="og:description" content="第1章 Flume概述1.1 Flume定义Flume是一个高可用，高可靠的，分布式的海量日志采集、聚合和传输的系统Flume基于流式架构，灵活简单Flume最主要的作用就是，实时读取服务器本地磁盘的数据，将数据写入到HDFS 1.2 Flume基础架构 1.2.1 AgentAgent是一个JVM进程，它以事件的形式将数据从源头送至目的地Agent主要有3个部分组成，Source、Channel">
+<meta property="og:description" content="第1章 Flume概述1.1 Flume定义Flume是一个高可用，高可靠的，分布式的海量日志采集、聚合和传输的系统Flume基于流式架构，灵活简单Flume最主要的作用就是，实时读取服务器本地磁盘的数据，将数据写入到HDFS 1.2 Flume基础架构image-20230504100830651 1.2.1 AgentAgent是一个JVM进程，它以事件的形式将数据从源头送至目的地Agent主">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230504100830651.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230504111054631.png">
@@ -67,7 +67,7 @@
     <script id="hexo-configurations">
     let Global = window.Global || {};
     Global.hexo_config = {"hostname":"xuanyin02.github.io","root":"/","language":"zh-CN","path":"search.xml"};
-    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[""]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"欢迎你的到来","subtitle":{"text":["Loading..."],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn/?c=f&encode=text"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":"Noto Sans SC","url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.1.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Github":"https://github.com/xuanyin02","Blog":"https://xuanyin02.github.io/"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":true,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[""]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":true,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"欢迎你的到来","subtitle":{"text":["Loading..."],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn/?c=f&encode=text"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":"Noto Sans SC","url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.1.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"tags":{"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"icon":"fa-solid fa-tags","path":"/tags/"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Github":"https://github.com/xuanyin02","Blog":"https://xuanyin02.github.io/"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
     Global.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
     
@@ -388,14 +388,14 @@
 
             <div class="article-content markdown-body">
                 <h3 id="第1章-Flume概述"><a href="#第1章-Flume概述" class="headerlink" title="第1章 Flume概述"></a>第1章 Flume概述</h3><h4 id="1-1-Flume定义"><a href="#1-1-Flume定义" class="headerlink" title="1.1 Flume定义"></a>1.1 Flume定义</h4><p>Flume是一个<strong>高可用，高可靠的，分布式的海量日志采集、聚合和传输的系统</strong><br>Flume基于流式架构，灵活简单<br>Flume最主要的作用就是，<strong>实时读取服务器本地磁盘的数据，将数据写入到HDFS</strong></p>
-<h4 id="1-2-Flume基础架构"><a href="#1-2-Flume基础架构" class="headerlink" title="1.2 Flume基础架构"></a>1.2 Flume基础架构</h4><p><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230504100830651.png" alt="image-20230504100830651"></p>
+<h4 id="1-2-Flume基础架构"><a href="#1-2-Flume基础架构" class="headerlink" title="1.2 Flume基础架构"></a>1.2 Flume基础架构</h4><p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230504100830651.png" alt="image-20230504100830651"><figcaption>image-20230504100830651</figcaption></figure></p>
 <h5 id="1-2-1-Agent"><a href="#1-2-1-Agent" class="headerlink" title="1.2.1 Agent"></a>1.2.1 Agent</h5><p>Agent是一个JVM进程，它以事件的形式将数据从源头送至目的地<br>Agent主要有3个部分组成，Source、Channel、Sink</p>
 <h5 id="1-2-2-Source"><a href="#1-2-2-Source" class="headerlink" title="1.2.2 Source"></a>1.2.2 Source</h5><p>Source是负责接收数据到Flume Agent组件。Source组件可以处理各种类型、各种格式的日志数据</p>
 <h5 id="1-2-3-Sink"><a href="#1-2-3-Sink" class="headerlink" title="1.2.3 Sink"></a>1.2.3 Sink</h5><p>Sink不断轮询Channel中的事件且批量移除它们，并将这些事件批量写入到存储或索引系统、或者被发送到另外一个Flume Agent</p>
 <h5 id="1-2-4-Channel"><a href="#1-2-4-Channel" class="headerlink" title="1.2.4 Channel"></a>1.2.4 Channel</h5><p>Channel是位于Source和Sink之间的缓冲区。因此，Channel允许Source和Sink运作在不同的速率上。Channel是线程安全的，可以同时处理几个Source的写入操作和几个Sink的读取操作<br>Flume自带两种Channel：Memory Channel 和 File Channel<br>Memory Channel是内存中的队列。Memory Channel在不需要关心数据丢失的情景下适用。如果需要关心数据丢失，那么Memory Channel就不应该使用，因为程序死亡、机器宕机或者重启都会导致数据丢失<br>File Channel将所有事件写入磁盘。因此在程序关闭或机器宕机的情况下不会丢失数据</p>
 <h5 id="1-2-5-Event"><a href="#1-2-5-Event" class="headerlink" title="1.2.5 Event"></a>1.2.5 Event</h5><p>传输单元，Flume数据传输的基本单元，以Event的形式将数据从源头送至目的地。Event由Header和Body两部分组成，Header用来存放该Event的一些属性，为K-V结构，Body用来存放该条数据，形式为字节数组</p>
 <h3 id="第2章-Flume入门"><a href="#第2章-Flume入门" class="headerlink" title="第2章 Flume入门"></a>第2章 Flume入门</h3><h4 id="2-1-Flume入门案例–监控端口数据"><a href="#2-1-Flume入门案例–监控端口数据" class="headerlink" title="2.1 Flume入门案例–监控端口数据"></a>2.1 Flume入门案例–监控端口数据</h4><p>使用Flume监听一个端口，收集该端口的数据，并打印到控制台</p>
-<p><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230504111054631.png" alt="image-20230504111054631"></p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230504111054631.png" alt="image-20230504111054631"><figcaption>image-20230504111054631</figcaption></figure></p>
 <p>实现步骤：</p>
 <ol>
 <li><p>在 flume 目录下创建 job 文件夹并进入 job 文件夹</p>
@@ -439,7 +439,7 @@ a1.sinks.k1.channel = c1	表示k1和c1连接起来
 </code></pre>
 </li>
 </ol>
-<h4 id="2-2-Flume入门案例–实时监控单个追加文件"><a href="#2-2-Flume入门案例–实时监控单个追加文件" class="headerlink" title="2.2 Flume入门案例–实时监控单个追加文件"></a>2.2 Flume入门案例–实时监控单个追加文件</h4><p><img lazyload src="/images/loading.svg" data-src="/./%E5%85%B3%E4%BA%8E%E6%97%A5%E5%BF%97%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9FFlume%E7%9F%A5%E8%AF%86%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230505173625217.png" alt="image-20230505173625217"></p>
+<h4 id="2-2-Flume入门案例–实时监控单个追加文件"><a href="#2-2-Flume入门案例–实时监控单个追加文件" class="headerlink" title="2.2 Flume入门案例–实时监控单个追加文件"></a>2.2 Flume入门案例–实时监控单个追加文件</h4><p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="/./%E5%85%B3%E4%BA%8E%E6%97%A5%E5%BF%97%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9FFlume%E7%9F%A5%E8%AF%86%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230505173625217.png" alt="image-20230505173625217"><figcaption>image-20230505173625217</figcaption></figure></p>
 <p>这里同上一个案例的区别主要是Flume Agent 配置文件不同</p>
 <p>创建配置文件 flume-file-hdfs.conf</p>
 <pre><code># Name the components on this agent
@@ -486,7 +486,7 @@ a2.sources.r2.channels = c2
 a2.sinks.k2.channel = c2
 </code></pre>
 <p><strong>注意：对于所有与时间相关的转义序列，Event Header 中必须存在以 “timestamp”的key（除非 hdfs.useLocalTimeStamp 设置为 true，此方法会使用 TimestampInterceptor 自动添加 timestamp）</strong></p>
-<h4 id="2-3-Flume入门案例–实时监控目录下多个新文件"><a href="#2-3-Flume入门案例–实时监控目录下多个新文件" class="headerlink" title="2.3 Flume入门案例–实时监控目录下多个新文件"></a>2.3 Flume入门案例–实时监控目录下多个新文件</h4><p><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230505175242130.png" alt="image-20230505175242130"></p>
+<h4 id="2-3-Flume入门案例–实时监控目录下多个新文件"><a href="#2-3-Flume入门案例–实时监控目录下多个新文件" class="headerlink" title="2.3 Flume入门案例–实时监控目录下多个新文件"></a>2.3 Flume入门案例–实时监控目录下多个新文件</h4><p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230505175242130.png" alt="image-20230505175242130"><figcaption>image-20230505175242130</figcaption></figure></p>
 <p><strong>说明：在使用Spooling Directory Source时，不要在监控目录中创建目录并持续修改文件；上传完成的文件会以.COMPLETED结尾；被监控的文件每500毫秒扫描一次文件变动</strong></p>
 <p>创建配置文件 flume-dir-hdfs.conf</p>
 <pre><code>a3.sources = r3
@@ -536,7 +536,7 @@ a3.sources.r3.channels = c3
 a3.sinks.k3.channel = c3
 </code></pre>
 <p>2.4 Flume入门案例–实时监控目录下多个追加文件</p>
-<p><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230505175422818.png" alt="image-20230505175422818"></p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230505175422818.png" alt="image-20230505175422818"><figcaption>image-20230505175422818</figcaption></figure></p>
 <p><strong>Exec Source适用于监控一个实时追加的文件，不能实现断点续传；Spooling Source适用于同步新文件，但不适合对实时追加日志的文件进行监听并同步；而Taildir Source适合用于监听多个实时追加的文件，并且能够实现断点续传</strong></p>
 <p>创建配置文件 flume-taildir-hdfs.conf</p>
 <pre><code>a3.sources = r3
@@ -700,7 +700,7 @@ a3.sinks.k3.channel = c3
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">关于日志采集系统Flume知识的学习</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0-Flume%E6%A6%82%E8%BF%B0"><span class="nav-text">第1章 Flume概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0-Flume%E5%85%A5%E9%97%A8"><span class="nav-text">第2章 Flume入门</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0-Flume%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">第1章 Flume概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0-Flume%E5%85%A5%E9%97%A8"><span class="nav-number">2.</span> <span class="nav-text">第2章 Flume入门</span></a></li></ol>
 
     </div>
 </div>
