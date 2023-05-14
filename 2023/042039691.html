@@ -36,8 +36,11 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230503225259694.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230503231507905-1683126934125-1.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230503231437092.png">
+<meta property="og:image" content="http://xuanyin02.github.io/%E5%85%B3%E4%BA%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97Kafka%E7%9F%A5%E8%AF%86%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230508203739197.png">
+<meta property="og:image" content="http://xuanyin02.github.io/%E5%85%B3%E4%BA%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97Kafka%E7%9F%A5%E8%AF%86%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230508212208719.png">
+<meta property="og:image" content="http://xuanyin02.github.io/%E5%85%B3%E4%BA%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97Kafka%E7%9F%A5%E8%AF%86%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230508215050506.png">
 <meta property="article:published_time" content="2023-04-20T03:17:51.000Z">
-<meta property="article:modified_time" content="2023-05-05T13:19:17.751Z">
+<meta property="article:modified_time" content="2023-05-08T16:39:34.315Z">
 <meta property="article:author" content="宣胤">
 <meta property="article:tag" content="kafka">
 <meta name="twitter:card" content="summary">
@@ -339,8 +342,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-05-05 21:19:17</span>
-            <span class="mobile">2023-05-05 21:19</span>
+            <span class="desktop">2023-05-09 00:39:34</span>
+            <span class="mobile">2023-05-09 00:39</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -373,12 +376,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>4.2k 字</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>4.6k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>17 分钟</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>18 分钟</span>
         </span>
     
     
@@ -740,6 +743,31 @@ kafkaProducer<span class="token punctuation">.</span><span class="token function
 <p><strong>Kafka集群中有一个broker的Controller会被选举为Controller Leader，负责管理集群broker的上下线，所有topic的分区副本分配和Leader选举等工作</strong></p>
 <h5 id="4-3-3-Leader-和-Follower故障处理细节"><a href="#4-3-3-Leader-和-Follower故障处理细节" class="headerlink" title="4.3.3 Leader 和 Follower故障处理细节"></a>4.3.3 Leader 和 Follower故障处理细节</h5><p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230503231507905-1683126934125-1.png" alt="image-20230503231507905"><figcaption>image-20230503231507905</figcaption></figure></p>
 <p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230503231437092.png" alt="image-20230503231437092"><figcaption>image-20230503231437092</figcaption></figure></p>
+<h4 id="4-4-文件存储"><a href="#4-4-文件存储" class="headerlink" title="4.4 文件存储"></a>4.4 文件存储</h4><h5 id="4-4-1-文件存储机制"><a href="#4-4-1-文件存储机制" class="headerlink" title="4.4.1 文件存储机制"></a>4.4.1 文件存储机制</h5><p>1）topic数据的存储机制	</p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="/./%E5%85%B3%E4%BA%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97Kafka%E7%9F%A5%E8%AF%86%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230508203739197.png" alt="image-20230508203739197"><figcaption>image-20230508203739197</figcaption></figure></p>
+<p>2）index 和 log 文件详解</p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="/./%E5%85%B3%E4%BA%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97Kafka%E7%9F%A5%E8%AF%86%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230508212208719.png" alt="image-20230508212208719"><figcaption>image-20230508212208719</figcaption></figure></p>
+<h5 id="4-4-2-文件清理策略"><a href="#4-4-2-文件清理策略" class="headerlink" title="4.4.2 文件清理策略"></a>4.4.2 文件清理策略</h5><p>Kafka中<strong>默认的日志保存时间为7天</strong>，可以通过调整如下参数修改保存时间：</p>
+<ul>
+<li>log.retention.hours，最低优先级–小时，默认7天</li>
+<li>log.retention.minutes，分钟</li>
+<li>log.retention.ms，最高优先级–毫秒</li>
+<li>log.retention.check.interval.ms，负责设置检查周期，默认5分钟</li>
+</ul>
+<p>那么日志一旦超过了设置的时间，怎么处理呢？Kafka中提供的日志清理策略有<strong>delete 和 compact</strong>两种</p>
+<p>1）delete日志删除：将过期数据删除</p>
+<ul>
+<li>log.cleanup.policy &#x3D; delete	所有数据启用删除策略</li>
+</ul>
+<p>（1）基于时间：默认打开。以segment中所有记录中的最大时间戳作为该文件时间戳</p>
+<p>（2）基于大小：默认关闭。超过设置的所有日志总大小，删除最早的segment</p>
+<p>​	log.retention.bytes，默认等于-1，表示无穷大</p>
+<p>2）compact日志压缩：对于相同key的不同value值，只保留最后一个版本</p>
+<ul>
+<li>log.cleanup.policy &#x3D; compact	所有数据启用压缩策略</li>
+</ul>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="/./%E5%85%B3%E4%BA%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97Kafka%E7%9F%A5%E8%AF%86%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230508215050506.png" alt="image-20230508215050506"><figcaption>image-20230508215050506</figcaption></figure></p>
+<p>压缩后的offset可能是不连续的，比如上图中没有6，当从这些offset消费消息时，将会拿到比这个offset大的offset对应的消息，实际上会拿到offset为7的消息，并从这个位置开始消费<br>这种策略只适合特殊场景，比如消息的key是用户ID，value是用户的资料，通过这种压缩策略，整个消息集里就保存了所有用户最新的资料</p>
 
             </div>
 
@@ -752,7 +780,7 @@ kafkaProducer<span class="token punctuation">.</span><span class="token function
         <li><strong>创建于:</strong> 2023-04-20 11:17:51</li>
         
             <li>
-                <strong>更新于:</strong> 2023-05-05 21:19:17
+                <strong>更新于:</strong> 2023-05-09 00:39:34
             </li>
         
         <li>

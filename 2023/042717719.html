@@ -28,8 +28,10 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230505164747393.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230505165006278.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230505172208248.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230514180529758.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230514185841763.png">
 <meta property="article:published_time" content="2023-04-27T08:27:07.000Z">
-<meta property="article:modified_time" content="2023-05-05T12:06:28.785Z">
+<meta property="article:modified_time" content="2023-05-14T11:09:04.858Z">
 <meta property="article:author" content="宣胤">
 <meta property="article:tag" content="flink">
 <meta name="twitter:card" content="summary">
@@ -331,8 +333,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-05-05 20:06:28</span>
-            <span class="mobile">2023-05-05 20:06</span>
+            <span class="desktop">2023-05-14 19:09:04</span>
+            <span class="mobile">2023-05-14 19:09</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -365,12 +367,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>688 字</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.9k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>2 分钟</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>7 分钟</span>
         </span>
     
     
@@ -451,6 +453,116 @@
 </ul>
 </li>
 </ol>
+<h3 id="2-flink编程基础"><a href="#2-flink编程基础" class="headerlink" title="2 flink编程基础"></a>2 flink编程基础</h3><h4 id="2-1-flink的DataStream抽象"><a href="#2-1-flink的DataStream抽象" class="headerlink" title="2.1 flink的DataStream抽象"></a>2.1 flink的DataStream抽象</h4><ul>
+<li>DataStream 代表一个数据流，<strong>它可以是无界的，也可以是有界的</strong></li>
+<li>DataStream 类似于Spark的rdd，它是不可变的</li>
+<li>无法对一个DataStream进行自由的添加或删除或修改元素</li>
+<li>只能通过算子对DataStream中的数据进行转换，将一个DataStream转成另一个DataStream</li>
+<li>DataStream可以通过source算子加载、映射外部数据而来；或者从已存在的DataStream转换而来</li>
+</ul>
+<h4 id="2-2-flink编程模板"><a href="#2-2-flink编程模板" class="headerlink" title="2.2 flink编程模板"></a>2.2 flink编程模板</h4><ol>
+<li>获取一个编程、执行入口环境env</li>
+<li>通过数据源组件、加载、创建DataStream</li>
+<li>对DataStream调用各种处理算子表达计算逻辑</li>
+<li>通过sink算子指定计算结果的输出方式</li>
+<li>在env上触发程序提交运行</li>
+</ol>
+<h4 id="2-3-flink程序的并行概念"><a href="#2-3-flink程序的并行概念" class="headerlink" title="2.3 flink程序的并行概念"></a>2.3 flink程序的并行概念</h4><ul>
+<li><p>flink程序中，每一个算子都可以成为一个独立任务（task）</p>
+</li>
+<li><p>flink程序中，视上下游算子间数据分发规划、并行度、共享槽位设置，可组成算子链成为一个task</p>
+</li>
+<li><p>每个任务在运行时都可拥有多个并行是运行实例（subtask）</p>
+</li>
+<li><p>且每个算子任务的并行度都可以在代码中显式设置</p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230514180529758.png" alt="image-20230514180529758"><figcaption>image-20230514180529758</figcaption></figure></p>
+</li>
+</ul>
+<h4 id="2-4-flink编程入口"><a href="#2-4-flink编程入口" class="headerlink" title="2.4 flink编程入口"></a>2.4 flink编程入口</h4><p>批处理入口</p>
+<pre class=" language-java"><code class="language-java">ExecutionEnvironment env <span class="token operator">=</span> ExecutionEnvironment<span class="token punctuation">.</span><span class="token function">getExecutionEnviroment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>流处理入口</p>
+<pre class=" language-java"><code class="language-java">StreamExecutionEnvironment env <span class="token operator">=</span> StreamExecutionEnvironment<span class="token punctuation">.</span><span class="token function">getExecutionEnviroment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>流批一体处理入口</p>
+<pre class=" language-java"><code class="language-java">StreamExecutionEnvironment env <span class="token operator">=</span> StreamExecutionEnvironment<span class="token punctuation">.</span><span class="token function">getExecutionEnviroment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//为env设置环境参数</span>
+ExecutionConfig config <span class="token operator">=</span> env<span class="token punctuation">.</span><span class="token function">getConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//设置为批处理模式</span>
+config<span class="token punctuation">.</span><span class="token function">setExecutionMode</span><span class="token punctuation">(</span>ExecutionMode<span class="token punctuation">.</span>BATCH<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>开启webui的本地运行环境处理入口</p>
+<pre class=" language-java"><code class="language-java">Configuration conf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Configuration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+conf<span class="token punctuation">.</span><span class="token function">setInteger</span><span class="token punctuation">(</span><span class="token string">"rest.port"</span><span class="token punctuation">,</span><span class="token number">8081</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+StreamExecutionEnvironment env <span class="token operator">=</span> StreamExecutionEnvironment<span class="token punctuation">.</span><span class="token function">getExecutionEnviroment</span><span class="token punctuation">(</span>conf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p>要开启上述webui功能，需添加依赖：flink-runtime-web_2.12</p>
+</blockquote>
+<h4 id="2-5-基本source算子"><a href="#2-5-基本source算子" class="headerlink" title="2.5 基本source算子"></a>2.5 基本source算子</h4><p>source是用来获取外部数据的算子，按照获取数据的方式，可以分为：</p>
+<ul>
+<li>基于集合的Source</li>
+<li>基于Socket网络端口的Source</li>
+<li>基于文件的Source</li>
+<li>第三方Connector Source</li>
+<li>自定义Source</li>
+</ul>
+<p>在此我仅介绍 第三方Connector Source 和 自定义Source</p>
+<p>在实际生产环境中，为了保证flink可以高效读取数据源中的数据，通常是跟一些分布式消息中间件结合使用，例如Kafka。Flink和Kafka整合可以高效的读取数据，并且可以保证Exactly Once（精确一次性语义）</p>
+<h5 id="第三方Connector-Source"><a href="#第三方Connector-Source" class="headerlink" title="第三方Connector Source"></a>第三方Connector Source</h5><p>以 Kafka Source为例：首先引入依赖：flink-connector-kafka_2.12</p>
+<blockquote>
+<p>代码示例：</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java">KafkaSource<span class="token operator">&lt;</span>String<span class="token operator">></span> kafkaSource <span class="token operator">=</span> KafkaSource<span class="token punctuation">.</span>&lt;String<span class="token operator">></span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setTopics</span><span class="token punctuation">(</span><span class="token string">"first"</span><span class="token punctuation">)</span>	<span class="token comment" spellcheck="true">//设置主题</span>
+                <span class="token punctuation">.</span><span class="token function">setGroupId</span><span class="token punctuation">(</span><span class="token string">"01"</span><span class="token punctuation">)</span>	<span class="token comment" spellcheck="true">//设置消费组ID</span>
+                <span class="token punctuation">.</span><span class="token function">setBootstrapServers</span><span class="token punctuation">(</span><span class="token string">"node1:9092"</span><span class="token punctuation">)</span>	<span class="token comment" spellcheck="true">//设置kafka连接地址</span>
+                <span class="token comment" spellcheck="true">//OffsetsInitializer.committedOffsets(OffsetResetStrategy.LATEST)   消费起始位移选择之前提交的偏移量（如果没有，则重置为LATEST）</span>
+                <span class="token comment" spellcheck="true">//OffsetsInitializer.earliest() 消费起始位移直接选择为“最早”</span>
+                <span class="token comment" spellcheck="true">//OffsetsInitializer.latest() 消费起始位移直接选择为“最新”</span>
+                <span class="token comment" spellcheck="true">//OffsetsInitializer.offsets(Map&lt; TopicPartition,Long>) 消费起始位移为：方法所传入的每个分区和对应的起始偏移量</span>
+                <span class="token punctuation">.</span><span class="token function">setStartingOffsets</span><span class="token punctuation">(</span>OffsetsInitializer<span class="token punctuation">.</span><span class="token function">committedOffsets</span><span class="token punctuation">(</span>OffsetResetStrategy<span class="token punctuation">.</span>LATEST<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setValueOnlyDeserializer</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SimpleStringSchema</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>	<span class="token comment" spellcheck="true">//设置反序列化Schema，SimpleStringSchema指的是读取kafka中的数据反序列化成String格式</span>
+
+                <span class="token comment" spellcheck="true">//开启了Kafka底层消费者的自动位移提交机制，它会把最新的消费位移提交到Kafka的consumer_offsets中</span>
+                <span class="token comment" spellcheck="true">//但是就算把自动位移提交机制开启，KafkaSource依然不依赖自动提交机制（宕机重启时，优先从flink算子自己的状态去获取偏移量&lt;更可靠>）</span>
+                <span class="token punctuation">.</span><span class="token function">setProperty</span><span class="token punctuation">(</span><span class="token string">"auto.offset.commit"</span><span class="token punctuation">,</span> <span class="token string">"true"</span><span class="token punctuation">)</span>
+
+                <span class="token comment" spellcheck="true">//把本source算子设置成 BOUNDED（有界流），将来本source去读取数据的时候，读到指定的位置，就停止读取并退出</span>
+                <span class="token comment" spellcheck="true">//常用来补数或者重跑一段历史数据</span>
+                <span class="token comment" spellcheck="true">//.setBounded(OffsetsInitializer.committedOffsets());</span>
+                <span class="token comment" spellcheck="true">//把本source算子设置成 UNBOUNDED（无界流），但是并不会一直读取数据，而是达到指定位置就停止读取，但程序不退出</span>
+                <span class="token comment" spellcheck="true">//主要应用场景：   需要从Kafka中读取某一段固定长度的数据，然后拿着这段数据去跟真正的无界流联合处理</span>
+                <span class="token comment" spellcheck="true">//.setUnbounded(OffsetsInitializer.latest())</span>
+
+                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>flink会把kafka消费者的消费位移记录在算子状态中，这样就实现了消费位移状态的容错，从而可以支持端到端的exactly-once</p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230514185841763.png" alt="image-20230514185841763"><figcaption>image-20230514185841763</figcaption></figure></p>
+<h5 id="自定义Source"><a href="#自定义Source" class="headerlink" title="自定义Source"></a>自定义Source</h5><p>本质上就是定义一个类，实现SourceFunction或继承RichParallelSourceFunction，实现run方法和cancel方法</p>
+<blockquote>
+<p>代码示例：</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyParallelSource</span> <span class="token keyword">extends</span> <span class="token class-name">RichParallelSourceFunction</span><span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//定义一个 int 类型的变量，从 1 开始</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span> flag <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//定义一个 flag 标标志</span>
+    <span class="token comment" spellcheck="true">//run 方法就是用来读取外部的数据或产生数据的逻辑</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span>SourceContext<span class="token operator">&lt;</span>String<span class="token operator">></span> ctx<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//满足 while 循环的条件，就将数据通过 SourceContext 收集起来</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;=</span> <span class="token number">10</span> <span class="token operator">&amp;&amp;</span> flag<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//为避免太快，睡眠 1 秒</span>
+        ctx<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token string">"data："</span> <span class="token operator">+</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//将数据通过 SourceContext 收集起来</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//cancel 方法就是让 Source 停止</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//将 flag 设置成 false，即停止 Source</span>
+        flag <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
 
             </div>
 
@@ -463,7 +575,7 @@
         <li><strong>创建于:</strong> 2023-04-27 16:27:07</li>
         
             <li>
-                <strong>更新于:</strong> 2023-05-05 20:06:28
+                <strong>更新于:</strong> 2023-05-14 19:09:04
             </li>
         
         <li>
@@ -581,7 +693,7 @@
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">关于实时计算框架flink知识的学习</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BF%AB%E9%80%9F%E8%AE%A4%E8%AF%86flink"><span class="nav-number">1.</span> <span class="nav-text">1 快速认识flink</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BF%AB%E9%80%9F%E8%AE%A4%E8%AF%86flink"><span class="nav-number">1.</span> <span class="nav-text">1 快速认识flink</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-flink%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">2 flink编程基础</span></a></li></ol>
 
     </div>
 </div>

@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230427182914489.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230427183049077.png">
 <meta property="article:published_time" content="2023-04-27T08:24:33.000Z">
-<meta property="article:modified_time" content="2023-04-27T14:34:32.224Z">
+<meta property="article:modified_time" content="2023-05-14T14:54:55.294Z">
 <meta property="article:author" content="宣胤">
 <meta property="article:tag" content="hive">
 <meta name="twitter:card" content="summary">
@@ -333,8 +333,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-27 22:34:32</span>
-            <span class="mobile">2023-04-27 22:34</span>
+            <span class="desktop">2023-05-14 22:54:55</span>
+            <span class="mobile">2023-05-14 22:54</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -367,12 +367,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.1k 字</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.5k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>12 分钟</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>13 分钟</span>
         </span>
     
     
@@ -554,6 +554,43 @@
 <span class="token keyword">with</span> serdeproperties <span class="token punctuation">(</span><span class="token string">"input.regex"</span> <span class="token operator">=</span> <span class="token string">"id=(.*),name=(.*)"</span><span class="token punctuation">)</span> 
 stored <span class="token keyword">as</span> textfile<span class="token punctuation">;</span>
 </code></pre>
+<h3 id="第5章-数据导入导出操作"><a href="#第5章-数据导入导出操作" class="headerlink" title="第5章 数据导入导出操作"></a>第5章 数据导入导出操作</h3><h4 id="5-1-数据导入"><a href="#5-1-数据导入" class="headerlink" title="5.1 数据导入"></a>5.1 数据导入</h4><h5 id="5-1-1-使用load向表中装载数据"><a href="#5-1-1-使用load向表中装载数据" class="headerlink" title="5.1.1 使用load向表中装载数据"></a>5.1.1 使用load向表中装载数据</h5><pre class=" language-SQL"><code class="language-SQL">load data [local] inpath '/opt/module/datas/student.txt' [overwrite] into table student [partition (partcol1=val1,…)];
+</code></pre>
+<ol>
+<li>load data：表示加载数据</li>
+<li>local：表示从本地加载数据到hive表；否则从HDFS加载数据到hive表</li>
+<li>inpath：表示加载数据的路径</li>
+<li>overwrite：表示覆盖表中已有数据，否则表示追加</li>
+<li>into table：表示加载到哪张表</li>
+<li>student：表示具体的表</li>
+<li>partition：表示上传到指定分区</li>
+</ol>
+<h5 id="5-1-2-使用insert…values向表中插入数据"><a href="#5-1-2-使用insert…values向表中插入数据" class="headerlink" title="5.1.2 使用insert…values向表中插入数据"></a>5.1.2 使用insert…values向表中插入数据</h5><pre class=" language-sql"><code class="language-sql"><span class="token keyword">insert</span> <span class="token keyword">into</span> <span class="token keyword">table</span>  student1 <span class="token keyword">partition</span><span class="token punctuation">(</span>month<span class="token operator">=</span><span class="token string">'201709'</span><span class="token punctuation">)</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'wangwu'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h5 id="5-1-3-使用insert…select向表中插入数据"><a href="#5-1-3-使用insert…select向表中插入数据" class="headerlink" title="5.1.3 使用insert…select向表中插入数据"></a>5.1.3 使用insert…select向表中插入数据</h5><pre class=" language-sql"><code class="language-sql"><span class="token keyword">insert</span> overwrite <span class="token keyword">table</span> student2 <span class="token keyword">partition</span><span class="token punctuation">(</span>month<span class="token operator">=</span><span class="token string">'201708'</span><span class="token punctuation">)</span> <span class="token keyword">select</span> id<span class="token punctuation">,</span> name <span class="token keyword">from</span> student1 <span class="token keyword">where</span> month<span class="token operator">=</span><span class="token string">'201709'</span><span class="token punctuation">;</span>
+</code></pre>
+<h5 id="5-1-4-用create-as创建表并加载数据"><a href="#5-1-4-用create-as创建表并加载数据" class="headerlink" title="5.1.4 用create as创建表并加载数据"></a>5.1.4 用create as创建表并加载数据</h5><pre class=" language-sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span> <span class="token keyword">if</span> <span class="token operator">not</span> <span class="token keyword">exists</span> student3
+<span class="token keyword">as</span> 
+<span class="token keyword">select</span> id<span class="token punctuation">,</span> name <span class="token keyword">from</span> student<span class="token punctuation">;</span>
+</code></pre>
+<h5 id="5-1-5-创建表时通过指定location加载数据路径"><a href="#5-1-5-创建表时通过指定location加载数据路径" class="headerlink" title="5.1.5 创建表时通过指定location加载数据路径"></a>5.1.5 创建表时通过指定location加载数据路径</h5><pre class=" language-sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span> <span class="token keyword">if</span> <span class="token operator">not</span> <span class="token keyword">exists</span> student4<span class="token punctuation">(</span>id <span class="token keyword">int</span><span class="token punctuation">,</span> name string<span class="token punctuation">)</span> <span class="token keyword">row</span> format delimited <span class="token keyword">fields</span> <span class="token keyword">terminated by</span> <span class="token string">'\t'</span> location <span class="token string">'/user/hive/warehouse/student4'</span><span class="token punctuation">;</span>
+</code></pre>
+<h5 id="5-1-6-import数据到指定Hive表中"><a href="#5-1-6-import数据到指定Hive表中" class="headerlink" title="5.1.6 import数据到指定Hive表中"></a>5.1.6 import数据到指定Hive表中</h5><pre class=" language-sql"><code class="language-sql"><span class="token keyword">import</span> <span class="token keyword">table</span> student2 <span class="token keyword">partition</span><span class="token punctuation">(</span>month<span class="token operator">=</span><span class="token string">'201709'</span><span class="token punctuation">)</span> <span class="token keyword">from</span> <span class="token string">'/user/hive/warehouse/export/student'</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p>注意：先用export导出后，再将数据导入</p>
+</blockquote>
+<h4 id="5-2-数据导出"><a href="#5-2-数据导出" class="headerlink" title="5.2 数据导出"></a>5.2 数据导出</h4><h5 id="5-2-1-insert导出"><a href="#5-2-1-insert导出" class="headerlink" title="5.2.1 insert导出"></a>5.2.1 insert导出</h5><pre class=" language-sql"><code class="language-sql"><span class="token keyword">insert</span> overwrite <span class="token punctuation">[</span><span class="token keyword">local</span><span class="token punctuation">]</span> directory <span class="token string">'/opt/module/datas/export/student1'</span>
+<span class="token keyword">ROW</span> FORMAT DELIMITED <span class="token keyword">FIELDS</span> <span class="token keyword">TERMINATED BY</span> <span class="token string">'\t'</span>             
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student<span class="token punctuation">;</span>
+</code></pre>
+<h5 id="5-2-2-export导出到HDFS上"><a href="#5-2-2-export导出到HDFS上" class="headerlink" title="5.2.2 export导出到HDFS上"></a>5.2.2 export导出到HDFS上</h5><pre class=" language-sql"><code class="language-sql">export <span class="token keyword">table</span> <span class="token keyword">default</span><span class="token punctuation">.</span>student <span class="token keyword">to</span> <span class="token string">'/user/hive/warehouse/export/student'</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="5-3-清除表中数据（Truncate）"><a href="#5-3-清除表中数据（Truncate）" class="headerlink" title="5.3 清除表中数据（Truncate）"></a>5.3 清除表中数据（Truncate）</h4><pre class=" language-sql"><code class="language-sql"> <span class="token keyword">truncate</span> <span class="token keyword">table</span> student<span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p>注意：Truncate只能删除管理表（内部表），不能删除外部表中数据</p>
+</blockquote>
 
             </div>
 
@@ -566,7 +603,7 @@ stored <span class="token keyword">as</span> textfile<span class="token punctuat
         <li><strong>创建于:</strong> 2023-04-27 16:24:33</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-27 22:34:32
+                <strong>更新于:</strong> 2023-05-14 22:54:55
             </li>
         
         <li>
@@ -684,7 +721,7 @@ stored <span class="token keyword">as</span> textfile<span class="token punctuat
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">关于数据仓库hive知识的学习</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0-hive%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">第1章 hive入门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0-hive%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">第2章 hive安装部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC3%E7%AB%A0-hive%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">第3章 hive数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC4%E7%AB%A0-DDL%E8%AF%AD%E8%A8%80"><span class="nav-number">4.</span> <span class="nav-text">第4章 DDL语言</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0-hive%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">第1章 hive入门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0-hive%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">第2章 hive安装部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC3%E7%AB%A0-hive%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">第3章 hive数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC4%E7%AB%A0-DDL%E8%AF%AD%E8%A8%80"><span class="nav-number">4.</span> <span class="nav-text">第4章 DDL语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC5%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">第5章 数据导入导出操作</span></a></li></ol>
 
     </div>
 </div>
