@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="Hexo Theme Redefine">
+    <meta name="keywords" content="hive">
     
     <meta name="author" content="宣胤">
     <!-- preconnect -->
@@ -18,16 +18,17 @@
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="人生总是充满遗憾，学会在遗憾中成长">
+        <meta name="description" content="第6章 SQL快速掌握6.1 sql的运算模型 – 逐行运算模型逐行运算：select后的运算表达式，是对每一行独立运算 表：一个数据的集合（集合中每一行就是一条数据：记录） select：     对一条数据的运算逻辑     -- 常量 :&quot;ok&quot; ,10 ,8.9     -- 变量 : id , name ,  age,     -- 运算符表达式：  age+10,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于数据仓库hive知识的学习(2)">
 <meta property="og:url" content="http://xuanyin02.github.io/2023/05142227.html">
 <meta property="og:site_name" content="宣胤星球">
-<meta property="og:description" content="人生总是充满遗憾，学会在遗憾中成长">
+<meta property="og:description" content="第6章 SQL快速掌握6.1 sql的运算模型 – 逐行运算模型逐行运算：select后的运算表达式，是对每一行独立运算 表：一个数据的集合（集合中每一行就是一条数据：记录） select：     对一条数据的运算逻辑     -- 常量 :&quot;ok&quot; ,10 ,8.9     -- 变量 : id , name ,  age,     -- 运算符表达式：  age+10,">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-14T14:56:31.000Z">
-<meta property="article:modified_time" content="2023-05-14T14:56:31.143Z">
+<meta property="article:modified_time" content="2023-05-14T15:28:31.562Z">
 <meta property="article:author" content="宣胤">
+<meta property="article:tag" content="hive">
 <meta name="twitter:card" content="summary">
     
     
@@ -326,20 +327,46 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-05-14 22:56:31</span>
-            <span class="mobile">2023-05-14 22:56</span>
+            <span class="desktop">2023-05-14 23:28:31</span>
+            <span class="mobile">2023-05-14 23:28</span>
             <span class="hover-info">更新</span>
         </span>
     
 
     
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/hive/">hive</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
 
     
     
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>586 字</span>
+        </span>
+    
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>1 分钟</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>2 分钟</span>
         </span>
     
     
@@ -355,7 +382,50 @@
             
 
             <div class="article-content markdown-body">
-                
+                <h3 id="第6章-SQL快速掌握"><a href="#第6章-SQL快速掌握" class="headerlink" title="第6章 SQL快速掌握"></a>第6章 SQL快速掌握</h3><h4 id="6-1-sql的运算模型-–-逐行运算模型"><a href="#6-1-sql的运算模型-–-逐行运算模型" class="headerlink" title="6.1 sql的运算模型 – 逐行运算模型"></a>6.1 sql的运算模型 – 逐行运算模型</h4><p>逐行运算：select后的运算表达式，是对每一行独立运算</p>
+<p>表：一个数据的集合（集合中每一行就是一条数据：记录）</p>
+<pre><code>select：
+    对一条数据的运算逻辑
+    -- 常量 :&quot;ok&quot; ,10 ,8.9
+    -- 变量 : id , name ,  age,
+    -- 运算符表达式：  age+10,  id+8 , id&gt;8  , id&gt;2 and id&lt;9
+    -- 函数表达式：  upper(name) , greatest(s1,s2,s3) 
+    -- 复合表达式：  greatest(s1,s2,s3)&gt;2 , greatest(s1,s2,s3)+10 , lower(substr(upper(name),0,3))
+</code></pre>
+<pre><code>from ：选择一个运算的数据集	 
+</code></pre>
+<pre><code>join：准备数据集（它可以将多个数据集拼成一个数据集，拼的时候可以带条件）
+join的拼接有多种方式：
+t1 join t2  --&gt; 笛卡尔积,结果的总行数的t1的行数*t2的行数；
+t1 join t2 on t1.id=t2.id  --&gt;内连接，满足拼接条件的才拼接..
+t1 left join t2 on t1.id=t2.id --&gt; 左（外）连接 left outer join ;左表所有行都保留，连接不上的右表字段为null
+t1 right join t2 on t1.id=t2.id --&gt;右（外）连接 right outer join;右表的所有行都保留，连接不上的左表字段为null
+t1 full join t2  on t1.id=t2.id --&gt;全（外）连接 full outer join;左、右表的行都保留，拼不上的字段为null
+-- hive不支持不等值join
+-- hive中有一种特别的join
+    left semi join  --&gt;左半连接，是sql中in子句的一个变种实现！
+    hive1.x中不支持in，现在的新版本hive支持in子句
+</code></pre>
+<pre><code>where：逐行过滤将要运算的数据集,where执行在select之前
+   -- where id&gt;2
+   -- where (id+10)&gt;2
+   -- where upper(name) = &#39;ZHANGSAN&#39;
+   -- where id in (select id from t_x)
+</code></pre>
+<pre><code>group by：
+函数：类似java代码中的方法，接收变量，返回结果，也就是一个表达式
+having：
+紧跟group by之后，是对分组后的数据进行按组过滤，将不满足条件表达式的组去除；
+</code></pre>
+<h4 id="6-2-sql运算模型–分组聚合运算"><a href="#6-2-sql运算模型–分组聚合运算" class="headerlink" title="6.2 sql运算模型–分组聚合运算"></a>6.2 sql运算模型–分组聚合运算</h4><p>– 分组运算模型中，select后面的表达式只能有如下情形：</p>
+<ol>
+<li>常量</li>
+<li>分组key</li>
+<li>聚合函数</li>
+</ol>
+<h4 id="6-3-sql运算模型–开窗运算（窗口分析运算模型）"><a href="#6-3-sql运算模型–开窗运算（窗口分析运算模型）" class="headerlink" title="6.3 sql运算模型–开窗运算（窗口分析运算模型）"></a>6.3 sql运算模型–开窗运算（窗口分析运算模型）</h4><p>– 可以用窗口分析函数：row_number() over() 来实现</p>
+<p>row_number() over(partition by sex order by salary desc) as rn</p>
+
             </div>
 
             
@@ -367,7 +437,7 @@
         <li><strong>创建于:</strong> 2023-05-14 22:56:31</li>
         
             <li>
-                <strong>更新于:</strong> 2023-05-14 22:56:31
+                <strong>更新于:</strong> 2023-05-14 23:28:31
             </li>
         
         <li>
@@ -383,11 +453,34 @@
             
 
             
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/hive/">#hive</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
 
             
 
             
                 <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/05169473.html"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">Hadoop面试常见问题</span>
+                                    <span class="post-nav-item">上一篇</span>
+                                </span>
+                            </a>
+                        </div>
                     
                     
                         <div class="article-next">
@@ -462,7 +555,7 @@
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">关于数据仓库hive知识的学习(2)</div>
-        
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC6%E7%AB%A0-SQL%E5%BF%AB%E9%80%9F%E6%8E%8C%E6%8F%A1"><span class="nav-number">1.</span> <span class="nav-text">第6章 SQL快速掌握</span></a></li></ol>
 
     </div>
 </div>
