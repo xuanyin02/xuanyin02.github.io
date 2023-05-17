@@ -26,7 +26,7 @@
 <meta property="og:description" content="一 什么是Hadoop？Hadoop是一个开源的分布式计算平台，可以处理大规模数据集。它由两个核心组件组成：HDFS文件系统 和 MapReduce计算框架。 二 Hadoop的优点是什么？  可以处理大规模数据集，支持PB级别的数据存储和处理   可以在廉价的硬件上运行，降低了成本   可以通过数据冗余和自动故障转移来提高可靠性   可以通过水平扩展来提高性能   可以通过MapReduce计算">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-16T08:26:48.000Z">
-<meta property="article:modified_time" content="2023-05-16T08:34:04.207Z">
+<meta property="article:modified_time" content="2023-05-17T15:36:12.010Z">
 <meta property="article:author" content="宣胤">
 <meta property="article:tag" content="hadoop">
 <meta name="twitter:card" content="summary">
@@ -327,8 +327,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-05-16 16:34:04</span>
-            <span class="mobile">2023-05-16 16:34</span>
+            <span class="desktop">2023-05-17 23:36:12</span>
+            <span class="mobile">2023-05-17 23:36</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -361,12 +361,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>6.9k 字</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>7.7k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>24 分钟</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>27 分钟</span>
         </span>
     
     
@@ -393,7 +393,7 @@
 <p>  每个节点运行Map任务来处理数据块</p>
 <p>  Map任务输出键值对，这些键值对被shuffle后传递给Reduce任务</p>
 <p>  Reduce任务对键值对进行聚合和处理，并将结果写回HDFS</p>
-<h4 id="四-Hadoop的数据复制是如何实现的？–涉及HDFS数据写入流程"><a href="#四-Hadoop的数据复制是如何实现的？–涉及HDFS数据写入流程" class="headerlink" title="四 Hadoop的数据复制是如何实现的？–涉及HDFS数据写入流程"></a>四 Hadoop的数据复制是如何实现的？–涉及HDFS数据写入流程</h4><p>  Hadoop是数据复制是通过HDFS实现的，当数据被写入HDFS时，它被分成块并复制到多个节点上。默认情况下，每个块会被复制到三个节点上，以提高数据的可靠性。如果一个节点失效，HDFS会自动将数据块复制到其他节点上，以保证数据的可用性。</p>
+<h4 id="四-Hadoop的数据复制是如何实现的？–涉及HDFS数据写入流程"><a href="#四-Hadoop的数据复制是如何实现的？–涉及HDFS数据写入流程" class="headerlink" title="四 Hadoop的数据复制是如何实现的？–涉及HDFS数据写入流程"></a>四 Hadoop的数据复制是如何实现的？–涉及HDFS数据写入流程</h4><p>  Hadoop的数据复制是通过HDFS实现的，当数据被写入HDFS时，它被分成块并复制到多个节点上。默认情况下，每个块会被复制到三个节点上，以提高数据的可靠性。如果一个节点失效，HDFS会自动将数据块复制到其他节点上，以保证数据的可用性。</p>
 <h4 id="五-Hadoop是数据压缩是如何实现的？"><a href="#五-Hadoop是数据压缩是如何实现的？" class="headerlink" title="五 Hadoop是数据压缩是如何实现的？"></a>五 Hadoop是数据压缩是如何实现的？</h4><p>  Hadoop是数据压缩是通过MapReduce框架中的压缩器实现的。压缩器可以在Map和Reduce任务之间压缩和解压缩数据。Hadoop支持多种压缩算法，包括Gzip、Bzip2和Snappy等。</p>
 <h4 id="六-Hadoop的数据安全是如何实现的？"><a href="#六-Hadoop的数据安全是如何实现的？" class="headerlink" title="六 Hadoop的数据安全是如何实现的？"></a>六 Hadoop的数据安全是如何实现的？</h4><p>  Hadoop的数据安全是通过HDFS中的访问控制列表（ACL）和MapReduce框架中的用户身份验证实现的。ACL可以控制对HDFS中文件和目录的访问权限。MapReduce框架可以通过用户身份验证来确保只有授权用户才能运行作业。</p>
 <h4 id="七-Hadoop的调优技巧有哪些？"><a href="#七-Hadoop的调优技巧有哪些？" class="headerlink" title="七 Hadoop的调优技巧有哪些？"></a>七 Hadoop的调优技巧有哪些？</h4><p>  增加节点数：通过增加节点数来提高性能</p>
@@ -433,10 +433,35 @@
 <li>read方法是并行的读取block信息，不是一块一块的读取；NameNode只是返回Client请求包含块的DataNode地址，并不是返回请求块是数据；</li>
 <li>最终读取来所有的block会合并成一个完整的最终文件。</li>
 </ol>
-<h4 id="十一-HDFS在读取文件的时候，如果其中一个块突然损坏了怎么办？"><a href="#十一-HDFS在读取文件的时候，如果其中一个块突然损坏了怎么办？" class="headerlink" title="十一 HDFS在读取文件的时候，如果其中一个块突然损坏了怎么办？"></a>十一 HDFS在读取文件的时候，如果其中一个块突然损坏了怎么办？</h4><p>  Cilent读取完DataNode上的块之后会进行checksum验证，也就是把客户端读取到本地的块与HDFS上的原始块进行校验，如果发现校验结果不一致，客户端会通知NameNode，然后再从下一个拥有该block副本的DataNode继续读。</p>
-<h4 id="十二-HDFS在上传文件的时候，如果其中一个DataNode突然挂掉了怎么办？"><a href="#十二-HDFS在上传文件的时候，如果其中一个DataNode突然挂掉了怎么办？" class="headerlink" title="十二 HDFS在上传文件的时候，如果其中一个DataNode突然挂掉了怎么办？"></a>十二 HDFS在上传文件的时候，如果其中一个DataNode突然挂掉了怎么办？</h4><p>  客户端上传文件时与DataNode建立pipeline管道，管道的正方向是客户端向DataNode发送的数据包，管道反方向是DataNode向客户端发送ack确认，也就是正确接收到数据包之后发送一个已确认接收到的应答。</p>
+<h4 id="十一-什么是HDFS的安全模式？"><a href="#十一-什么是HDFS的安全模式？" class="headerlink" title="十一 什么是HDFS的安全模式？"></a>十一 什么是HDFS的安全模式？</h4><p>HDFS的安全模式，即HDFS safe mode，是HDFS文件系统的一种特殊状态，在该状态下，HDFS文件系统只接收数据请求，而不接收删除、修改等变更操作，也不能复制底层的block及其副本</p>
+<h4 id="十二-进入安全模式的两种方式"><a href="#十二-进入安全模式的两种方式" class="headerlink" title="十二 进入安全模式的两种方式"></a>十二 进入安全模式的两种方式</h4><p><strong>被动进入</strong>：使用命令—&gt; hdfs dfsadmin -safemode enter</p>
+<p><strong>主动进入</strong>：为了保证整个文件系统的数据一致性&#x2F;整个文件系统不丢失数据</p>
+<ul>
+<li>​    根本原因：</li>
+</ul>
+<ol>
+<li><p>与namenode保持定期心跳的datanode的个数没有达到指定阈值（阈值通过dfs.namenode.safemode.min.datanodes指定）</p>
+</li>
+<li><p>没有足够的block拥有指定的副本数（也就是没达到阈值，最小副本数通过参数dfs.namenode.replication.min指定，阈值通过dfs.namenode.safemode.threshold-pct指定，默认是0.999f）</p>
+</li>
+</ol>
+<blockquote>
+<p>正常情况下，HDFS启动过程中，会主动进入安全模式一段时间，这是HDFS的分布式架构决定的。因为namenode启动成功后，需要等待datanode启动成功并通过心跳汇报datanode上存储的block信息，有足够的block拥有指定的副本数之后，并等待特定时间后（通过参数dfs.namenode.safemode.extensions 30000控制），主动退出安全模式。</p>
+</blockquote>
+<ul>
+<li>直接原因：</li>
+</ul>
+<ol>
+<li>部分datanode启动失败或者因为网络原因与namenode心跳连接失败</li>
+<li>部分datanode节点存储hdfs数据的磁盘卷有损坏，导致存储在该磁盘卷中的数据无法提取</li>
+<li>部分datanode节点存储hdfs数据的磁盘分区空间满，导致存储在该磁盘卷中的数据无法正常读取</li>
+</ol>
+<h4 id="十三-修复问题–修复数据"><a href="#十三-修复问题–修复数据" class="headerlink" title="十三 修复问题–修复数据"></a>十三 修复问题–修复数据</h4><p>比如如果有datanode未成功启动，则尝试修复并启动对应的datanode<br>比如如果有datanode存储hdfs数据的磁盘分区空间满，则尝试扩展磁盘分区空间<br>比如如果有datanode存在存储卷故障，则尝试修复存储卷，如果无法修复则需要替换存储卷（会丢失存储卷上的数据）</p>
+<p>需要注意的是，如果出现了某些datanode彻底损坏无法启动，或某些datanode节点磁盘卷故障彻底无法修复的情况，则这些数据对应的block及block上层的hdfs文件，就被丢失了，就需要补数据（从上游重新拉取数据，或重新运行作业生成数据），也可能无法补。</p>
+<h4 id="十四-HDFS在读取文件的时候，如果其中一个块突然损坏了怎么办？"><a href="#十四-HDFS在读取文件的时候，如果其中一个块突然损坏了怎么办？" class="headerlink" title="十四 HDFS在读取文件的时候，如果其中一个块突然损坏了怎么办？"></a>十四 HDFS在读取文件的时候，如果其中一个块突然损坏了怎么办？</h4><p>  Cilent读取完DataNode上的块之后会进行checksum验证，也就是把客户端读取到本地的块与HDFS上的原始块进行校验，如果发现校验结果不一致，客户端会通知NameNode，然后再从下一个拥有该block副本的DataNode继续读。</p>
+<h4 id="十五-HDFS在上传文件的时候，如果其中一个DataNode突然挂掉了怎么办？"><a href="#十五-HDFS在上传文件的时候，如果其中一个DataNode突然挂掉了怎么办？" class="headerlink" title="十五 HDFS在上传文件的时候，如果其中一个DataNode突然挂掉了怎么办？"></a>十五 HDFS在上传文件的时候，如果其中一个DataNode突然挂掉了怎么办？</h4><p>  客户端上传文件时与DataNode建立pipeline管道，管道的正方向是客户端向DataNode发送的数据包，管道反方向是DataNode向客户端发送ack确认，也就是正确接收到数据包之后发送一个已确认接收到的应答。</p>
 <p>  当DataNode突然挂掉了，客户端接收不到这个DataNode发送的ack确认，客户端会通知NameNode，NameNode检查该块的副本与规定的不符，NameNode会通知DataNode去复制副本，并将挂掉的DataNode做下线处理，不再让它参与文件上传与下载。</p>
-<h4 id="十三-NameNode在启动的时候会做哪些操作？"><a href="#十三-NameNode在启动的时候会做哪些操作？" class="headerlink" title="十三 NameNode在启动的时候会做哪些操作？"></a>十三 NameNode在启动的时候会做哪些操作？</h4><p>NameNode数据存储在内存和本地磁盘，本地磁盘数据存储在fsimage镜像文件和edits编辑日志文件。</p>
+<h4 id="十六-NameNode在启动的时候会做哪些操作？"><a href="#十六-NameNode在启动的时候会做哪些操作？" class="headerlink" title="十六 NameNode在启动的时候会做哪些操作？"></a>十六 NameNode在启动的时候会做哪些操作？</h4><p>NameNode数据存储在内存和本地磁盘，本地磁盘数据存储在fsimage镜像文件和edits编辑日志文件。</p>
 <p>首次启动NameNode：</p>
 <ol>
 <li><p>格式化文件系统，为了生成fsimage镜像文件</p>
@@ -465,7 +490,7 @@
 <li>创建新的edits文件，内容开始为空；</li>
 <li>启动DataNode</li>
 </ol>
-<h4 id="十四-谈谈对Secondary-NameNode的了解，它的工作机制是怎样的？"><a href="#十四-谈谈对Secondary-NameNode的了解，它的工作机制是怎样的？" class="headerlink" title="十四 谈谈对Secondary NameNode的了解，它的工作机制是怎样的？"></a>十四 谈谈对Secondary NameNode的了解，它的工作机制是怎样的？</h4><p>Secondary NameNode是合并NameNode的edits logs到fsimage文件中。</p>
+<h4 id="十七-谈谈对Secondary-NameNode的了解，它的工作机制是怎样的？"><a href="#十七-谈谈对Secondary-NameNode的了解，它的工作机制是怎样的？" class="headerlink" title="十七 谈谈对Secondary NameNode的了解，它的工作机制是怎样的？"></a>十七 谈谈对Secondary NameNode的了解，它的工作机制是怎样的？</h4><p>Secondary NameNode是合并NameNode的edits logs到fsimage文件中。</p>
 <p>它的具体工作机制：</p>
 <ol>
 <li>Secondary NameNode询问NameNode是否需要checkpoint。直接带回结果；</li>
@@ -478,13 +503,13 @@
 <li>NameNode将fsimage.checkpoint重新命名成fsimage；</li>
 </ol>
 <p>所以如果NameNode中的元数据丢失，是可以从Secondary NameNode恢复一部分元数据信息的，但不是全部，因为NaneNode正在写的edits日志还没有拷贝到Secondary NameNode，这部分恢复不了。</p>
-<h4 id="十五-Secondary-NameNode不能恢复NameNode的全部数据，那如何保证NameNode数据存储安全？"><a href="#十五-Secondary-NameNode不能恢复NameNode的全部数据，那如何保证NameNode数据存储安全？" class="headerlink" title="十五 Secondary NameNode不能恢复NameNode的全部数据，那如何保证NameNode数据存储安全？"></a>十五 Secondary NameNode不能恢复NameNode的全部数据，那如何保证NameNode数据存储安全？</h4><p>这个问题就要说NameNode的高可用了，即NameNode HA。</p>
+<h4 id="十八-Secondary-NameNode不能恢复NameNode的全部数据，那如何保证NameNode数据存储安全？"><a href="#十八-Secondary-NameNode不能恢复NameNode的全部数据，那如何保证NameNode数据存储安全？" class="headerlink" title="十八 Secondary NameNode不能恢复NameNode的全部数据，那如何保证NameNode数据存储安全？"></a>十八 Secondary NameNode不能恢复NameNode的全部数据，那如何保证NameNode数据存储安全？</h4><p>这个问题就要说NameNode的高可用了，即NameNode HA。</p>
 <p>一个NameNode有单点故障问题，那就配置两个NameNode，配置有两个关键点，一是必须要保证这两个NameNode的元数据信息必须要同步的，二是一个NameNode挂掉之后另一个要立马补上。</p>
 <ol>
 <li>元数据信息同步在HA方案中采用的是“共享存储”。每次写文件时，需要将日志同步写入共享存储，这个步骤成功才能认定写文件成功。然后备份节点定期从共享存储同步日志，以便进行主备切换。</li>
 <li>监控NameNode状态采用zookeeper，两个NameNode节点的状态存放在zookeeper中，另外，两个NameNode节点分别有一个进程监控程序–ZKFC，实时读取zookeeper中NameNode的状态，来判断当前的NameNode是不是已经宕机。如果Standby的NameNode节点的ZKFC发现主节点已经挂掉，那么就会强制给原本的Active NameNode节点发送强制关闭请求，之后将Standby的NameNode设置为Active。</li>
 </ol>
-<h4 id="十六-在NameNode-HA中，会出现脑裂问题吗？怎么解决脑裂？"><a href="#十六-在NameNode-HA中，会出现脑裂问题吗？怎么解决脑裂？" class="headerlink" title="十六 在NameNode HA中，会出现脑裂问题吗？怎么解决脑裂？"></a>十六 在NameNode HA中，会出现脑裂问题吗？怎么解决脑裂？</h4><p>会出现脑裂问题：假设 NameNode1 当前为 Active 状态，NameNode2 当前为 Standby 状态。如果某一时刻 NameNode1 发生了“假死”现象（在进行垃圾回收时 和 网络延迟大时 可能发生），那么 Zookeeper 服务端会认为 NameNode1 挂掉了，根据前面的主备切换逻辑，NameNode2 会替代 NameNode1 进入 Active 状态。但是此时 NameNode1 可能仍然处于 Active 状态正常运行，这样 NameNode1 和 NameNode2 都处于 Active 状态，都可以对外提供服务。这种情况称为脑裂。</p>
+<h4 id="十九-在NameNode-HA中，会出现脑裂问题吗？怎么解决脑裂？"><a href="#十九-在NameNode-HA中，会出现脑裂问题吗？怎么解决脑裂？" class="headerlink" title="十九 在NameNode HA中，会出现脑裂问题吗？怎么解决脑裂？"></a>十九 在NameNode HA中，会出现脑裂问题吗？怎么解决脑裂？</h4><p>会出现脑裂问题：假设 NameNode1 当前为 Active 状态，NameNode2 当前为 Standby 状态。如果某一时刻 NameNode1 发生了“假死”现象（在进行垃圾回收时 和 网络延迟大时 可能发生），那么 Zookeeper 服务端会认为 NameNode1 挂掉了，根据前面的主备切换逻辑，NameNode2 会替代 NameNode1 进入 Active 状态。但是此时 NameNode1 可能仍然处于 Active 状态正常运行，这样 NameNode1 和 NameNode2 都处于 Active 状态，都可以对外提供服务。这种情况称为脑裂。</p>
 <p>脑裂对于NameNode这类对数据一致性要求非常高的系统来说是灾难性的，数据会发生错乱且无法恢复。zookeeper社区对这种问题的解决方法叫做fencing（隔离），也就是想办法把旧是Active NameNode隔离起来，使它不能正常对外提供服务。</p>
 <p>在进行fencing的时候，会执行以下操作：</p>
 <ol>
@@ -495,10 +520,10 @@
 </ol>
 </li>
 </ol>
-<h4 id="十七-小文件过多会有什么危害，如何避免？"><a href="#十七-小文件过多会有什么危害，如何避免？" class="headerlink" title="十七 小文件过多会有什么危害，如何避免？"></a>十七 小文件过多会有什么危害，如何避免？</h4><p>Hadoop上大量HDFS元数据信息存储在NameNode内存中，因此过多的小文件必定会压垮NameNode的内存。</p>
+<h4 id="二十-小文件过多会有什么危害，如何避免？"><a href="#二十-小文件过多会有什么危害，如何避免？" class="headerlink" title="二十 小文件过多会有什么危害，如何避免？"></a>二十 小文件过多会有什么危害，如何避免？</h4><p>Hadoop上大量HDFS元数据信息存储在NameNode内存中，因此过多的小文件必定会压垮NameNode的内存。</p>
 <p>每个元数据对象约占50byte，所以如果有1千万个小文件，每个文件占用一个block，则NameNode大约需要2G空间。如果存储1亿个文件，则NameNode需要20G空间。</p>
 <p>显而易见的解决这个问腿的方法就是合并小文件，可以选择在客户端上传时执行一定的策略先合并，或者是使用Hadoop的CombineFileInputFormat&lt;K,V&gt;实现小文件的合并。</p>
-<h4 id="十八-请说下HDFS的组织架构"><a href="#十八-请说下HDFS的组织架构" class="headerlink" title="十八 请说下HDFS的组织架构"></a>十八 请说下HDFS的组织架构</h4><ol>
+<h4 id="二十一-请说下HDFS的组织架构"><a href="#二十一-请说下HDFS的组织架构" class="headerlink" title="二十一 请说下HDFS的组织架构"></a>二十一 请说下HDFS的组织架构</h4><ol>
 <li>Client：客户端<ol>
 <li>切分文件。文件上传HDFS的时候，Client将文件切分成一个一个的Block，然后进行存储</li>
 <li>与NameNode交互，获取文件的位置信息</li>
@@ -525,7 +550,7 @@
 </ol>
 </li>
 </ol>
-<h4 id="十九-请说下MR中的Map-Task的工作机制"><a href="#十九-请说下MR中的Map-Task的工作机制" class="headerlink" title="十九 请说下MR中的Map Task的工作机制"></a>十九 请说下MR中的Map Task的工作机制</h4><p>简单概述：</p>
+<h4 id="二十二-请说下MR中的Map-Task的工作机制"><a href="#二十二-请说下MR中的Map-Task的工作机制" class="headerlink" title="二十二 请说下MR中的Map Task的工作机制"></a>二十二 请说下MR中的Map Task的工作机制</h4><p>简单概述：</p>
 <p>inputFile通过split被切割为多个split文件，通过Record按行读取内容给map（自己写的处理逻辑的方法），数据被map处理完之后，交给OutputCollect收集器，对其结果key进行分区（默认使用的hashPartitioner），然后写入buffer，每个map task都有一个内存缓冲区（环形缓冲区），存放着map的输出结果，当缓冲区快满的时候需要将缓冲区的数据以一个临时文件的方式溢写到磁盘，当整个map task结束后再对磁盘中这个map task产生的所有临时文件做合并，生成最终的正式输出文件，然后等待reduce task的拉取。</p>
 <p>详细步骤：</p>
 <ol>
@@ -537,7 +562,7 @@
 <li>当环形缓冲区的数据达到溢写比例（默认0.8），也就是80M时，溢写线程启动，需要对这80M空间内的数据做排序和合并。排序是MR模型默认的行为，这里的排序也是对序列化的字节做的排序</li>
 <li>合并溢写文件，每次溢写会在磁盘上生成一个临时溢出文件（写之前判断是否有Combiner），如果Mapper的输出结果真的很大，有多次这样的溢写发生，磁盘上相应的就会有多个临时溢出文件存在。当整个数据处理结束之后开始对磁盘中的所有临时文件进行Merge归并、排序，因为最终的文件只有一个写入磁盘，并且为这个文件提供了一个索引文件，以记录每个reduce对应数据的偏移量</li>
 </ol>
-<h4 id="二十-请说下MR中Reduce-Task的工作机制"><a href="#二十-请说下MR中Reduce-Task的工作机制" class="headerlink" title="二十 请说下MR中Reduce Task的工作机制"></a>二十 请说下MR中Reduce Task的工作机制</h4><p>简单描述：</p>
+<h4 id="二十三-请说下MR中Reduce-Task的工作机制"><a href="#二十三-请说下MR中Reduce-Task的工作机制" class="headerlink" title="二十三 请说下MR中Reduce Task的工作机制"></a>二十三 请说下MR中Reduce Task的工作机制</h4><p>简单描述：</p>
 <p>Reduce大致分为copy、sort、reduce三个阶段，重点在前两个阶段</p>
 <p>copy阶段包含一个eventFetcher来获取已完成的map列表，由Fetcher线程去copy数据，在此过程中启动两个merge线程，分别为inMemoryMerger和onDiskMerger，分别将内存中的数据merge到磁盘和磁盘中是数据进行merge。待数据copy完成之后，copy阶段就完成了。</p>
 <p>开始sort阶段，sort阶段主要是执行finalMerge操作，纯粹的sort阶段，完成之后就是reduce阶段，调用用户定义的reduce函数进行处理</p>
@@ -553,7 +578,7 @@
 <li><p>对排序后的键值对调用reduce方法：键相等的键值对调用一次reduce方法，每次调用会产生零个或者多个键值对，最后把这些输出的键值对写入到HDFS文件中</p>
 </li>
 </ol>
-<h4 id="二十一-请说下MR中的shuffle阶段"><a href="#二十一-请说下MR中的shuffle阶段" class="headerlink" title="二十一 请说下MR中的shuffle阶段"></a>二十一 请说下MR中的shuffle阶段</h4><p>shuffle阶段分为四个步骤：分区、排序、规约、分组，其中前三个步骤在map阶段完成，最后一个步骤在reduce阶段完成</p>
+<h4 id="二十四-请说下MR中的shuffle阶段"><a href="#二十四-请说下MR中的shuffle阶段" class="headerlink" title="二十四 请说下MR中的shuffle阶段"></a>二十四 请说下MR中的shuffle阶段</h4><p>shuffle阶段分为四个步骤：分区、排序、规约、分组，其中前三个步骤在map阶段完成，最后一个步骤在reduce阶段完成</p>
 <p>shuffle是MR的核心，它分布在MR的map阶段和reduce阶段。一般把从map产生输出开始到reduce取得数据作为输入之前的过程称作shuffle</p>
 <ol>
 <li>Collect阶段：将Map Task的结果输出到默认为100M的环形缓冲区，保存的是key&#x2F;value，Partition分区信息等</li>
@@ -564,14 +589,14 @@
 <li>Sort阶段：在对数据进行合并的同时，会进行排序操作，由于Map Task阶段已经对数据进行了局部的排序，Reduce Task只需保证copy的数据的最终整体有效性即可</li>
 </ol>
 <p>Shuffle中的缓冲区大小会影响到MR程序的执行效率，原则上说，缓冲区越大，磁盘io的次数越少，执行速度越快。缓冲区的大小可以通过参数调整，参数：mapreduce.task.io.sort.mb 默认100M</p>
-<h4 id="二十二-shuffle阶段的数据压缩机制了解吗？"><a href="#二十二-shuffle阶段的数据压缩机制了解吗？" class="headerlink" title="二十二 shuffle阶段的数据压缩机制了解吗？"></a>二十二 shuffle阶段的数据压缩机制了解吗？</h4><p>在shuffle阶段，可以看到数据通过大量拷贝，从map阶段输出的数据，都要通过网络拷贝，发送到reduce阶段，这一过程中，涉及到大量的网络IO，如果数据能够进行压缩，那么数据的发送量就会少很多</p>
+<h4 id="二十五-shuffle阶段的数据压缩机制了解吗？"><a href="#二十五-shuffle阶段的数据压缩机制了解吗？" class="headerlink" title="二十五 shuffle阶段的数据压缩机制了解吗？"></a>二十五 shuffle阶段的数据压缩机制了解吗？</h4><p>在shuffle阶段，可以看到数据通过大量拷贝，从map阶段输出的数据，都要通过网络拷贝，发送到reduce阶段，这一过程中，涉及到大量的网络IO，如果数据能够进行压缩，那么数据的发送量就会少很多</p>
 <p>hadoop当中支持的压缩算法：gzip、bzip2、LZO、LZ4、Snappy，这几种压缩算法综合压缩和解压缩的速率，谷歌的Snappy是最优的，一般都选择Snappy压缩。</p>
-<h4 id="二十三-在写MR时，什么情况下可以使用规约？"><a href="#二十三-在写MR时，什么情况下可以使用规约？" class="headerlink" title="二十三 在写MR时，什么情况下可以使用规约？"></a>二十三 在写MR时，什么情况下可以使用规约？</h4><p>规约（Combiner）是不能够影响任务的运行结果的局部汇总，适用于求和类，不适用于求平均值，如果reduce的输入参数类型和输出参数的类型是一样的，则规约的类可以使用reduce类，只需要在驱动类中指明规约的类即可</p>
-<h4 id="二十四-YARN集群的架构和工作原理知道多少？"><a href="#二十四-YARN集群的架构和工作原理知道多少？" class="headerlink" title="二十四 YARN集群的架构和工作原理知道多少？"></a>二十四 YARN集群的架构和工作原理知道多少？</h4><p>YARN的基本设计思想是将MapReduce V1中的JobTracker拆分为两个独立的服务：ResourceManager和ApplicationMaster</p>
+<h4 id="二十六-在写MR时，什么情况下可以使用规约？"><a href="#二十六-在写MR时，什么情况下可以使用规约？" class="headerlink" title="二十六 在写MR时，什么情况下可以使用规约？"></a>二十六 在写MR时，什么情况下可以使用规约？</h4><p>规约（Combiner）是不能够影响任务的运行结果的局部汇总，适用于求和类，不适用于求平均值，如果reduce的输入参数类型和输出参数的类型是一样的，则规约的类可以使用reduce类，只需要在驱动类中指明规约的类即可</p>
+<h4 id="二十七-YARN集群的架构和工作原理知道多少？"><a href="#二十七-YARN集群的架构和工作原理知道多少？" class="headerlink" title="二十七 YARN集群的架构和工作原理知道多少？"></a>二十七 YARN集群的架构和工作原理知道多少？</h4><p>YARN的基本设计思想是将MapReduce V1中的JobTracker拆分为两个独立的服务：ResourceManager和ApplicationMaster</p>
 <p>ResourceManager负责整个系统的资源管理和分配，ApplicationMaster负责单个应用程序的管理</p>
 <ol>
 <li><p>ResourceManager：RM是一个全局的资源管理器，负责整个系统的资源管理和分配，它由两个部分组成：调度器（Scheduler）和应用程序管理器（Application Manager）</p>
-<p>调度器根据容量、队列等限制条件，将系统中的资源分配给正在运行的应用程序，在保证容量、公平性和服务等级的前提下，优化集群资源利用率，让所有的资源都被充分利用。应用程序管理器负责管理整个系统中是所有的应用程序，包括应用程序的提交、与调度器协商资源以启动ApplicationMaster、监控ApplicationMaster运行状态并在失败时重启它。</p>
+<p>调度器根据容量、队列等限制条件，将系统中的资源分配给正在运行的应用程序，在保证容量、公平性和服务等级的前提下，优化集群资源利用率，让所有的资源都被充分利用。应用程序管理器负责管理整个系统中的所有的应用程序，包括应用程序的提交、与调度器协商资源以启动ApplicationMaster、监控ApplicationMaster运行状态并在失败时重启它。</p>
 </li>
 <li><p>ApplicationMaster：用户提交的一个应用程序会ApplicationMaster，它的主要功能有：</p>
 <ol>
@@ -581,12 +606,15 @@
 <li>监控所有的内部任务状态，并在任务运行失败的时候重新为任务申请资源以重启任务</li>
 </ol>
 </li>
-<li><p>NodeManager：NodeManager是每个节点上的资源和任务管理器，一方面，它会定期地向RM汇报本节点上的资源使用情况和各个Container的运行状态；另一方面，他接收并处理来自AM的Container启动和停止请求</p>
+<li><p>NodeManager：NodeManager是每个节点上的资源和任务管理器，一方面，它会定期地向RM汇报本节点上的资源使用情况和各个Container的运行状态；另一方面，他接收并处理来自AM的Container启动和停止使用请求</p>
 </li>
 <li><p>Container：Container是YARN中的资源抽象，封装了各种资源。一个应用程序会分配一个Container，这个应用程序只能使用Container中描述的资源。不同于MapReduce V1中槽位solt的资源封装，Container是一个动态资源的划分单位，更能充分利用资源。</p>
 </li>
 </ol>
-<h4 id="二十五-YARN的任务提交流程是怎样的？"><a href="#二十五-YARN的任务提交流程是怎样的？" class="headerlink" title="二十五 YARN的任务提交流程是怎样的？"></a>二十五 YARN的任务提交流程是怎样的？</h4><p>当JobClient向YARN提交一个应用程序后，YARN将分两个阶段运行这个应用程序：一是启动ApplicationMaster；二是由ApplicationMaster创建应用程序，为它申请资源，监控运行直到结束。具体步骤如下：</p>
+<blockquote>
+<p>可以把YARN中的ResourceManager比作一个工程公司，其中调度器比作财务部，负责财务（资源）的管理；应用程序管理器比作研发部，负责管理研发任务；ApplicationMaster比作研发部门的小组，但是不是事先存在的，有任务才产生；NodeManager比作研发小组中的组员；Container比作给的钱。<br>当一个研发任务被客户提交给公司，研发部跟财务部协商，打第一份钱来组成研发小组，研发小组成立，如果还有足够余钱（因为组成这个小组会花钱，比如配电脑什么的），就直接分配任务和钱给组员。否则就向财务部申请money，再分配给组员。在这个过程中，组员会向小组汇报任务进程，小组会向研发部汇报进程。</p>
+</blockquote>
+<h4 id="二十八-YARN的任务提交流程是怎样的？"><a href="#二十八-YARN的任务提交流程是怎样的？" class="headerlink" title="二十八 YARN的任务提交流程是怎样的？"></a>二十八 YARN的任务提交流程是怎样的？</h4><p>当JobClient向YARN提交一个应用程序后，YARN将分两个阶段运行这个应用程序：一是启动ApplicationMaster；二是由ApplicationMaster创建应用程序，为它申请资源，监控运行直到结束。具体步骤如下：</p>
 <ol>
 <li>用户向YARN提交一个应用程序，并指定ApplicationMaster程序、启动ApplicationMaster、用户程序</li>
 <li>RM为这个应用程序分配第一个Container，并与之对应的NM通讯，要求他在这个Container中启动应用程序ApplicationMaster</li>
@@ -598,7 +626,7 @@
 <li>各个任务向AM汇报自己的状态和进度，以便当任务失败时可以重启任务</li>
 <li>应用程序完成后，ApplicationMaster向ResourceManager注销并关闭自己</li>
 </ol>
-<h4 id="二十六-YARN的资源调度三种模型了解吗？"><a href="#二十六-YARN的资源调度三种模型了解吗？" class="headerlink" title="二十六 YARN的资源调度三种模型了解吗？"></a>二十六 YARN的资源调度三种模型了解吗？</h4><p>在YARN中有三种调度器可以选择：FIFO Scheduler、Capacity Scheduler、Fair Scheduler</p>
+<h4 id="二十九-YARN的资源调度三种模型了解吗？"><a href="#二十九-YARN的资源调度三种模型了解吗？" class="headerlink" title="二十九 YARN的资源调度三种模型了解吗？"></a>二十九 YARN的资源调度三种模型了解吗？</h4><p>在YARN中有三种调度器可以选择：FIFO Scheduler、Capacity Scheduler、Fair Scheduler</p>
 <p>Apache版本的hadoop默认使用的是Capacity Scheduler调度方式。CDH版本的默认使用的是Fair Scheduler调度方式</p>
 <p>FIFO Scheduler（先来先服务）：</p>
 <p>FIFO Scheduler把应用按提交的顺序排成一个队列，这是一个先进先出队列，在进行资源分配的时候，先给队列中最头上的应用分配资源，待最头上的应用需求满足后再给下一个分配</p>
@@ -607,8 +635,8 @@
 <p>对于Capacity调度器，有一个专门的队列用来运行小任务，但是为小任务专门设置一个队列会预先占用一定的集群资源，这就导致大任务的执行时间会落后于使用FIFO Scheduler调度器时的时间</p>
 <p>Fair Scheduler（公平调度器）：</p>
 <p>在Fair调度器中，我们不需要预先占用一定的系统资源，Fair调度器会为所有的job动态的调整系统资源</p>
-<p>比如：当第一个大job提交时，只有这一个job在运行，此时它获得了所有集群资源；当第二个小job提交后，Fair调度器会分配一般资源给这个小job，让这两个任务公平的共享集群资源</p>
-<p>需要注意的是，在Fair调度器中，第二个任务提交到获得资源会有一定延迟，因为它需要等待第一个任务释放占用的Container。小人物执行完成之后，也会释放自己占用的资源，大人物又获得了全部的系统资源。最终的效果就是Fair调度器即得到了高的资源利用率又能保证小人物及时完成。</p>
+<p>比如：当第一个大job提交时，只有这一个job在运行，此时它获得了所有集群资源；当第二个小job提交后，Fair调度器会分配一半资源给这个小job，让这两个任务公平的共享集群资源</p>
+<p>需要注意的是，在Fair调度器中，第二个任务从提交到获得资源会有一定延迟，因为它需要等待第一个任务释放占用的Container。小任务执行完成之后，也会释放自己占用的资源，大人物又获得了全部的系统资源。最终的效果就是Fair调度器即得到了高的资源利用率又能保证小任务及时完成。</p>
 
             </div>
 
@@ -621,7 +649,7 @@
         <li><strong>创建于:</strong> 2023-05-16 16:26:48</li>
         
             <li>
-                <strong>更新于:</strong> 2023-05-16 16:34:04
+                <strong>更新于:</strong> 2023-05-17 23:36:12
             </li>
         
         <li>

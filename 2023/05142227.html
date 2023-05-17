@@ -26,7 +26,7 @@
 <meta property="og:description" content="第6章 SQL快速掌握6.1 sql的运算模型 – 逐行运算模型逐行运算：select后的运算表达式，是对每一行独立运算 表：一个数据的集合（集合中每一行就是一条数据：记录） select：     对一条数据的运算逻辑     -- 常量 :&quot;ok&quot; ,10 ,8.9     -- 变量 : id , name ,  age,     -- 运算符表达式：  age+10,">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-14T14:56:31.000Z">
-<meta property="article:modified_time" content="2023-05-14T15:28:31.562Z">
+<meta property="article:modified_time" content="2023-05-16T14:50:51.002Z">
 <meta property="article:author" content="宣胤">
 <meta property="article:tag" content="hive">
 <meta name="twitter:card" content="summary">
@@ -327,8 +327,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-05-14 23:28:31</span>
-            <span class="mobile">2023-05-14 23:28</span>
+            <span class="desktop">2023-05-16 22:50:51</span>
+            <span class="mobile">2023-05-16 22:50</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -361,12 +361,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>586 字</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>2 分钟</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>4 分钟</span>
         </span>
     
     
@@ -423,8 +423,46 @@ having：
 <li>分组key</li>
 <li>聚合函数</li>
 </ol>
+<p><strong>select语句中非分组函数的字段必须声明在GORUP BY中	反之，GROUP BY中声明的字段可以不出现在select语句中</strong></p>
+<p><strong>分组key可以有多个，分组key越多，分出来的组也会越多</strong></p>
+<blockquote>
+<p><em><strong>分组聚合还可以采用 partition by</strong></em></p>
+</blockquote>
 <h4 id="6-3-sql运算模型–开窗运算（窗口分析运算模型）"><a href="#6-3-sql运算模型–开窗运算（窗口分析运算模型）" class="headerlink" title="6.3 sql运算模型–开窗运算（窗口分析运算模型）"></a>6.3 sql运算模型–开窗运算（窗口分析运算模型）</h4><p>– 可以用窗口分析函数：row_number() over() 来实现</p>
 <p>row_number() over(partition by sex order by salary desc) as rn</p>
+<h3 id="第7章-HQL查询语法详解"><a href="#第7章-HQL查询语法详解" class="headerlink" title="第7章 HQL查询语法详解"></a>第7章 HQL查询语法详解</h3><pre class=" language-sql"><code class="language-sql"><span class="token punctuation">[</span><span class="token keyword">WITH</span> CommonTableExpression <span class="token punctuation">(</span><span class="token punctuation">,</span> CommonTableExpression<span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">]</span>    <span class="token punctuation">(</span>Note: Only available
+ starting <span class="token keyword">with</span> Hive <span class="token number">0.13</span><span class="token punctuation">.</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token keyword">SELECT</span> <span class="token punctuation">[</span><span class="token keyword">ALL</span> <span class="token operator">|</span> <span class="token keyword">DISTINCT</span><span class="token punctuation">]</span> select_expr<span class="token punctuation">,</span> select_expr<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token keyword">FROM</span> table_reference
+  <span class="token punctuation">[</span><span class="token keyword">WHERE</span> where_condition<span class="token punctuation">]</span>
+  <span class="token punctuation">[</span><span class="token keyword">GROUP</span> <span class="token keyword">BY</span> col_list<span class="token punctuation">]</span>
+  <span class="token punctuation">[</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> col_list<span class="token punctuation">]</span>
+  <span class="token punctuation">[</span>CLUSTER <span class="token keyword">BY</span> col_list
+    <span class="token operator">|</span> <span class="token punctuation">[</span>DISTRIBUTE <span class="token keyword">BY</span> col_list<span class="token punctuation">]</span> <span class="token punctuation">[</span>SORT <span class="token keyword">BY</span> col_list<span class="token punctuation">]</span>
+  <span class="token punctuation">]</span>
+</code></pre>
+<h4 id="7-1-with…as…临时表语法"><a href="#7-1-with…as…临时表语法" class="headerlink" title="7.1 with…as…临时表语法"></a>7.1 with…as…临时表语法</h4><blockquote>
+<p>示例：</p>
+</blockquote>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">with</span> o <span class="token keyword">as</span> <span class="token punctuation">(</span>
+<span class="token keyword">select</span>
+id<span class="token punctuation">,</span>m<span class="token punctuation">,</span><span class="token function">sum</span><span class="token punctuation">(</span>sale<span class="token punctuation">)</span> <span class="token keyword">as</span> amt
+<span class="token keyword">from</span> t_sale
+<span class="token keyword">group</span> <span class="token keyword">by</span> id<span class="token punctuation">,</span>m
+<span class="token punctuation">)</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> o <span class="token keyword">where</span> o<span class="token punctuation">.</span>amt<span class="token operator">></span><span class="token number">80</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="7-2-排序"><a href="#7-2-排序" class="headerlink" title="7.2 排序"></a>7.2 排序</h4><h5 id="7-2-1-全局排序（Order-By）"><a href="#7-2-1-全局排序（Order-By）" class="headerlink" title="7.2.1 全局排序（Order By）"></a>7.2.1 全局排序（Order By）</h5><p>全局排序，强制只有一个reduce</p>
+<h5 id="7-2-2-Sort-By"><a href="#7-2-2-Sort-By" class="headerlink" title="7.2.2 Sort By"></a>7.2.2 Sort By</h5><p>每个task内部进行排序，对全局结果集来说不是排序</p>
+<p>要设置reduce个数：set mapreduce.job.reduces&#x3D;3;</p>
+<p>当设置的reduce为1时，结果与Order By一样</p>
+<h5 id="7-2-3-分桶排序1（Distribute-By-Sort-By）"><a href="#7-2-3-分桶排序1（Distribute-By-Sort-By）" class="headerlink" title="7.2.3 分桶排序1（Distribute By + Sort By）"></a>7.2.3 分桶排序1（Distribute By + Sort By）</h5><p>Distribute By：类似MR中partition，进行分区，可以结合sort by使用。<br>注意，Hive要求DISTRIBUTE BY语句要写在SORT BY语句之前。<br>对于distribute by进行测试，一定要分配多reduce进行处理，否则无法看到distribute by的效果。</p>
+<p>示例：先按照部门编号分区，再按照员工编号降序排序</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">set</span> mapreduce<span class="token punctuation">.</span>job<span class="token punctuation">.</span>reduces<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp distribute <span class="token keyword">by</span> 部门编号 sort <span class="token keyword">by</span> 员工编号 <span class="token keyword">desc</span><span class="token punctuation">;</span>
+</code></pre>
+<h5 id="7-2-4-分桶排序2（Cluster-By）"><a href="#7-2-4-分桶排序2（Cluster-By）" class="headerlink" title="7.2.4 分桶排序2（Cluster By）"></a>7.2.4 分桶排序2（Cluster By）</h5><p>当distribute by和sorts by字段相同时，可以使用cluster by代替</p>
+<p>cluster by除了具有distribute by的功能外还兼具sort by的功能。但是排序只能是升序排序，不能指定排序规则为ASC或者DESC。</p>
 
             </div>
 
@@ -437,7 +475,7 @@ having：
         <li><strong>创建于:</strong> 2023-05-14 22:56:31</li>
         
             <li>
-                <strong>更新于:</strong> 2023-05-14 23:28:31
+                <strong>更新于:</strong> 2023-05-16 22:50:51
             </li>
         
         <li>
@@ -555,7 +593,7 @@ having：
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">关于数据仓库hive知识的学习(2)</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC6%E7%AB%A0-SQL%E5%BF%AB%E9%80%9F%E6%8E%8C%E6%8F%A1"><span class="nav-number">1.</span> <span class="nav-text">第6章 SQL快速掌握</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC6%E7%AB%A0-SQL%E5%BF%AB%E9%80%9F%E6%8E%8C%E6%8F%A1"><span class="nav-number">1.</span> <span class="nav-text">第6章 SQL快速掌握</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC7%E7%AB%A0-HQL%E6%9F%A5%E8%AF%A2%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">第7章 HQL查询语法详解</span></a></li></ol>
 
     </div>
 </div>
