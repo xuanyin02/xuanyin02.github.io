@@ -20,7 +20,7 @@
     
         <meta name="description" content="这一篇文章我要分享的是flink实时计算框架，我先解释一下flink的基本概念：一个分布式的、有状态的实时流式处理系统（编程框架）。那么就会有人问：之前不是学习过spark streaming吗，也能做实时流式处理，为什么还要学习flink？其实答案很简单：flink比spark streaming更实时！spark streaming的流式处理是基于微批处理的思想，需要隔一点时间才会去处理，fl">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于实时计算框架flink知识的学习">
+<meta property="og:title" content="关于实时计算框架flink知识的学习(1)">
 <meta property="og:url" content="http://xuanyin02.github.io/2023/042717719.html">
 <meta property="og:site_name" content="宣胤星球">
 <meta property="og:description" content="这一篇文章我要分享的是flink实时计算框架，我先解释一下flink的基本概念：一个分布式的、有状态的实时流式处理系统（编程框架）。那么就会有人问：之前不是学习过spark streaming吗，也能做实时流式处理，为什么还要学习flink？其实答案很简单：flink比spark streaming更实时！spark streaming的流式处理是基于微批处理的思想，需要隔一点时间才会去处理，fl">
@@ -30,8 +30,11 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230505172208248.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230514180529758.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230514185841763.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230525120857757.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230525174137091.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230525174307272.png">
 <meta property="article:published_time" content="2023-04-27T08:27:07.000Z">
-<meta property="article:modified_time" content="2023-05-14T11:09:04.858Z">
+<meta property="article:modified_time" content="2023-05-25T10:16:09.496Z">
 <meta property="article:author" content="宣胤">
 <meta property="article:tag" content="flink">
 <meta name="twitter:card" content="summary">
@@ -47,7 +50,7 @@
     
     <title>
         
-            关于实时计算框架flink知识的学习 -
+            关于实时计算框架flink知识的学习(1) -
         
         宣胤星球
     </title>
@@ -309,7 +312,7 @@
             
             
                 <div class="article-title">
-                    <h1 class="article-title-regular">关于实时计算框架flink知识的学习</h1>
+                    <h1 class="article-title-regular">关于实时计算框架flink知识的学习(1)</h1>
                 </div>
             
                 
@@ -338,8 +341,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-05-14 19:09:04</span>
-            <span class="mobile">2023-05-14 19:09</span>
+            <span class="desktop">2023-05-25 18:16:09</span>
+            <span class="mobile">2023-05-25 18:16</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -372,12 +375,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.9k 字</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>4k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>7 分钟</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>16 分钟</span>
         </span>
     
     
@@ -568,6 +571,219 @@ StreamExecutionEnvironment env <span class="token operator">=</span> StreamExecu
     <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 </code></pre>
+<h4 id="2-6-基本transformation算子"><a href="#2-6-基本transformation算子" class="headerlink" title="2.6 基本transformation算子"></a>2.6 基本transformation算子</h4><h5 id="2-6-1-映射算子"><a href="#2-6-1-映射算子" class="headerlink" title="2.6.1 映射算子"></a>2.6.1 映射算子</h5><ul>
+<li>map映射：DataStream.map( new MapFunction(…){})</li>
+<li>flatMap扁平化映射：DataStream.flatMap( new FlatMapFunction(…){})</li>
+</ul>
+<blockquote>
+<p>如果是调用flatMap方法时传入Lambda表达式，需要在调用flatMap方法后，在调用returns方法指定返回的数据的类型。不然Flink无法自动推断出返回的数据类型，会出现异常。</p>
+<p>比如返回一个元组：<br>return Types.TUPLE(Types.String,Types.INT)</p>
+</blockquote>
+<ul>
+<li>project 投影：DataStream.project(元组索引)</li>
+</ul>
+<blockquote>
+<p>该算子只能对Tuple类型数据使用，project方法的功能类似sql中的”select”字段；该方法只有Java的API有，Scala的API没有此方法。</p>
+<p>例如：DataStream.project(0,2)</p>
+</blockquote>
+<h5 id="2-6-2-过滤算子"><a href="#2-6-2-过滤算子" class="headerlink" title="2.6.2 过滤算子"></a>2.6.2 过滤算子</h5><p>filter过滤：DataStream.filter( new FilterFunction(…){})</p>
+<h5 id="2-6-3-分组算子"><a href="#2-6-3-分组算子" class="headerlink" title="2.6.3 分组算子"></a>2.6.3 分组算子</h5><p>keyBy按key分组：DataStream.keyBy()</p>
+<p>&#x2F;&#x2F;按照 Tuple2 中的第 0 个位置进行分组，分组后得到 KeyedStream</p>
+<pre class=" language-java"><code class="language-java">KeyedStream<span class="token operator">&lt;</span>Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token operator">></span><span class="token punctuation">,</span> Tuple<span class="token operator">></span> keyed <span class="token operator">=</span> wordAndOne<span class="token punctuation">.</span><span class="token function">keyBy</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&#x2F;&#x2F;按照 Bean 中的属性名 word 进行分组</p>
+<pre class=" language-java"><code class="language-java">KeyedStream<span class="token operator">&lt;</span>CountBean<span class="token punctuation">,</span> Tuple<span class="token operator">></span> keyed <span class="token operator">=</span> wordAndOne<span class="token punctuation">.</span><span class="token function">keyBy</span><span class="token punctuation">(</span><span class="token string">"word"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h5 id="2-6-4-滚动聚合算子"><a href="#2-6-4-滚动聚合算子" class="headerlink" title="2.6.4 滚动聚合算子"></a>2.6.4 滚动聚合算子</h5><blockquote>
+<p>此处所说的滚动聚合算子，是多个聚合算子的统称，有sum、min、minBy、max、maxBy；<by>这些算子的底层逻辑都是维护一个聚合值，并使用每条流入的数据对聚合值进行滚动更新；<by>这些算子都只能在KeyedStream上调用（就是必须keyBy之后调用）。</by></by></p>
+</blockquote>
+<ul>
+<li>sum：该算子实现实时滚动相加的功能，即新输入的数据和历史数据进行相加</li>
+<li>min、minBy：这两个算子都是求最小值<br>min和minBy的区别在于：<br>min的返回值，最小值字段以外，其他字段是第一条输入数据的值；<br>minBy的返回值，就是最小值字段所在的那条数据。</li>
+<li>max、maxBy同理</li>
+<li>reduce规约：它的滚动聚合逻辑没有写死，而是由用户通过ReduceFunction来传入</li>
+<li>fold折叠：1.12版本已移除</li>
+</ul>
+<h4 id="2-7-基本sink算子"><a href="#2-7-基本sink算子" class="headerlink" title="2.7 基本sink算子"></a>2.7 基本sink算子</h4><p>sink算子是将计算结果最终输出的算子；不同的sink算子可以将数据输出到不同的目标，如写入到文件、输出到指定的网络端口、消息中间件、外部的文件系统或者是打印到控制台。</p>
+<h5 id="2-7-1-打印输出（略）"><a href="#2-7-1-打印输出（略）" class="headerlink" title="2.7.1 打印输出（略）"></a>2.7.1 打印输出（略）</h5><h5 id="2-7-2-文件sink"><a href="#2-7-2-文件sink" class="headerlink" title="2.7.2 文件sink"></a>2.7.2 文件sink</h5><ul>
+<li>第一种方法：result.wirteAs[x] (存储路径)–x可以是Text、Csv。<strong>但是此种方法已被移除</strong></li>
+<li>第二种方法：result.writeUsingOutputFormat( new TextOutputFormat&lt;&gt;(new Path( path )))  以指定的格式输出</li>
+<li>第三种方法：result.writeToSocket( ip地址, 端口号, new SimpleStrignSchema())  输出到网络端口</li>
+</ul>
+<h4 id="2-8-扩展sink算子"><a href="#2-8-扩展sink算子" class="headerlink" title="2.8 扩展sink算子"></a>2.8 扩展sink算子</h4><h5 id="2-8-1-StreamFileSink"><a href="#2-8-1-StreamFileSink" class="headerlink" title="2.8.1 StreamFileSink"></a>2.8.1 StreamFileSink</h5><p>该Sink不但可以<strong>将数据写入到各种文件系统</strong>，而且<strong>整合了checkpoint机制来保证Exactly Once语义</strong>，还可以<strong>对文件进行分桶存储</strong>，还支持<strong>以列式存储的格式写入</strong>，功能更强大。</p>
+<p>StreamFileSink中输出的文件，其生命周期会经历3种状态：</p>
+<ol>
+<li><p>in-progress Files</p>
+</li>
+<li><p>Pending Files</p>
+</li>
+<li><p>Finshed Files</p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230525120857757.png" alt="image-20230525120857757"><figcaption>image-20230525120857757</figcaption></figure></p>
+</li>
+</ol>
+<p><em><strong>代码模块要点</strong></em>：通过DefaultRollingPolicy这个工具类，指定文件滚动生成的策略。这里设置的文件滚动生成策略有两个，一个是距离上一次生成文件时间超过30秒，另一个是文件大小达到100mb。这两个条件只要满足其中一个即可滚动生成文件。然后StreamingFileSink.forRowFormat方法将文件输出目录、文件写入的编码传入。再调用withRollingPolicy关联上面的文件滚动生成策略，接着调用build方法构建好StreamingFileSink，最后将其作为参数传入到addSink方法中。</p>
+<p>列式存储文件输出代码结构剖析</p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230525174137091.png" alt="image-20230525174137091"><figcaption>image-20230525174137091</figcaption></figure></p>
+<p>GenericRecord 与 Schema 的关系</p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230525174307272.png" alt="image-20230525174307272"><figcaption>image-20230525174307272</figcaption></figure></p>
+<h6 id="2-8-1-1-Row格式文件输出代码案例"><a href="#2-8-1-1-Row格式文件输出代码案例" class="headerlink" title="2.8.1.1 Row格式文件输出代码案例"></a>2.8.1.1 Row格式文件输出代码案例</h6><pre class=" language-java"><code class="language-java">DataStream<span class="token operator">&lt;</span>String<span class="token operator">></span> dataSteam <span class="token operator">=</span> …
+<span class="token comment" spellcheck="true">//构建文件滚动生成的策略</span>
+DefaultRollingPolicy<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> rollingPolicy <span class="token operator">=</span> DefaultRollingPolicy<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">withRolloverInterval</span><span class="token punctuation">(</span><span class="token number">30</span> <span class="token operator">*</span> 1000L<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//30 秒滚动生成一个文件</span>
+    <span class="token punctuation">.</span><span class="token function">withMaxPartSize</span><span class="token punctuation">(</span>1024L <span class="token operator">*</span> 1024L <span class="token operator">*</span> 100L<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//当文件达到 100m 滚动生成一个文件</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//创建 StreamingFileSink，数据以行格式写入</span>
+StreamingFileSink<span class="token operator">&lt;</span>String<span class="token operator">></span> sink <span class="token operator">=</span> StreamingFileSink<span class="token punctuation">.</span><span class="token function">forRowFormat</span><span class="token punctuation">(</span>
+    <span class="token keyword">new</span> <span class="token class-name">Path</span><span class="token punctuation">(</span>outputPath<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//指的文件存储目录</span>
+    <span class="token keyword">new</span> <span class="token class-name">SimpleStringEncoder</span><span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//指的文件的编码</span>
+    <span class="token punctuation">.</span><span class="token function">withRollingPolicy</span><span class="token punctuation">(</span>rollingPolicy<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//传入文件滚动生成策略</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//调用 DataStream 的 addSink 添加该 Sink</span>
+dataSteam<span class="token punctuation">.</span><span class="token function">addSink</span><span class="token punctuation">(</span>sink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h6 id="2-8-1-2-Bulk列式存储文件输出代码实例1"><a href="#2-8-1-2-Bulk列式存储文件输出代码实例1" class="headerlink" title="2.8.1.2 Bulk列式存储文件输出代码实例1"></a>2.8.1.2 Bulk列式存储文件输出代码实例1</h6><p>手动构建Avro的Schema对象，得到ParquetWriterFactory的方式</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+* 方式一：
+* 核心逻辑：
+* - 构造一个 schema
+* - 利用 schema 构造一个 parquetWriterFactory
+* - 利用 parquetWriterFactory 构造一个 FileSink 算子
+* - 将原始数据转成 GenericRecord 流，输出到 FileSink 算子
+*/</span>
+<span class="token comment" spellcheck="true">// 1. 先定义 GenericRecord 的数据模式</span>
+Schema schema <span class="token operator">=</span> SchemaBuilder<span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">record</span><span class="token punctuation">(</span><span class="token string">"DataRecord"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">namespace</span><span class="token punctuation">(</span><span class="token string">"cn.doitedu.flink.avro.schema"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">doc</span><span class="token punctuation">(</span><span class="token string">"用户行为事件数据模式"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">fields</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">requiredInt</span><span class="token punctuation">(</span><span class="token string">"gid"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">requiredLong</span><span class="token punctuation">(</span><span class="token string">"ts"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">requiredString</span><span class="token punctuation">(</span><span class="token string">"eventId"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">requiredString</span><span class="token punctuation">(</span><span class="token string">"sessionId"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">name</span><span class="token punctuation">(</span><span class="token string">"eventInfo"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">type</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">type</span><span class="token punctuation">(</span><span class="token string">"string"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">noDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">endRecord</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+<span class="token comment" spellcheck="true">// 2. 通过定义好的 schema 模式，来得到一个 parquetWriter</span>
+ParquetWriterFactory<span class="token operator">&lt;</span>GenericRecord<span class="token operator">></span> writerFactory <span class="token operator">=</span> ParquetAvroWriters<span class="token punctuation">.</span><span class="token function">forGenericRecord</span><span class="token punctuation">(</span>schema<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 3. 利用生成好的 parquetWriter，来构造一个 支持列式输出 parquet 文件的 sink 算子</span>
+FileSink<span class="token operator">&lt;</span>GenericRecord<span class="token operator">></span> bulksink <span class="token operator">=</span> FileSink<span class="token punctuation">.</span><span class="token function">forBulkFormat</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Path</span><span class="token punctuation">(</span><span class="token string">"d:/datasink/"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> writerFactory<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">withBucketAssigner</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DateTimeBucketAssigner</span><span class="token operator">&lt;</span>GenericRecord<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"yyyy-MM-dd--HH"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">withRollingPolicy</span><span class="token punctuation">(</span>OnCheckpointRollingPolicy<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">withOutputFileConfig</span><span class="token punctuation">(</span>OutputFileConfig<span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withPartPrefix</span><span class="token punctuation">(</span><span class="token string">"doit_edu"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withPartSuffix</span><span class="token punctuation">(</span><span class="token string">".parquet"</span>	<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 4. 将自定义 javabean 的流，转成 上述 sink 算子中 parquetWriter 所需要的 GenericRecord 流</span>
+SingleOutputStreamOperator<span class="token operator">&lt;</span>GenericRecord<span class="token operator">></span> recordStream <span class="token operator">=</span> streamSource
+    <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span>MapFunction<span class="token operator">&lt;</span>EventLog<span class="token punctuation">,</span> GenericRecord<span class="token operator">></span><span class="token punctuation">)</span> eventLog <span class="token operator">-</span><span class="token operator">></span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 构造一个 Record 对象</span>
+        GenericData<span class="token punctuation">.</span>Record record <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GenericData<span class="token punctuation">.</span>Record</span><span class="token punctuation">(</span>schema<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 将数据填入 record</span>
+        record<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"gid"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> eventLog<span class="token punctuation">.</span><span class="token function">getGuid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        record<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"eventId"</span><span class="token punctuation">,</span> eventLog<span class="token punctuation">.</span><span class="token function">getEventId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        record<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"ts"</span><span class="token punctuation">,</span> eventLog<span class="token punctuation">.</span><span class="token function">getTimeStamp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        record<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"sessionId"</span><span class="token punctuation">,</span> eventLog<span class="token punctuation">.</span><span class="token function">getSessionId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        record<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"eventInfo"</span><span class="token punctuation">,</span> eventLog<span class="token punctuation">.</span><span class="token function">getEventInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> record<span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">returns</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">GenericRecordAvroTypeInfo</span><span class="token punctuation">(</span>schema<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 由于 avro 的相关类、对象需要用 avro</span>
+的序列化器，所以需要显式指定 AvroTypeInfo 来提供 AvroSerializer
+
+<span class="token comment" spellcheck="true">// 5. 输出数据</span>
+recordStream<span class="token punctuation">.</span><span class="token function">sinkTo</span><span class="token punctuation">(</span>bulksink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h6 id="2-8-1-3-Bulk列式存储文件输出代码实例2"><a href="#2-8-1-3-Bulk列式存储文件输出代码实例2" class="headerlink" title="2.8.1.3 Bulk列式存储文件输出代码实例2"></a>2.8.1.3 Bulk列式存储文件输出代码实例2</h6><p>编写 avsc 配置文件，并利用插件生成“特定 JavaBean”，得到 ParquetWriterFactory 的方式</p>
+<p>avsc配置文件：得到“特定 JavaBean”–AvroEventLogBean</p>
+<pre><code>&#123;&quot;namespace&quot;: &quot;cn.doitedu.flink.avro.schema&quot;,
+&quot;type&quot;: &quot;record&quot;,
+&quot;name&quot;: &quot;AvroEventLog&quot;,
+&quot;fields&quot;: [
+    &#123;&quot;name&quot;: &quot;guid&quot;, &quot;type&quot;: &quot;long&quot;&#125;,
+    &#123;&quot;name&quot;: &quot;sessionId&quot;, &quot;type&quot;: &quot;string&quot;&#125;,
+    &#123;&quot;name&quot;: &quot;eventId&quot;, &quot;type&quot;: &quot;string&quot;&#125;,
+    &#123;&quot;name&quot;: &quot;timeStamp&quot;, &quot;type&quot;: &quot;long&quot;&#125;,
+    &#123;&quot;name&quot;: &quot;eventInfo&quot;, &quot;type&quot;: &#123; &quot;type&quot;:&quot;map&quot;,&quot;values&quot;: &quot;string&quot;&#125; &#125;
+    ]
+&#125;
+</code></pre>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+* 方式二：
+* 核心逻辑：
+* - 编写一个 avsc 文本文件（json），来描述数据模式
+* - 添加 maven 代码生成器插件，来针对上述的 avsc 生成 avro 特定格式的 JavaBean 类
+* - 利用代码生成器生成的 JavaBean，来构造一个 parquetWriterFactory
+* - 利用 parquetWriterFactory 构造一个 FileSink 算子
+* - 将原始数据流 转成 特定格式 JavaBean 流，输出到 FileSink 算子
+*/</span>
+
+<span class="token comment" spellcheck="true">// 1. 先定义avsc文件放在resources文件夹中，并用maven的插件，编译一下，生成特定格式的JavaBean ：AvroEventLog</span>
+<span class="token comment" spellcheck="true">// 这种根据 avsc 生成的 JavaBean 类，自身就已经带有了 Schema 对象</span>
+<span class="token comment" spellcheck="true">// AvroEventLog avroEventLog = new AvroEventLog();</span>
+<span class="token comment" spellcheck="true">// Schema schema = avroEventLog.getSchema();</span>
+
+<span class="token comment" spellcheck="true">// 2. 通过自动生成 AvroEventLog 类，来得到一个 parquetWriter</span>
+ParquetWriterFactory<span class="token operator">&lt;</span>AvroEventLog<span class="token operator">></span> parquetWriterFactory <span class="token operator">=</span>
+ParquetAvroWriters<span class="token punctuation">.</span><span class="token function">forSpecificRecord</span><span class="token punctuation">(</span>AvroEventLog<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 3. 利用生成好的 parquetWriter，来构造一个 支持列式输出 parquet 文件的 sink 算子</span>
+FileSink<span class="token operator">&lt;</span>AvroEventLog<span class="token operator">></span> bulkSink <span class="token operator">=</span> FileSink<span class="token punctuation">.</span><span class="token function">forBulkFormat</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Path</span><span class="token punctuation">(</span><span class="token string">"d:/datasink2/"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+parquetWriterFactory<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">withBucketAssigner</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DateTimeBucketAssigner</span><span class="token operator">&lt;</span>AvroEventLog<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"yyyy-MM-dd--HH"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">withRollingPolicy</span><span class="token punctuation">(</span>OnCheckpointRollingPolicy<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>	<span class="token punctuation">.</span><span class="token function">withOutputFileConfig</span><span class="token punctuation">(</span>OutputFileConfig<span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withPartPrefix</span><span class="token punctuation">(</span><span class="token string">"doit_edu"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withPartSuffix</span><span class="token punctuation">(</span><span class="token string">".parquet"</span>	<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 4. 将自定义 javabean 的 EventLog 流，转成 上述 sink 算子中 parquetWriter 所需要的 AvroEventLog 流</span>
+SingleOutputStreamOperator<span class="token operator">&lt;</span>AvroEventLog<span class="token operator">></span> avroEventLogStream <span class="token operator">=</span> streamSource<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">new</span>
+<span class="token class-name">MapFunction</span><span class="token operator">&lt;</span>EventLog<span class="token punctuation">,</span> AvroEventLog<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> AvroEventLog <span class="token function">map</span><span class="token punctuation">(</span>EventLog eventLog<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        HashMap<span class="token operator">&lt;</span>CharSequence<span class="token punctuation">,</span> CharSequence<span class="token operator">></span> eventInfo1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 进行 hashmap&lt;charsequenct,charsequence>类型的数据转移</span>
+        Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> eventInfo2 <span class="token operator">=</span> eventLog<span class="token punctuation">.</span><span class="token function">getEventInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Set<span class="token operator">&lt;</span>Map<span class="token punctuation">.</span>Entry<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">>></span> entries <span class="token operator">=</span> eventInfo2<span class="token punctuation">.</span><span class="token function">entrySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>Map<span class="token punctuation">.</span>Entry<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> entry <span class="token operator">:</span> entries<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            eventInfo1<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>entry<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> entry<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">AvroEventLog</span><span class="token punctuation">(</span>eventLog<span class="token punctuation">.</span><span class="token function">getGuid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> eventLog<span class="token punctuation">.</span><span class="token function">getSessionId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        eventLog<span class="token punctuation">.</span><span class="token function">getEventId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> eventLog<span class="token punctuation">.</span><span class="token function">getTimeStamp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> eventInfo1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 5. 输出数据</span>
+avroEventLogStream<span class="token punctuation">.</span><span class="token function">sinkTo</span><span class="token punctuation">(</span>bulkSink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h6 id="2-8-1-4-Bulk列式存储文件输出代码实例3"><a href="#2-8-1-4-Bulk列式存储文件输出代码实例3" class="headerlink" title="2.8.1.4 Bulk列式存储文件输出代码实例3"></a>2.8.1.4 Bulk列式存储文件输出代码实例3</h6><p>直接利用普通JavaBean，利用工具本身的反射机制，得到ParquetWriterFactory的方式</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+* 方式三：
+* 核心逻辑：
+* - 利用自己的 JavaBean 类，来构造一个 parquetWriterFactory
+* - 利用 parquetWriterFactory 构造一个 FileSink 算子
+* - 将原始数据流，输出到 FileSink 算子
+*/</span>
+
+<span class="token comment" spellcheck="true">// 1. 通过自己的 JavaBean 类，来得到一个 parquetWriter</span>
+ParquetWriterFactory<span class="token operator">&lt;</span>EventLog<span class="token operator">></span> parquetWriterFactory <span class="token operator">=</span> ParquetAvroWriters<span class="token punctuation">.</span><span class="token function">forReflectRecord</span><span class="token punctuation">(</span>EventLog<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 2. 利用生成好的 parquetWriter，来构造一个 支持列式输出 parquet 文件的 sink 算子</span>
+FileSink<span class="token operator">&lt;</span>EventLog<span class="token operator">></span> bulkSink <span class="token operator">=</span> FileSink<span class="token punctuation">.</span><span class="token function">forBulkFormat</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Path</span><span class="token punctuation">(</span><span class="token string">"d:/datasink3/"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>parquetWriterFactory<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">withBucketAssigner</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DateTimeBucketAssigner</span><span class="token operator">&lt;</span>EventLog<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"yyyy-MM-dd--HH"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">withRollingPolicy</span><span class="token punctuation">(</span>OnCheckpointRollingPolicy<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">withOutputFileConfig</span><span class="token punctuation">(</span>OutputFileConfig<span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withPartPrefix</span><span class="token punctuation">(</span><span class="token string">"doit_edu"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withPartSuffix</span><span class="token punctuation">(</span><span class="token string">".parquet"</span>	<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 3. 输出数据</span>
+streamSource<span class="token punctuation">.</span><span class="token function">sinkTo</span><span class="token punctuation">(</span>bulkSink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 
             </div>
 
@@ -575,12 +791,12 @@ StreamExecutionEnvironment env <span class="token operator">=</span> StreamExecu
                 <div class="post-copyright-info">
                     <div class="article-copyright-info-container">
     <ul>
-        <li><strong>标题:</strong> 关于实时计算框架flink知识的学习</li>
+        <li><strong>标题:</strong> 关于实时计算框架flink知识的学习(1)</li>
         <li><strong>作者:</strong> 宣胤</li>
         <li><strong>创建于:</strong> 2023-04-27 16:27:07</li>
         
             <li>
-                <strong>更新于:</strong> 2023-05-14 19:09:04
+                <strong>更新于:</strong> 2023-05-25 18:16:09
             </li>
         
         <li>
@@ -697,8 +913,8 @@ StreamExecutionEnvironment env <span class="token operator">=</span> StreamExecu
                 <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
-        <div class="page-title">关于实时计算框架flink知识的学习</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BF%AB%E9%80%9F%E8%AE%A4%E8%AF%86flink"><span class="nav-number">1.</span> <span class="nav-text">1 快速认识flink</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-flink%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 flink基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-flink%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9E%B6%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 flink的运行架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-flink%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 flink的特性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-flink%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">2 flink编程基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-flink%E7%9A%84DataStream%E6%8A%BD%E8%B1%A1"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 flink的DataStream抽象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-flink%E7%BC%96%E7%A8%8B%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 flink编程模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-flink%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%B9%B6%E8%A1%8C%E6%A6%82%E5%BF%B5"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 flink程序的并行概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-flink%E7%BC%96%E7%A8%8B%E5%85%A5%E5%8F%A3"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 flink编程入口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-%E5%9F%BA%E6%9C%ACsource%E7%AE%97%E5%AD%90"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 基本source算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9Connector-Source"><span class="nav-number">2.5.1.</span> <span class="nav-text">第三方Connector Source</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89Source"><span class="nav-number">2.5.2.</span> <span class="nav-text">自定义Source</span></a></li></ol></li></ol></li></ol>
+        <div class="page-title">关于实时计算框架flink知识的学习(1)</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BF%AB%E9%80%9F%E8%AE%A4%E8%AF%86flink"><span class="nav-number">1.</span> <span class="nav-text">1 快速认识flink</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-flink%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 flink基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-flink%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9E%B6%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 flink的运行架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-flink%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 flink的特性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-flink%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">2 flink编程基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-flink%E7%9A%84DataStream%E6%8A%BD%E8%B1%A1"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 flink的DataStream抽象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-flink%E7%BC%96%E7%A8%8B%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 flink编程模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-flink%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%B9%B6%E8%A1%8C%E6%A6%82%E5%BF%B5"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 flink程序的并行概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-flink%E7%BC%96%E7%A8%8B%E5%85%A5%E5%8F%A3"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 flink编程入口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-%E5%9F%BA%E6%9C%ACsource%E7%AE%97%E5%AD%90"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 基本source算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9Connector-Source"><span class="nav-number">2.5.1.</span> <span class="nav-text">第三方Connector Source</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89Source"><span class="nav-number">2.5.2.</span> <span class="nav-text">自定义Source</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-%E5%9F%BA%E6%9C%ACtransformation%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 基本transformation算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-1-%E6%98%A0%E5%B0%84%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.1.</span> <span class="nav-text">2.6.1 映射算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-2-%E8%BF%87%E6%BB%A4%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.2.</span> <span class="nav-text">2.6.2 过滤算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-3-%E5%88%86%E7%BB%84%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.3.</span> <span class="nav-text">2.6.3 分组算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-4-%E6%BB%9A%E5%8A%A8%E8%81%9A%E5%90%88%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.4.</span> <span class="nav-text">2.6.4 滚动聚合算子</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-%E5%9F%BA%E6%9C%ACsink%E7%AE%97%E5%AD%90"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 基本sink算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-7-1-%E6%89%93%E5%8D%B0%E8%BE%93%E5%87%BA%EF%BC%88%E7%95%A5%EF%BC%89"><span class="nav-number">2.7.1.</span> <span class="nav-text">2.7.1 打印输出（略）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-7-2-%E6%96%87%E4%BB%B6sink"><span class="nav-number">2.7.2.</span> <span class="nav-text">2.7.2 文件sink</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-%E6%89%A9%E5%B1%95sink%E7%AE%97%E5%AD%90"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 扩展sink算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-8-1-StreamFileSink"><span class="nav-number">2.8.1.</span> <span class="nav-text">2.8.1 StreamFileSink</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-8-1-1-Row%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81%E6%A1%88%E4%BE%8B"><span class="nav-number">2.8.1.1.</span> <span class="nav-text">2.8.1.1 Row格式文件输出代码案例</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-8-1-2-Bulk%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81%E5%AE%9E%E4%BE%8B1"><span class="nav-number">2.8.1.2.</span> <span class="nav-text">2.8.1.2 Bulk列式存储文件输出代码实例1</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-8-1-3-Bulk%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81%E5%AE%9E%E4%BE%8B2"><span class="nav-number">2.8.1.3.</span> <span class="nav-text">2.8.1.3 Bulk列式存储文件输出代码实例2</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-8-1-4-Bulk%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81%E5%AE%9E%E4%BE%8B3"><span class="nav-number">2.8.1.4.</span> <span class="nav-text">2.8.1.4 Bulk列式存储文件输出代码实例3</span></a></li></ol></li></ol></li></ol></li></ol>
 
     </div>
 </div>
