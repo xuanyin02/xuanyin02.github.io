@@ -33,8 +33,12 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230525120857757.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230525174137091.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230525174307272.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230527183522506.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230527183617257.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230527183705722.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230527184539484.png">
 <meta property="article:published_time" content="2023-04-27T08:27:07.000Z">
-<meta property="article:modified_time" content="2023-05-25T10:16:09.496Z">
+<meta property="article:modified_time" content="2023-05-27T10:59:13.956Z">
 <meta property="article:author" content="宣胤">
 <meta property="article:tag" content="flink">
 <meta name="twitter:card" content="summary">
@@ -341,8 +345,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-05-25 18:16:09</span>
-            <span class="mobile">2023-05-25 18:16</span>
+            <span class="desktop">2023-05-27 18:59:13</span>
+            <span class="mobile">2023-05-27 18:59</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -375,12 +379,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>4k 字</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>6.6k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>16 分钟</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>27 分钟</span>
         </span>
     
     
@@ -519,7 +523,7 @@ StreamExecutionEnvironment env <span class="token operator">=</span> StreamExecu
 <p>在实际生产环境中，为了保证flink可以高效读取数据源中的数据，通常是跟一些分布式消息中间件结合使用，例如Kafka。Flink和Kafka整合可以高效的读取数据，并且可以保证Exactly Once（精确一次性语义）</p>
 <h5 id="第三方Connector-Source"><a href="#第三方Connector-Source" class="headerlink" title="第三方Connector Source"></a>第三方Connector Source</h5><p>以 Kafka Source为例：首先引入依赖：flink-connector-kafka_2.12</p>
 <blockquote>
-<p>代码示例：</p>
+<p>示例代码：</p>
 </blockquote>
 <pre class=" language-java"><code class="language-java">KafkaSource<span class="token operator">&lt;</span>String<span class="token operator">></span> kafkaSource <span class="token operator">=</span> KafkaSource<span class="token punctuation">.</span>&lt;String<span class="token operator">></span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
                 <span class="token punctuation">.</span><span class="token function">setTopics</span><span class="token punctuation">(</span><span class="token string">"first"</span><span class="token punctuation">)</span>	<span class="token comment" spellcheck="true">//设置主题</span>
@@ -549,7 +553,7 @@ StreamExecutionEnvironment env <span class="token operator">=</span> StreamExecu
 <p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230514185841763.png" alt="image-20230514185841763"><figcaption>image-20230514185841763</figcaption></figure></p>
 <h5 id="自定义Source"><a href="#自定义Source" class="headerlink" title="自定义Source"></a>自定义Source</h5><p>本质上就是定义一个类，实现SourceFunction或继承RichParallelSourceFunction，实现run方法和cancel方法</p>
 <blockquote>
-<p>代码示例：</p>
+<p>示例代码：</p>
 </blockquote>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyParallelSource</span> <span class="token keyword">extends</span> <span class="token class-name">RichParallelSourceFunction</span><span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token keyword">private</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//定义一个 int 类型的变量，从 1 开始</span>
@@ -784,6 +788,333 @@ FileSink<span class="token operator">&lt;</span>EventLog<span class="token opera
 <span class="token comment" spellcheck="true">// 3. 输出数据</span>
 streamSource<span class="token punctuation">.</span><span class="token function">sinkTo</span><span class="token punctuation">(</span>bulkSink<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
+<h5 id="2-8-2-KafkaSink"><a href="#2-8-2-KafkaSink" class="headerlink" title="2.8.2 KafkaSink"></a>2.8.2 KafkaSink</h5><p>核心类</p>
+<ul>
+<li>KafkaStringSerializationSchema – 反序列化</li>
+<li>FlinkKafkaProducer – 生产者（即sink）</li>
+</ul>
+<blockquote>
+<p>示例代码：</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 读数据，写入 kafka</span>
+DataStreamSource<span class="token operator">&lt;</span>String<span class="token operator">></span> source <span class="token operator">=</span> env<span class="token punctuation">.</span><span class="token function">socketTextStream</span><span class="token punctuation">(</span><span class="token string">"localhost"</span><span class="token punctuation">,</span> <span class="token number">9099</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+KafkaSink<span class="token operator">&lt;</span>String<span class="token operator">></span> kafkaSink <span class="token operator">=</span> KafkaSink<span class="token punctuation">.</span>&lt;String<span class="token operator">></span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">setBootstrapServers</span><span class="token punctuation">(</span><span class="token string">"doit01:9092,doit02:9092,doit03:9092"</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">setRecordSerializer</span><span class="token punctuation">(</span>
+    KafkaRecordSerializationSchema<span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">setTopic</span><span class="token punctuation">(</span><span class="token string">"topic-name"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">setValueSerializationSchema</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SimpleStringSchema</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">setDeliverGuarantee</span><span class="token punctuation">(</span>DeliveryGuarantee<span class="token punctuation">.</span>AT_LEAST_ONCE<span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">setTransactionalIdPrefix</span><span class="token punctuation">(</span><span class="token string">"doitedu-"</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+source<span class="token punctuation">.</span><span class="token function">sinkTo</span><span class="token punctuation">(</span>kafkaSink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p>KafkaSink是能结合Flink的Checkpoint机制，来支持端到端精确一次语义的（底层是利用了kafka producer的事务机制）</p>
+</blockquote>
+<h5 id="2-8-3-JdbcSink"><a href="#2-8-3-JdbcSink" class="headerlink" title="2.8.3 JdbcSink"></a>2.8.3 JdbcSink</h5><blockquote>
+<p>JdbcSink也是能支持端到端精确一次语义的</p>
+</blockquote>
+<blockquote>
+<p>示例代码：</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java">SinkFunction<span class="token operator">&lt;</span>Student<span class="token operator">></span> exactlyOnceSink <span class="token operator">=</span> JdbcSink<span class="token punctuation">.</span><span class="token function">exactlyOnceSink</span><span class="token punctuation">(</span>
+    <span class="token string">"insert into flink_stu values (?,?,?,?) on duplicate key 	update name=?,gender=?,score=? "</span><span class="token punctuation">,</span>
+    <span class="token punctuation">(</span>PreparedStatement preparedStatement<span class="token punctuation">,</span> Student student<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    preparedStatement<span class="token punctuation">.</span><span class="token function">setInt</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> student<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    preparedStatement<span class="token punctuation">.</span><span class="token function">setString</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> student<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    preparedStatement<span class="token punctuation">.</span><span class="token function">setString</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> student<span class="token punctuation">.</span><span class="token function">getGender</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    preparedStatement<span class="token punctuation">.</span><span class="token function">setFloat</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">float</span><span class="token punctuation">)</span> student<span class="token punctuation">.</span><span class="token function">getScore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    preparedStatement<span class="token punctuation">.</span><span class="token function">setString</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> student<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    preparedStatement<span class="token punctuation">.</span><span class="token function">setString</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">,</span> student<span class="token punctuation">.</span><span class="token function">getGender</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    preparedStatement<span class="token punctuation">.</span><span class="token function">setFloat</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">float</span><span class="token punctuation">)</span> student<span class="token punctuation">.</span><span class="token function">getScore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
+    JdbcExecutionOptions<span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">withMaxRetries</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">withBatchSize</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    JdbcExactlyOnceOptions<span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true">// mysql 不支持同一个连接上存在并行的多个事务，必须把该参数设置为 true</span>
+        <span class="token punctuation">.</span><span class="token function">withTransactionPerConnection</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">new</span> <span class="token class-name">SerializableSupplier</span><span class="token operator">&lt;</span>XADataSource<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">public</span> XADataSource <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// XADataSource 就是 jdbc 连接，不过它是支持分布式事务的连接</span>
+        <span class="token comment" spellcheck="true">// 而且它的构造方法，不同的数据库构造方法不同</span>
+        MysqlXADataSource xaDataSource <span class="token operator">=</span> <span class="token keyword">new</span> 			<span class="token class-name">MysqlXADataSource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        xaDataSource<span class="token punctuation">.</span><span class="token function">setUrl</span><span class="token punctuation">(</span><span class="token string">"jdbc:mysql://doit01:3306/abc"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        xaDataSource<span class="token punctuation">.</span><span class="token function">setUser</span><span class="token punctuation">(</span><span class="token string">"root"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        xaDataSource<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span><span class="token string">"ABC123.abc123"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> xaDataSource<span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 把构造好的 sink 添加到流中</span>
+studentStream<span class="token punctuation">.</span><span class="token function">addSink</span><span class="token punctuation">(</span>exactlyOnceSink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h5 id="2-8-4-RedisSink"><a href="#2-8-4-RedisSink" class="headerlink" title="2.8.4 RedisSink"></a>2.8.4 RedisSink</h5><p>Redis是一个基于内存、性能极高的NoSQL数据库，数据还可以持久化到磁盘，读写速度快，适合存储key-value类型的数据。Redis不仅仅支持简单的key-value类型的数据，同时还提供list、set、zset、hash等数据结构的存储。Flink实时计算出的结果，需要快速的输出存储起来，要求写入的存储系统的速度要快，这个才不会造成数据积压。Redis就是一个非常不错的选择。</p>
+<p>使用实例</p>
+<p>首先在maven中导入依赖：flink-connector-redis_2.12</p>
+<p>接下来就是定义一个类（或者静态内部类）实现RedisMapper接口，需要指定一个泛型，即写入到Redis的数据的类型，并实现三个方法：</p>
+<ul>
+<li>getCommandDescription 方法，返回 RedisCommandDescription 实例，在该构造方法中可以指定写入到 Redis 的方法类型为 HSET，和 Redis 的 additionalKey 即 value 为 HASH 类型外面 key 的值的名称；</li>
+<li>getKeyFromData 是指定 value 为 HASH 类型对应 key 的值；</li>
+<li>geVauleFromData 是指定 value 为 HASH 类型对应 value 的值。</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">RedisWordCountMapper</span> <span class="token keyword">implements</span> <span class="token class-name">RedisMapper</span><span class="token operator">&lt;</span>Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token operator">>></span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> RedisCommandDescription <span class="token function">getCommandDescription</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//写入 Redis 的方法，value 使用 HASH 类型，并指定外面 key 的值的名称</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">RedisCommandDescription</span><span class="token punctuation">(</span>RedisCommand<span class="token punctuation">.</span>HSET<span class="token punctuation">,</span> <span class="token string">"WORD_COUNT"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> String <span class="token function">getKeyFromData</span><span class="token punctuation">(</span>Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token operator">></span> data<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> data<span class="token punctuation">.</span>f0<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//指定写入 Redis 的 value 里面 key 的值</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> String <span class="token function">getValueFromData</span><span class="token punctuation">(</span>Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token operator">></span> data<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> data<span class="token punctuation">.</span>f1<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//指定写入 value 里面 value 的值</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>在使用之前，先 new FlinkJedisPoolConfig，设置 Redis 的 ip 地址或主机名、端口号、密码等。然后 new RedisSink 将准备好的 conf 和 RedisWordCountMapper 实例传入到其构造方法中，最后调用 DataStream的 addSink 方法，将 new 好的 RedisSink 作为参数传入。</p>
+<pre class=" language-java"><code class="language-java">DataStream<span class="token operator">&lt;</span>Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token operator">>></span> result <span class="token operator">=</span> wordAndOne<span class="token punctuation">.</span><span class="token function">keyBy</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//设置 Redis 的参数，如地址、端口号等</span>
+FlinkJedisPoolConfig conf <span class="token operator">=</span> <span class="token keyword">new</span>
+<span class="token class-name">FlinkJedisPoolConfig<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setHost</span><span class="token punctuation">(</span><span class="token string">"localhost"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span><span class="token string">"123456"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//将数据写入 Redis</span>
+result<span class="token punctuation">.</span><span class="token function">addSink</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RedisSink</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>conf<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">RedisWordCountMapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="3-flink多流操作API"><a href="#3-flink多流操作API" class="headerlink" title="3 flink多流操作API"></a>3 flink多流操作API</h3><h4 id="3-1-split分流-已deprecated"><a href="#3-1-split分流-已deprecated" class="headerlink" title="3.1 split分流 [已deprecated]"></a>3.1 split分流 [已deprecated]</h4><h4 id="3-2-侧流输出"><a href="#3-2-侧流输出" class="headerlink" title="3.2 侧流输出"></a>3.2 侧流输出</h4><p>首先定义侧流标签，比如：maleOutputTag、femaleOutputTag</p>
+<blockquote>
+<p>侧流输出示例代码：</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java">SingleOutputStreamOperator<span class="token operator">&lt;</span>Student<span class="token operator">></span> mainStream <span class="token operator">=</span> students<span class="token punctuation">.</span><span class="token function">process</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ProcessFunction</span><span class="token operator">&lt;</span>Student<span class="token punctuation">,</span> Student<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">processElement</span><span class="token punctuation">(</span>Student student<span class="token punctuation">,</span> ProcessFunction<span class="token operator">&lt;</span>Student<span class="token punctuation">,</span> Student<span class="token operator">></span><span class="token punctuation">.</span>Context ctx<span class="token punctuation">,</span>
+Collector<span class="token operator">&lt;</span>Student<span class="token operator">></span> collector<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>student<span class="token punctuation">.</span><span class="token function">getGender</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"m"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 输出到测流“maleOutputTag”</span>
+        ctx<span class="token punctuation">.</span><span class="token function">output</span><span class="token punctuation">(</span>maleOutputTag<span class="token punctuation">,</span> student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>student<span class="token punctuation">.</span><span class="token function">getGender</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"f"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 输出到测流“femaleOutputTag”</span>
+        ctx<span class="token punctuation">.</span><span class="token function">output</span><span class="token punctuation">(</span>femaleOutputTag<span class="token punctuation">,</span> student<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 在主流中输出</span>
+        collector<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//获取侧流输出结果</span>
+SingleOutputStreamOperator<span class="token operator">&lt;</span>Student<span class="token operator">></span> side1 <span class="token operator">=</span> mainStream<span class="token punctuation">.</span><span class="token function">getSideOutput</span><span class="token punctuation">(</span>maleOutputTag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+SingleOutputStreamOperator<span class="token operator">&lt;</span>String<span class="token operator">></span> side2 <span class="token operator">=</span> mainStream<span class="token punctuation">.</span><span class="token function">getSideOutput</span><span class="token punctuation">(</span>femaleOutputTag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>以下 function 函数，支持将特定数据输出到侧流中：</p>
+<ul>
+<li>ProcessFunction</li>
+<li>KeyedProcessFunction</li>
+<li>CoProcessFunction</li>
+<li>KeyedCoProcessFunction</li>
+<li>ProcessWindowFunction</li>
+<li>ProcessAllWindowFunction</li>
+</ul>
+<h4 id="3-3-connect连接操作"><a href="#3-3-connect连接操作" class="headerlink" title="3.3 connect连接操作"></a>3.3 connect连接操作</h4><p>该方法可以将两个任意类型的的DataStream连接成一个新的ConnectedStreams。需要注意的是，connect方法与union方法不同，连接形成的ConnectedStreams里面的两个流依然是相互独立的。<strong>connect方法最大的好处是可以让两个流共享State状态</strong>。</p>
+<blockquote>
+<p>示例代码：</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//将两个 DataStream 连接到一起</span>
+ConnectedStreams<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token operator">></span> connected <span class="token operator">=</span> DataStream1<span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span>DataStream2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>接下来讲讲对ConnectedStreams的操作方法</p>
+<p><strong>coMap</strong>：对 ConnectedStreams 调用map方法时需要传入CoMapFunction </p>
+<p>该接口需要指定 3 个泛型：</p>
+<ol>
+<li>第一个输入 DataStream 的数据类型</li>
+<li>第二个输入 DataStream 的数据类型</li>
+<li>返回结果的数据类型</li>
+</ol>
+<p>该接口需要重写两个方法（<strong>这两个方法必须是相同的返回值类型</strong>）：</p>
+<ol>
+<li>map1 方法，是对第 1 个流进行 map 的处理逻辑</li>
+<li>map2 方法，是对 2 个流进行 map 的处理逻辑</li>
+</ol>
+<blockquote>
+<p>示例代码：</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//对 ConnectedStreams 中两个流分别调用个不同逻辑的 map 方法</span>
+DataStream<span class="token operator">&lt;</span>String<span class="token operator">></span> result <span class="token operator">=</span> wordAndNum<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">CoMapFunction</span><span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token punctuation">,</span> String<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> String <span class="token function">map1</span><span class="token punctuation">(</span>String value<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> value<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//第一个 map 方法是将第一个流的字符变大写</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> String <span class="token function">map2</span><span class="token punctuation">(</span>Integer value<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> String<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>value <span class="token operator">*</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//第二个 map 方将是第二个流的数字乘以 10 并转成 String</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><strong>coFlatMap</strong>：对 ConnectedStreams 调用flatMap方法需要传入CoFlatMapFunction</p>
+<p>该接口需要重写两个方法（<strong>这两个方法必须是相同的返回值类型</strong>）：</p>
+<ol>
+<li>flatMap1 方法，是对第 1 个流进行 flatMap 的处理逻辑</li>
+<li>flatMap2 方法，是对 2 个流进行 flatMap 的处理逻辑</li>
+</ol>
+<blockquote>
+<p>示例代码：</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//对 ConnectedStreams 中两个流分别调用个不同逻辑的 flatMap 方法</span>
+DataStream<span class="token operator">&lt;</span>String<span class="token operator">></span> result <span class="token operator">=</span> connected<span class="token punctuation">.</span><span class="token function">flatMap</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">CoFlatMapFunction</span><span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token punctuation">,</span> String<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">flatMap1</span><span class="token punctuation">(</span>String value<span class="token punctuation">,</span> Collector<span class="token operator">&lt;</span>String<span class="token operator">></span> out<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        String<span class="token punctuation">[</span><span class="token punctuation">]</span> words <span class="token operator">=</span> value<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>String w <span class="token operator">:</span> words<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        out<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">flatMap2</span><span class="token punctuation">(</span>String value<span class="token punctuation">,</span> Collector<span class="token operator">&lt;</span>String<span class="token operator">></span> out<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        String<span class="token punctuation">[</span><span class="token punctuation">]</span> nums <span class="token operator">=</span> value<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">","</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>String n <span class="token operator">:</span> nums<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        out<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="3-4-union合并操作"><a href="#3-4-union合并操作" class="headerlink" title="3.4 union合并操作"></a>3.4 union合并操作</h4><p>该方法可以将两个或者多个<strong>数据类型一致</strong>的DataStream合并成一个DataStream。</p>
+<blockquote>
+<p>示例代码：</p>
+</blockquote>
+<pre class=" language-Java"><code class="language-Java">//将两个 DataStream 合并到一起
+DataStream<Integer> result = odd.union(even);
+</code></pre>
+<h4 id="3-5-coGroup协同分组"><a href="#3-5-coGroup协同分组" class="headerlink" title="3.5 coGroup协同分组"></a>3.5 coGroup协同分组</h4><p>coGroup本质上是join算子的底层算子，功能类似（略）</p>
+<h4 id="3-6-join关联操作"><a href="#3-6-join关联操作" class="headerlink" title="3.6 join关联操作"></a>3.6 join关联操作</h4><p>用于关联两个流（类似于sql中的join），需要指定join条件；<strong>需要在窗口中进行关联后的逻辑计算</strong></p>
+<p><strong>join算子的代码结构</strong>：</p>
+<pre class=" language-java"><code class="language-java">stream<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>otherStream<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">where</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>KeySelector<span class="token operator">></span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">equalTo</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>KeySelector<span class="token operator">></span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">window</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>WindowAssigner<span class="token operator">></span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>JoinFunction<span class="token operator">></span><span class="token punctuation">)</span>
+</code></pre>
+<p>那我们先介绍一下–不同窗口join的结果示意</p>
+<p>tumbling window（滚动窗口）：</p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230527183522506.png" alt="image-20230527183522506"><figcaption>image-20230527183522506</figcaption></figure></p>
+<p>sliding window（滑动窗口）：</p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230527183617257.png" alt="image-20230527183617257"><figcaption>image-20230527183617257</figcaption></figure></p>
+<p>session window（会话窗口）：</p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230527183705722.png" alt="image-20230527183705722"><figcaption>image-20230527183705722</figcaption></figure></p>
+<blockquote>
+<p>完整实例代码：</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 对 join 流进行计算处理</span>
+DataStream<span class="token operator">&lt;</span>String<span class="token operator">></span> stream <span class="token operator">=</span> joined
+    <span class="token comment" spellcheck="true">// where 流 1 的某字段 equalTo 流 2 的某字段</span>
+    <span class="token punctuation">.</span><span class="token function">where</span><span class="token punctuation">(</span>s <span class="token operator">-</span><span class="token operator">></span> s<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">equalTo</span><span class="token punctuation">(</span>s <span class="token operator">-</span><span class="token operator">></span> s<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true">// join 实质上只能在窗口中进行	   .window(TumblingProcessingTimeWindows.of(Time.seconds(20)))</span>
+    <span class="token comment" spellcheck="true">// 对窗口中满足关联条件的数据进行计算</span>
+    <span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">JoinFunction</span><span class="token operator">&lt;</span>Student<span class="token punctuation">,</span> StuInfo<span class="token punctuation">,</span> String<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 这边传入的两个流的两条数据，是能够满足关联条件的</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> String <span class="token function">join</span><span class="token punctuation">(</span>Student first<span class="token punctuation">,</span> StuInfo second<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// first: 左流数据 ; second: 右流数据</span>
+        <span class="token comment" spellcheck="true">// 计算逻辑</span>
+        <span class="token comment" spellcheck="true">// 返回结果</span>
+        <span class="token keyword">return</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="3-7-broadcast广播"><a href="#3-7-broadcast广播" class="headerlink" title="3.7 broadcast广播"></a>3.7 broadcast广播</h4><p>在开发过程中，如果遇到需要<strong>下发&#x2F;广播 配置、规则等低吞吐事件流</strong>到下游所有task时，就可以使用Broadcast State特性。下游的task接收这些配置、规则并保存为BroadcastState，将这些配置应用到另一个数据流的计算中。</p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230527184539484.png" alt="image-20230527184539484"><figcaption>image-20230527184539484</figcaption></figure></p>
+<p>核心要点：</p>
+<ul>
+<li>将需要广播出去的流，调用broadcast方法进行广播转换，得到广播流BroadCastStream</li>
+<li>然后在主流上调用connect算子，来连接广播流（以实现广播状态的共享处理）</li>
+<li>在连接流上调用process算子，就会在同一个ProcessFunction中提供两个方法分别对两个流进行处理，并在这个ProcessFunction内实现“广播状态”的共享</li>
+</ul>
+<blockquote>
+<p>实例代码：</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+* 案例背景：
+* 流 1： 用户行为事件流（用户ID，时间ID）（持续不断，同一个人也会反复出现，出现次数不定
+* 流 2： 用户维度信息（用户ID，年龄，城市），同一个人的数据只会来一次，来的时间也不定 （作为广播流）
+*
+* 需要加工流 1，把用户的维度信息填充好，利用广播流来实现
+*/</span>
+
+<span class="token comment" spellcheck="true">// 将字典数据所在流： s2 ， 转成 广播流</span>
+MapStateDescriptor<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">>></span> userInfoStateDesc <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MapStateDescriptor</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"userInfoStateDesc"</span><span class="token punctuation">,</span> TypeInformation<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">,</span> TypeInformation<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TypeHint</span><span class="token operator">&lt;</span>Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">>></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+BroadcastStream<span class="token operator">&lt;</span>Tuple3<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token punctuation">,</span> String<span class="token operator">>></span> s2BroadcastStream <span class="token operator">=</span> s2<span class="token punctuation">.</span><span class="token function">broadcast</span><span class="token punctuation">(</span>userInfoStateDesc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 哪个流处理中需要用到广播状态数据，就要 去 连接 connect 这个广播流</span>
+BroadcastConnectedStream<span class="token operator">&lt;</span>Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span><span class="token punctuation">,</span> Tuple3<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token punctuation">,</span> String<span class="token operator">>></span> connected <span class="token operator">=</span>
+s1<span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span>s2BroadcastStream<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+* 对 连接了广播流之后的 ”连接流“ 进行处理
+* 核心思想：
+* 在 processBroadcastElement 方法中，把获取到的广播流中的数据，插入到 “广播状态”中
+* 在 processElement 方法中，对取到的主流数据进行处理（从广播状态中获取要拼接的数据，拼接后输出）
+*/</span>
+SingleOutputStreamOperator<span class="token operator">&lt;</span>String<span class="token operator">></span> resultStream <span class="token operator">=</span> connected<span class="token punctuation">.</span><span class="token function">process</span><span class="token punctuation">(</span><span class="token keyword">new</span>
+<span class="token class-name">BroadcastProcessFunction</span><span class="token operator">&lt;</span>Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span><span class="token punctuation">,</span> Tuple3<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token punctuation">,</span> String<span class="token operator">></span><span class="token punctuation">,</span> String<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+* 本方法，是用来处理 主流中的数据（每来一条，调用一次）
+* @param element 左流（主流）中的一条数据
+* @param ctx 上下文
+* @param out 输出器
+* @throws Exception
+*/</span>
+<span class="token annotation punctuation">@Override</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">processElement</span><span class="token punctuation">(</span>Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> element<span class="token punctuation">,</span>
+BroadcastProcessFunction<span class="token operator">&lt;</span>Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span><span class="token punctuation">,</span> Tuple3<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token punctuation">,</span> String<span class="token operator">></span><span class="token punctuation">,</span> String<span class="token operator">></span><span class="token punctuation">.</span>ReadOnlyContext
+ctx<span class="token punctuation">,</span> Collector<span class="token operator">&lt;</span>String<span class="token operator">></span> out<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 通过 ReadOnlyContext ctx 取到的广播状态对象，是一个 “只读 ” 的对象；</span>
+    ReadOnlyBroadcastState<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">>></span> 		broadcastState <span class="token operator">=</span> ctx<span class="token punctuation">.</span><span class="token function">getBroadcastState</span><span class="token punctuation">(</span>userInfoStateDesc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>broadcastState <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> userInfo <span class="token operator">=</span> broadcastState<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>element<span class="token punctuation">.</span>f0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        out<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>element<span class="token punctuation">.</span>f0 <span class="token operator">+</span> <span class="token string">","</span> <span class="token operator">+</span> element<span class="token punctuation">.</span>f1 <span class="token operator">+</span> <span class="token string">","</span> <span class="token operator">+</span> <span class="token punctuation">(</span>userInfo <span class="token operator">==</span> null <span class="token operator">?</span> null <span class="token operator">:</span> userInfo<span class="token punctuation">.</span>f0<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">","</span> <span class="token operator">+</span> <span class="token punctuation">(</span>userInfo <span class="token operator">==</span> null <span class="token operator">?</span> null <span class="token operator">:</span> userInfo<span class="token punctuation">.</span>f1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        out<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>element<span class="token punctuation">.</span>f0 <span class="token operator">+</span> <span class="token string">","</span> <span class="token operator">+</span> element<span class="token punctuation">.</span>f1 <span class="token operator">+</span> <span class="token string">","</span> <span class="token operator">+</span> null <span class="token operator">+</span> <span class="token string">","</span> <span class="token operator">+</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+*
+* @param element 广播流中的一条数据
+* @param ctx 上下文
+* @param out 输出器
+* @throws Exception
+*/</span>
+<span class="token annotation punctuation">@Override</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">processBroadcastElement</span><span class="token punctuation">(</span>Tuple3<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token punctuation">,</span> String<span class="token operator">></span> element<span class="token punctuation">,</span>
+BroadcastProcessFunction<span class="token operator">&lt;</span>Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span><span class="token punctuation">,</span> Tuple3<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token punctuation">,</span> String<span class="token operator">></span><span class="token punctuation">,</span> String<span class="token operator">></span><span class="token punctuation">.</span>Context ctx<span class="token punctuation">,</span>
+Collector<span class="token operator">&lt;</span>String<span class="token operator">></span> out<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 从上下文中，获取广播状态对象（可读可写的状态对象）</span>
+    BroadcastState<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Tuple2<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">>></span> 				broadcastState <span class="token operator">=</span>
+ctx<span class="token punctuation">.</span><span class="token function">getBroadcastState</span><span class="token punctuation">(</span>userInfoStateDesc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 然后将获得的这条 广播流数据， 拆分后，装入广播状态</span>
+    broadcastState<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>element<span class="token punctuation">.</span>f0<span class="token punctuation">,</span> Tuple2<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>element<span class="token punctuation">.</span>f1<span class="token punctuation">,</span> element<span class="token punctuation">.</span>f2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+resultStream<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+env<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 
             </div>
 
@@ -796,7 +1127,7 @@ streamSource<span class="token punctuation">.</span><span class="token function"
         <li><strong>创建于:</strong> 2023-04-27 16:27:07</li>
         
             <li>
-                <strong>更新于:</strong> 2023-05-25 18:16:09
+                <strong>更新于:</strong> 2023-05-27 18:59:13
             </li>
         
         <li>
@@ -914,7 +1245,7 @@ streamSource<span class="token punctuation">.</span><span class="token function"
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">关于实时计算框架flink知识的学习(1)</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BF%AB%E9%80%9F%E8%AE%A4%E8%AF%86flink"><span class="nav-number">1.</span> <span class="nav-text">1 快速认识flink</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-flink%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 flink基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-flink%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9E%B6%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 flink的运行架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-flink%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 flink的特性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-flink%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">2 flink编程基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-flink%E7%9A%84DataStream%E6%8A%BD%E8%B1%A1"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 flink的DataStream抽象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-flink%E7%BC%96%E7%A8%8B%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 flink编程模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-flink%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%B9%B6%E8%A1%8C%E6%A6%82%E5%BF%B5"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 flink程序的并行概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-flink%E7%BC%96%E7%A8%8B%E5%85%A5%E5%8F%A3"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 flink编程入口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-%E5%9F%BA%E6%9C%ACsource%E7%AE%97%E5%AD%90"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 基本source算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9Connector-Source"><span class="nav-number">2.5.1.</span> <span class="nav-text">第三方Connector Source</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89Source"><span class="nav-number">2.5.2.</span> <span class="nav-text">自定义Source</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-%E5%9F%BA%E6%9C%ACtransformation%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 基本transformation算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-1-%E6%98%A0%E5%B0%84%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.1.</span> <span class="nav-text">2.6.1 映射算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-2-%E8%BF%87%E6%BB%A4%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.2.</span> <span class="nav-text">2.6.2 过滤算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-3-%E5%88%86%E7%BB%84%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.3.</span> <span class="nav-text">2.6.3 分组算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-4-%E6%BB%9A%E5%8A%A8%E8%81%9A%E5%90%88%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.4.</span> <span class="nav-text">2.6.4 滚动聚合算子</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-%E5%9F%BA%E6%9C%ACsink%E7%AE%97%E5%AD%90"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 基本sink算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-7-1-%E6%89%93%E5%8D%B0%E8%BE%93%E5%87%BA%EF%BC%88%E7%95%A5%EF%BC%89"><span class="nav-number">2.7.1.</span> <span class="nav-text">2.7.1 打印输出（略）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-7-2-%E6%96%87%E4%BB%B6sink"><span class="nav-number">2.7.2.</span> <span class="nav-text">2.7.2 文件sink</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-%E6%89%A9%E5%B1%95sink%E7%AE%97%E5%AD%90"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 扩展sink算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-8-1-StreamFileSink"><span class="nav-number">2.8.1.</span> <span class="nav-text">2.8.1 StreamFileSink</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-8-1-1-Row%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81%E6%A1%88%E4%BE%8B"><span class="nav-number">2.8.1.1.</span> <span class="nav-text">2.8.1.1 Row格式文件输出代码案例</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-8-1-2-Bulk%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81%E5%AE%9E%E4%BE%8B1"><span class="nav-number">2.8.1.2.</span> <span class="nav-text">2.8.1.2 Bulk列式存储文件输出代码实例1</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-8-1-3-Bulk%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81%E5%AE%9E%E4%BE%8B2"><span class="nav-number">2.8.1.3.</span> <span class="nav-text">2.8.1.3 Bulk列式存储文件输出代码实例2</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-8-1-4-Bulk%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81%E5%AE%9E%E4%BE%8B3"><span class="nav-number">2.8.1.4.</span> <span class="nav-text">2.8.1.4 Bulk列式存储文件输出代码实例3</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BF%AB%E9%80%9F%E8%AE%A4%E8%AF%86flink"><span class="nav-number">1.</span> <span class="nav-text">1 快速认识flink</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-flink%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 flink基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-flink%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9E%B6%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 flink的运行架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-flink%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 flink的特性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-flink%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">2 flink编程基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-flink%E7%9A%84DataStream%E6%8A%BD%E8%B1%A1"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 flink的DataStream抽象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-flink%E7%BC%96%E7%A8%8B%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 flink编程模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-flink%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%B9%B6%E8%A1%8C%E6%A6%82%E5%BF%B5"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 flink程序的并行概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-flink%E7%BC%96%E7%A8%8B%E5%85%A5%E5%8F%A3"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 flink编程入口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-%E5%9F%BA%E6%9C%ACsource%E7%AE%97%E5%AD%90"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 基本source算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9Connector-Source"><span class="nav-number">2.5.1.</span> <span class="nav-text">第三方Connector Source</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89Source"><span class="nav-number">2.5.2.</span> <span class="nav-text">自定义Source</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-%E5%9F%BA%E6%9C%ACtransformation%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 基本transformation算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-1-%E6%98%A0%E5%B0%84%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.1.</span> <span class="nav-text">2.6.1 映射算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-2-%E8%BF%87%E6%BB%A4%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.2.</span> <span class="nav-text">2.6.2 过滤算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-3-%E5%88%86%E7%BB%84%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.3.</span> <span class="nav-text">2.6.3 分组算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-4-%E6%BB%9A%E5%8A%A8%E8%81%9A%E5%90%88%E7%AE%97%E5%AD%90"><span class="nav-number">2.6.4.</span> <span class="nav-text">2.6.4 滚动聚合算子</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-%E5%9F%BA%E6%9C%ACsink%E7%AE%97%E5%AD%90"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 基本sink算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-7-1-%E6%89%93%E5%8D%B0%E8%BE%93%E5%87%BA%EF%BC%88%E7%95%A5%EF%BC%89"><span class="nav-number">2.7.1.</span> <span class="nav-text">2.7.1 打印输出（略）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-7-2-%E6%96%87%E4%BB%B6sink"><span class="nav-number">2.7.2.</span> <span class="nav-text">2.7.2 文件sink</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-%E6%89%A9%E5%B1%95sink%E7%AE%97%E5%AD%90"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 扩展sink算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-8-1-StreamFileSink"><span class="nav-number">2.8.1.</span> <span class="nav-text">2.8.1 StreamFileSink</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-8-1-1-Row%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81%E6%A1%88%E4%BE%8B"><span class="nav-number">2.8.1.1.</span> <span class="nav-text">2.8.1.1 Row格式文件输出代码案例</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-8-1-2-Bulk%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81%E5%AE%9E%E4%BE%8B1"><span class="nav-number">2.8.1.2.</span> <span class="nav-text">2.8.1.2 Bulk列式存储文件输出代码实例1</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-8-1-3-Bulk%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81%E5%AE%9E%E4%BE%8B2"><span class="nav-number">2.8.1.3.</span> <span class="nav-text">2.8.1.3 Bulk列式存储文件输出代码实例2</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-8-1-4-Bulk%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E4%BB%A3%E7%A0%81%E5%AE%9E%E4%BE%8B3"><span class="nav-number">2.8.1.4.</span> <span class="nav-text">2.8.1.4 Bulk列式存储文件输出代码实例3</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-8-2-KafkaSink"><span class="nav-number">2.8.2.</span> <span class="nav-text">2.8.2 KafkaSink</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-8-3-JdbcSink"><span class="nav-number">2.8.3.</span> <span class="nav-text">2.8.3 JdbcSink</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-8-4-RedisSink"><span class="nav-number">2.8.4.</span> <span class="nav-text">2.8.4 RedisSink</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-flink%E5%A4%9A%E6%B5%81%E6%93%8D%E4%BD%9CAPI"><span class="nav-number">3.</span> <span class="nav-text">3 flink多流操作API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-split%E5%88%86%E6%B5%81-%E5%B7%B2deprecated"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 split分流 [已deprecated]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E4%BE%A7%E6%B5%81%E8%BE%93%E5%87%BA"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 侧流输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-connect%E8%BF%9E%E6%8E%A5%E6%93%8D%E4%BD%9C"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 connect连接操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-union%E5%90%88%E5%B9%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 union合并操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-coGroup%E5%8D%8F%E5%90%8C%E5%88%86%E7%BB%84"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 coGroup协同分组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-join%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 join关联操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-7-broadcast%E5%B9%BF%E6%92%AD"><span class="nav-number">3.7.</span> <span class="nav-text">3.7 broadcast广播</span></a></li></ol></li></ol>
 
     </div>
 </div>
