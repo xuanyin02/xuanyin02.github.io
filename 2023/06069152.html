@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="spring、springmvc、springboot">
+    
+    <meta name="author" content="宣胤">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://xuanyin02.github.io/2023/06069152.html"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="关于SSM框架：Spring+SpringMVC+SpringBoot的知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java SSM框架">
+<meta property="og:url" content="http://xuanyin02.github.io/2023/06069152.html">
+<meta property="og:site_name" content="宣胤星球">
+<meta property="og:description" content="关于SSM框架：Spring+SpringMVC+SpringBoot的知识">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230606215746774.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230607225604276.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230609230510011.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230610003158201.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230610003227859.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230610002515153.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230610002719066.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230610002945086.png">
+<meta property="og:image" content="http://xuanyin02.github.io/Java-SSM%E6%A1%86%E6%9E%B6/image-20230610003759113.png">
+<meta property="og:image" content="http://xuanyin02.github.io/Java-SSM%E6%A1%86%E6%9E%B6/image-20230610004305035.png">
+<meta property="og:image" content="http://xuanyin02.github.io/Java-SSM%E6%A1%86%E6%9E%B6/image-20230610004751808.png">
+<meta property="article:published_time" content="2023-06-06T13:51:38.000Z">
+<meta property="article:modified_time" content="2023-06-09T17:05:26.614Z">
+<meta property="article:author" content="宣胤">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230606215746774.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/Hopstarter.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/Hopstarter.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/Hopstarter.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Java SSM框架 -
+        
+        宣胤星球
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/assets/fonts.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"xuanyin02.github.io","root":"/","language":"zh-CN","path":"search.xml"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":true,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[""]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":6,"number":true,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"欢迎你的到来","subtitle":{"text":["Loading..."],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn/?c=f"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":"Noto Sans SC","url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"},{"name":"BABYDOLL (Speed)","artist":"Ari Abdul","url":"/musics/BABYDOLL (Speed).mp3","cover":"http://p2.music.126.net/jhjtPJ9HfOgX-G7MYl-yaQ==/109951167210282652.jpg?param=130y130"},{"name":"One Day","artist":"Matisyahu","url":"/musics/One Day.mp3","cover":"http://p1.music.126.net/S6knilCPQYxOqRFNJ9DQXA==/109951165610749659.jpg?param=130y130"},{"name":"Empty Love","artist":"Lulleaux / Kid Princess","url":"/musics/Empty Love.mp3","cover":"http://p1.music.126.net/xrWSChs7pIOWFjOz5eQIzw==/109951164855840145.jpg?param=130y130"},{"name":"年少有为","artist":"李荣浩","url":"/musics/年少有为.mp3","cover":"http://p1.music.126.net/tt8xwK-ASC2iqXNUXYKoDQ==/109951163606377163.jpg?param=130y130"},{"name":"不将就","artist":"李荣浩","url":"/musics/不将就.mp3","cover":"http://p2.music.126.net/e-Uc6W3Kug-HFHJ5nvCUPg==/109951166562828988.jpg?param=130y130"},{"name":"起风了","artist":"买辣椒也用券","url":"/musics/起风了.mp3","cover":"http://p2.music.126.net/diGAyEmpymX8G7JcnElncQ==/109951163699673355.jpg?param=130y130"},{"name":"像我这样的人","artist":"毛不易","url":"/musics/像我这样的人.mp3","cover":"http://p2.music.126.net/vmCcDvD1H04e9gm97xsCqg==/109951163350929740.jpg?param=130y130"},{"name":"凄美地","artist":"郭顶","url":"/musics/凄美地.mp3","cover":"http://p2.music.126.net/wSMfGvFzOAYRU_yVIfquAA==/2946691248081599.jpg?param=130y130"},{"name":"飞云之下","artist":"林俊杰/韩红","url":"/musics/飞云之下.mp3","cover":"http://p1.music.126.net/YsQrEZ_M6kduwN2zh6Q6kg==/109951163311406661.jpg?param=130y130"}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.1.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Github":"https://github.com/xuanyin02","Blog":"https://xuanyin02.github.io/"}}},"search":{"enable":true,"preload":true},"tags":{"tags":{"icon":"fa-solid fa-tags","path":"/tags/"}},"categories":{"categories":{"icon":"fa-solid fa-folder","path":"/categories/"}}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/rss2.xml" title="宣胤星球" type="application/rss+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/Hopstarter.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                宣胤星球
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        归档
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about">ME
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/xuanyin02">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a href="https://xuanyin02.github.io/">BLOG
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                归档
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="dropdown-item flex-center">
+                                <a class="dropdown-item" href="/about">ME</a>
+                            </li>
+                        
+                            <li class="dropdown-item flex-center">
+                                <a class="dropdown-item" target="_blank" rel="noopener" href="https://github.com/xuanyin02">GITHUB</a>
+                            </li>
+                        
+                            <li class="dropdown-item flex-center">
+                                <a class="dropdown-item" href="https://xuanyin02.github.io/">BLOG</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            
+            
+                <div class="article-title">
+                    <h1 class="article-title-regular">Java SSM框架</h1>
+                </div>
+            
+                
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/avatar.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">宣胤</span>
+                            
+                                <span class="author-label"></span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-06-06 21:51:38</span>
+        <span class="mobile">2023-06-06 21:51</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-06-10 01:05:26</span>
+            <span class="mobile">2023-06-10 01:05</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Java%E5%BC%80%E5%8F%91/">Java开发</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/java/">java</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.5k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>12 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h2 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h2><h3 id="Spring-Framework系统架构"><a href="#Spring-Framework系统架构" class="headerlink" title="Spring Framework系统架构"></a>Spring Framework系统架构</h3><p>Spring Framework是Spring生态圈中最基础的项目，是其他项目的根基</p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230606215746774.png" alt="image-20230606215746774"><figcaption>image-20230606215746774</figcaption></figure></p>
+<h3 id="Spring核心"><a href="#Spring核心" class="headerlink" title="Spring核心"></a>Spring核心</h3><p>代码书写现状：耦合性偏高<br>解决方案：使用对象时，在程序中不要注定使用new产生对象，转换为由<strong>外部</strong>提供对象</p>
+<h4 id="IoC（Inversion-of-Control）控制反转"><a href="#IoC（Inversion-of-Control）控制反转" class="headerlink" title="IoC（Inversion of Control）控制反转"></a>IoC（Inversion of Control）控制反转</h4><p>使用对象时，由主动new产生对象转换为<strong>由外部提供对象</strong>，此过程中对象的创建控制权由程序转移到<strong>外部</strong>，这种思想称为控制反转</p>
+<p>Spring技术对IOC思想进行了实现：Spring提供了一个容器，称为<strong>IoC容器</strong>（系统架构中的Core Container），用来充当IoC思想的“<strong>外部</strong>”。<br>IoC容器负责对象的创建、初始化等一系列工作，被创建或被管理的对象在IoC容器中被称为<strong>Bean</strong></p>
+<h4 id="DI-Dependency-Injection-依赖注入"><a href="#DI-Dependency-Injection-依赖注入" class="headerlink" title="DI (Dependency Injection) 依赖注入"></a>DI (Dependency Injection) 依赖注入</h4><p>在容器中建立Bena与Bean之间的依赖关系的整个过程,称为依赖注入</p>
+<p>目标:充分解耦</p>
+<ol>
+<li>使用IoC容器管理bean (IoC)</li>
+<li>在IoC容器内将有依赖关系的bean进行绑定 (DI)</li>
+</ol>
+<p>最终效果:使用对象时不仅可以直接从IoC容器中获取,并且获取到的bean已经绑定了所有的依赖关系</p>
+<h5 id="Bean实例化方式"><a href="#Bean实例化方式" class="headerlink" title="Bean实例化方式"></a>Bean实例化方式</h5><ul>
+<li>无参构造实例化bean</li>
+<li>静态工厂实例化bean</li>
+<li>实例工厂实例化bean</li>
+<li>FactoryBean实例化bean</li>
+</ul>
+<h5 id="Bean的生命周期"><a href="#Bean的生命周期" class="headerlink" title="Bean的生命周期"></a>Bean的生命周期</h5><p>生命周期：从创建到消亡的完整过程<br>Bean生命周期：bean从创建到销毁的整体过程（对象从创建到销毁）<br>Bean生命周期控制：在bean创建后到销毁前做一些事情</p>
+<p>1、bean生命周期控制：</p>
+<ul>
+<li><p>配置</p>
+<p>init-method</p>
+<p>destory-method</p>
+</li>
+<li><p>接口</p>
+<p>InitializingBean</p>
+<p>DisposableBean</p>
+</li>
+</ul>
+<p>2、关闭容器：</p>
+<ul>
+<li><p>ConfigurableApplicationContext</p>
+<p>close()</p>
+<p>registerShutdownHook()</p>
+</li>
+</ul>
+<h5 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h5><p>向一个类中传递数据的方式：</p>
+<ul>
+<li>普通方法（set方法）</li>
+<li>构造方法</li>
+</ul>
+<p>创建Bean依赖的数据类型：</p>
+<ul>
+<li>引用类型</li>
+<li>简单类型（基本数据类型与String）</li>
+</ul>
+<p>依赖注入方式：</p>
+<ul>
+<li><p>setter注入</p>
+<p>简单类型</p>
+<p>引用类型</p>
+</li>
+<li><p>构造器注入</p>
+<p>简单类型</p>
+<p>引用类型</p>
+</li>
+</ul>
+<p>依赖注入方式选择：</p>
+<ol>
+<li>强制依赖使用构造器进行，使用setter注入有概率不进行注入导致null对象出现</li>
+<li>可选依赖使用setter注入进行，灵活性强</li>
+<li>Spring框架倡导使用构造器，第三方框架内部大多数采用构造器注入的形式进行数据初始化，相对严谨</li>
+<li>如果有必要可以两者同时使用，使用构造器注入完成强制依赖的注入，使用setter注入完成可选依赖的注入</li>
+<li>实际开发过程中还要根据实际情况分析，如果受控对象没有提供setter方法就必须使用构造器注入</li>
+<li>自己开发的模块推荐使用setter注入</li>
+</ol>
+<p>依赖自动装配：</p>
+<p>​    IoC容器根据bean所依赖的资源在容器中<strong>自动查找并注入</strong>到bean中的过程称为自动装配</p>
+<p>自动装配方式：</p>
+<ul>
+<li>按类型（常用）</li>
+<li>按名称</li>
+<li>按构造方法</li>
+<li>不启用自动装配</li>
+</ul>
+<p>依赖自动装配特征：</p>
+<ul>
+<li>自动装配用于引用类型依赖注入，不能对简单类型进行操作</li>
+<li>使用按类型装配时（byType）必须保障容器中相同类型的bean唯一，推荐使用</li>
+<li>使用按名称装配时（byName）必须保障容器中具有指定名称的bean，因变量名与配置耦合，不推荐使用</li>
+<li>自动装配优先级低于setter注入与构造器注入，同时出现自动装配配置失效</li>
+</ul>
+<h5 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h5><p>创建容器：</p>
+<ul>
+<li>ClassPathXmlApplicationContext</li>
+<li>FileSystemXmlApplicationContext</li>
+</ul>
+<p>获取bean：</p>
+<ul>
+<li>获取之后强转</li>
+<li>获取时添加获取的类型参数</li>
+<li>按照类型获取</li>
+</ul>
+<h4 id="注解开发"><a href="#注解开发" class="headerlink" title="注解开发"></a>注解开发</h4><h5 id="注解开发定义bean"><a href="#注解开发定义bean" class="headerlink" title="注解开发定义bean"></a>注解开发定义bean</h5><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//加载配置类初始化容器</span>
+ApplicationContext ctx <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span>SpringConfig<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+</code></pre>
+<p>@Configuration注解用于设定当前类为配置类<br>@ComponentScan注解用于设定扫描路径，此注解只能添加一次，多个数据请用数组格式</p>
+<p>Spring提供@Componemt注解的三个衍生注解</p>
+<ol>
+<li>@Controller：用于表现层bean定义</li>
+<li>@Service：用于业务层bean定义</li>
+<li>@Repository：用于数据层bean定义</li>
+</ol>
+<p>@Autowired注解用于自动装配类型<br>@Value注解用于设定简单类型的值<br>@PropertySource注解加载properties文件</p>
+<h4 id="AOP（Aspect-Oriented-Programming）面向切面编程"><a href="#AOP（Aspect-Oriented-Programming）面向切面编程" class="headerlink" title="AOP（Aspect Oriented Programming）面向切面编程"></a>AOP（Aspect Oriented Programming）面向切面编程</h4><p>一种编程范式，指导开发者如何组织程序结构–（OOP（Object Oriented Programming）面向对象编程）</p>
+<blockquote>
+<p>作用：在不惊动原始设计的基础上为其进行<strong>功能增强</strong><br>Spring理念：无入侵式&#x2F;无侵入式</p>
+</blockquote>
+<h5 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h5><ul>
+<li>连接点（JoinPoint）：程序执行过程中的任意位置，粒度为执行方法、抛出异常、设置变量等<br>在SpringAOP中，理解为方法的执行</li>
+<li>切入点（PointCut）：要进行功能增强的方法<br>切入点表达式：匹配连接点的式子<br>在SpringAOP中，一个切入点表达式可以只描述一个具体方法，也可以匹配多个方法<br>一个具体方法：com.itheima.dao包下的BookDao接口中的无形参无返回值的save方法<br>匹配多个方法：所有的save方法，所有的get开头的方法，所有以Dao结尾的接口中的任意方法，所有带有一个参数的方法</li>
+<li>通知（Advice）：在切入点处执行的操作，也就是共性功能<br>在SpringAOP中，功能最终以方法的形式呈现</li>
+<li>通知类：定义通知的类</li>
+<li>切面（Aspect）：描述通知与切入点的对应关系</li>
+</ul>
+<h5 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h5><ol>
+<li><p>Spring容器启动</p>
+</li>
+<li><p>读取所有切面配置中的切入点</p>
+</li>
+<li><p>初始化bean，判定bean对应的类中的方法是否匹配到任意切入点</p>
+<p>匹配失败，创建对象</p>
+<p>匹配成功，创建原始对象（<strong>目标对象</strong>）的<strong>代理</strong>对象</p>
+</li>
+<li><p>获取bean执行方法</p>
+<p>获取bean，调用方法并执行，完成操作</p>
+<p> 获取的bean是代理对象时，根据代理对象的运行模式运行原始方法与增强的内容，完成操作</p>
+</li>
+</ol>
+<p>目标对象（Target）：原始功能去掉共性功能对应的类产生的对象，这种对象是无法直接完成最终工作的</p>
+<p>代理（Proxy）：目标对象无法直接完成的工作，需要对其进行功能回填，通过原始对象的代理对象实现</p>
+<blockquote>
+<p>SpringAOP本质：代理模式</p>
+</blockquote>
+<h5 id="切入点表达式"><a href="#切入点表达式" class="headerlink" title="切入点表达式"></a>切入点表达式</h5><p>切入点表达式标准格式：动作关键字（访问修饰符 返回值 包名.类&#x2F;接口名.方法名（参数） 异常名）</p>
+<blockquote>
+<p>Execution (public User com.itheima.service.UserService.findById(int))</p>
+</blockquote>
+<ul>
+<li>动作关键字：描述切入点的行为动作，例如execution表示执行到指定切入点</li>
+<li>可以使用通配符描述切入点，快速描述</li>
+</ul>
+<h5 id="通知获取数据"><a href="#通知获取数据" class="headerlink" title="通知获取数据"></a>通知获取数据</h5><ul>
+<li><p>获取切入点方法的参数</p>
+<p>JoinPoint：适用于前置、后置、返回后、抛出异常后通知</p>
+<p>ProceedJoinPoint：适用于环绕通知</p>
+</li>
+<li><p>获取切入点方法返回值</p>
+<p>返回后通知</p>
+<p>环绕通知</p>
+</li>
+<li><p>获取切入点方法运行异常信息</p>
+<p> 抛出异常后通知</p>
+<p>环绕通知</p>
+</li>
+</ul>
+<h4 id="Spring事务"><a href="#Spring事务" class="headerlink" title="Spring事务"></a>Spring事务</h4><p>事务简介</p>
+<p>Spring事务作用：在<strong>数据层或业务层</strong>保障一系列的数据库操作同成功同失败</p>
+<p>开启事务步骤：</p>
+<ol>
+<li>在业务层接口上添加Spring事务管理</li>
+<li>设置事务管理器</li>
+<li>开启注解式事务驱动</li>
+</ol>
+<blockquote>
+<p>注意事项：Spring注解式事务通常添加在业务层接口中而不会添加到业务层实现类中，降低耦合。注解式事务可以添加到业务方法上表示当前方法开启事务，也可以添加到接口上表示当前接口所有方法开启事务。</p>
+</blockquote>
+<p>事务角色</p>
+<ul>
+<li>事务管理员：发起事务方，在Spring中通常指代业务层开启事务的方法</li>
+<li>事务协调员：加入事务方，在Spring中通常指代数据层方法，也可以是业务层方法</li>
+</ul>
+<p>事务属性</p>
+<p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230607225604276.png" alt="image-20230607225604276"><figcaption>image-20230607225604276</figcaption></figure></p>
+<h3 id="SpringMVC"><a href="#SpringMVC" class="headerlink" title="SpringMVC"></a>SpringMVC</h3><h4 id="SpringMVC简介"><a href="#SpringMVC简介" class="headerlink" title="SpringMVC简介"></a>SpringMVC简介</h4><p>概述</p>
+<p>SpringMVC技术与Servlet技术功能等同，均属于web层开发技术</p>
+<p>SpringMVC是一种表现层框架技术，用于表现层功能开发</p>
+<p>SpringMVC是一种基于Javahi实现MVC模型的轻量级WEB框架</p>
+<p>优点</p>
+<ul>
+<li>使用简单，开发便捷</li>
+<li>灵活性强</li>
+</ul>
+<h5 id="入门案例"><a href="#入门案例" class="headerlink" title="入门案例"></a>入门案例</h5><p>名称：@Controller<br>类型：类注解<br>位置：SpringMVC控制器类定义上方<br>作用：设定SpringMVC的核心控制器bean<br>范例：     </p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Controller</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserController</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>名称：@ResponseBody<br>类型：方法注解<br>位置：SpringMVC控制器方法定义上方<br>作用：设置当前控制器方法响应内容为当前返回值，无需解析<br>范例：</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/save"</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@ResponseBody</span>
+<span class="token keyword">public</span> String <span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"user save ..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token string">"&amp;#123;'info':'springmvc'&amp;#125;"</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<h6 id="SpringMVC入门程序开发总结（1-N）"><a href="#SpringMVC入门程序开发总结（1-N）" class="headerlink" title="SpringMVC入门程序开发总结（1+N）"></a>SpringMVC入门程序开发总结（1+N）</h6><p>1次工作:</p>
+<ul>
+<li>创建工程，设置服务器，加载工程</li>
+<li>导入坐标</li>
+<li>创建Web容器启动类，加载SpringMVC配置，并设置SpringMVC请求拦截路径</li>
+<li>SpringMVC核心配置类（设置配置类，扫描controller包，加载Controller控制器bean）</li>
+</ul>
+<p>N次工作:</p>
+<ul>
+<li>定义处理请求的控制器类</li>
+<li>定义处理请求的控制器方法，并配置映射路径（@RequestMapping）与返回json数据（@ResponseBody）</li>
+</ul>
+<h6 id="入门案例工作流程分析"><a href="#入门案例工作流程分析" class="headerlink" title="入门案例工作流程分析"></a>入门案例工作流程分析</h6><p>启动服务器初始化过程：</p>
+<ol>
+<li><p>服务器启动，执行ServletContainerInitConfig类，初始化web容器</p>
+</li>
+<li><p>执行createServletApplicationContext方法，创建了WebApplicationContext对象</p>
+</li>
+<li><p>加载SpringMvcConfig</p>
+</li>
+<li><p>执行@ComponentScan加载对应的bean</p>
+</li>
+<li><p>加载UserController，每个@RequestMapping的名称对应一个具体的方法</p>
+</li>
+<li><p>执行getServletMapping方法，定义所有的请求都通过SpringMVC</p>
+<figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230609230510011.png" alt="image-20230609230510011" style="zoom: 50%;"><figcaption>image-20230609230510011</figcaption></figure></li>
+</ol>
+<p>单次请求过程：</p>
+<ol>
+<li>发送请求localhost&#x2F;save</li>
+<li>web容器发现所有请求都经过SpringMVC，将请求交给SpringMVC处理</li>
+<li>解析请求路径&#x2F;save</li>
+<li>由&#x2F;save匹配执行对应的方法save()</li>
+<li>执行save()</li>
+<li>检测到有@ResponseBody直接将save()方法的返回值作为响应体返回给请求方</li>
+</ol>
+<h5 id="Bean加载控制"><a href="#Bean加载控制" class="headerlink" title="Bean加载控制"></a>Bean加载控制</h5><p>Controller加载控制与业务bean加载控制：（加载属于自己的bean）</p>
+<p>SpringMVC相关bean（表现层bean）</p>
+<p>Spring控制的bean：</p>
+<ul>
+<li>业务bean（Service）</li>
+<li>功能bean（DataSource等）</li>
+</ul>
+<p>SpringMVC相关bean加载控制：</p>
+<ul>
+<li>SpringMVC加载的bean对应的包均在com.itheima.controller包内</li>
+</ul>
+<p>Spring相关bean加载控制：</p>
+<ul>
+<li>方式一：Spring加载的bena设定扫描范围为com.itheima，排除掉controller包内的bean</li>
+<li>方式二：Spring加载的bean设定扫描范围为精准范围，例如service包、dao包等</li>
+<li>方式三：不区分Spring和SpringMVC的环境，加载到同一个环境中</li>
+</ul>
+<p>名称：@ComponentScan<br>类型：类注解<br>范例：</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token annotation punctuation">@ComponentScan</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"com.itheima"</span><span class="token punctuation">,</span>
+excludeFilters <span class="token operator">=</span> <span class="token annotation punctuation">@ComponentScan</span><span class="token punctuation">.</span><span class="token function">Filter</span><span class="token punctuation">(</span>
+        type <span class="token operator">=</span> FilterType<span class="token punctuation">.</span>ANNOTATION<span class="token punctuation">,</span>
+        classes <span class="token operator">=</span> Controller<span class="token punctuation">.</span><span class="token keyword">class</span>
+    <span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SpringConfig</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>属性：</p>
+<ul>
+<li>excludeFilters：排除扫描路径中加载的bean，需要指定类别(type)与具体项(classes)</li>
+<li>includeFilters：加载指定的bean，需要指定类别(type)与具体项(classes)</li>
+</ul>
+<h4 id="请求与响应"><a href="#请求与响应" class="headerlink" title="请求与响应"></a>请求与响应</h4><h5 id="请求映射路径"><a href="#请求映射路径" class="headerlink" title="请求映射路径"></a>请求映射路径</h5><p>名称：@RequestMapping<br>类型：方法注解	类注解<br>位置：SpringMVC控制器方法定义上方<br>作用：设置当前控制器方法请求访问路径，如果设置在类上统一设置当前控制器方法请求访问路径前缀<br>范例：</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Controller</span>
+<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/user"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserController</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/save"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@ResponseBody</span>
+    <span class="token keyword">public</span> String <span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"user save ..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token string">"&amp;#123;'module':'user save'&amp;#125;"</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>属性：</p>
+<ul>
+<li>value(默认)：请求访问路径，或访问路径前缀</li>
+</ul>
+<h5 id="请求方式"><a href="#请求方式" class="headerlink" title="请求方式"></a>请求方式</h5><p>Get请求</p>
+<p>Post请求</p>
+<blockquote>
+<p>SpringMVC中需要解决Post请求中文乱码问题</p>
+</blockquote>
+<h5 id="请求参数"><a href="#请求参数" class="headerlink" title="请求参数"></a>请求参数</h5><h6 id="普通参数"><a href="#普通参数" class="headerlink" title="普通参数"></a>普通参数</h6><p>普通参数：请求参数名与形参变量名不同，使用@RequestParam绑定参数关系<br>(@RequestParam(“”name) Strign userName, int age)<figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230610003158201.png" alt="image-20230610003158201"><figcaption>image-20230610003158201</figcaption></figure></p>
+<p>POJO参数：请求参数名与形参对象属性名相同，定义POJO类型参即可接收参数<br>(User user)<figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230610003227859.png" alt="image-20230610003227859"><figcaption>image-20230610003227859</figcaption></figure></p>
+<p>嵌套POJO参数：请求参数名与形参对象属性名相同，按照对象<strong>层次结构关系</strong>即可接收嵌套POJO属性参数<br>(User user)<figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230610002515153.png" alt="image-20230610002515153"><figcaption>image-20230610002515153</figcaption></figure></p>
+<p>数组参数：请求参数名与形参对象属性名相同且请求参数为多个，定义数组类型形参即可接收参数<br>(String[] likes)<figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230610002719066.png" alt="image-20230610002719066"><figcaption>image-20230610002719066</figcaption></figure></p>
+<p>集合保存普通参数：请求参数名与形参集合对象名相同且请求参数为多个，@RequestParam绑定参数关系<br>(@RequestParam List<String> likes)<figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230610002945086.png" alt="image-20230610002945086"><figcaption>image-20230610002945086</figcaption></figure></String></p>
+<h6 id="JSON数据参数"><a href="#JSON数据参数" class="headerlink" title="JSON数据参数"></a>JSON数据参数</h6><ol>
+<li><p>发送数据<figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="/./Java-SSM%E6%A1%86%E6%9E%B6/image-20230610003759113.png" alt="image-20230610003759113"><figcaption>image-20230610003759113</figcaption></figure></p>
+</li>
+<li><p>开启自动转换json数据的支持（在SpringMvcConfig中）<br>@EnableWebMvc</p>
+</li>
+<li><p>设置接收数据</p>
+<p>JSON数据参数：(@RequestBody List<String> likes)–发送数据如上图</String></p>
+<p>POJO参数：json数据与形参对象属性名相同，定义POJO类型形参即可接收参数<br>(@RequestBody User user)<figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="/./Java-SSM%E6%A1%86%E6%9E%B6/image-20230610004305035.png" alt="image-20230610004305035"><figcaption>image-20230610004305035</figcaption></figure></p>
+<p>POJO集合参数：json数组数据与集合泛型 属性名形同，定义List类型形参即可接收参数<br>(@RequestBody List<User> list)<figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="/./Java-SSM%E6%A1%86%E6%9E%B6/image-20230610004751808.png" alt="image-20230610004751808"><figcaption>image-20230610004751808</figcaption></figure></User></p>
+</li>
+</ol>
+<h6 id="比较-RequestBody与-RequestParam"><a href="#比较-RequestBody与-RequestParam" class="headerlink" title="比较@RequestBody与@RequestParam"></a>比较@RequestBody与@RequestParam</h6><p>区别：</p>
+<ul>
+<li>@RequestParam用于接收url地址传参，表单传参[application&#x2F;x-www-form-urlencoded]</li>
+<li>@RequestBody用于接收json数据[application&#x2F;json]</li>
+</ul>
+<p>应用：</p>
+<ul>
+<li>后期开发中，发送json格式数据为主，@RequestBody应用较广</li>
+<li>如果发送非json格式数据，选用@RequestParam接收请求参数</li>
+</ul>
+<h6 id="日期类型参数"><a href="#日期类型参数" class="headerlink" title="日期类型参数"></a>日期类型参数</h6><p>名称：@DateTimeFormat<br>类型：类注解<br>位置：SpringMVC控制器方法形参前面<br>作用：设定日期时间型数据格式<br>范例：</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/dataParam"</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@ResponseBody</span>
+<span class="token keyword">public</span> String <span class="token function">dataParam</span><span class="token punctuation">(</span><span class="token annotation punctuation">@DateTimeFormat</span><span class="token punctuation">(</span>pattern<span class="token operator">=</span><span class="token string">"yyyy-MM-dd"</span><span class="token punctuation">)</span> Date date<span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"参数传递 date ==> "</span><span class="token operator">+</span>date<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token string">"&amp;#123;'module':'data param'&amp;#125;"</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>属性：pattern：日期时间格式字符串</p>
+<p>日期类型参数：(Date date,<br>@DateTimeFormat(pattern&#x3D;”yyyy-MM-dd”) Date date1,<br>@DateTimeFormat(pattern&#x3D;”yyyy&#x2F;MM&#x2F;dd HH:mm:ss”) Date date2)</p>
+<h6 id="类型转换器"><a href="#类型转换器" class="headerlink" title="类型转换器"></a>类型转换器</h6><p>Converter接口</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Converter</span><span class="token operator">&lt;</span>S<span class="token punctuation">,</span>T<span class="token operator">></span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Nullable</span>
+    T <span class="token function">convert</span><span class="token punctuation">(</span>S var1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>请求参数年龄数据（String -&gt; Integer）</li>
+<li>日期格式数据（String -&gt; Date）</li>
+</ul>
+<blockquote>
+<p>@EnableWebMvc功能之一：根据类型匹配对应的类型转换器</p>
+</blockquote>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> Java SSM框架</li>
+        <li><strong>作者:</strong> 宣胤</li>
+        <li><strong>创建于:</strong> 2023-06-06 21:51:38</li>
+        
+            <li>
+                <strong>更新于:</strong> 2023-06-10 01:05:26
+            </li>
+        
+        <li>
+            <strong>链接:</strong> http://xuanyin02.github.io/2023/06069152.html
+        </li>
+        <li>
+            <strong>版权声明:</strong> 本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 进行许可。
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/java/">#java</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/060851507.html"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">算法与数据结构</span>
+                                    <span class="post-nav-item">上一篇</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/060663789.html"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">Docker+K8S</span>
+                                    <span class="post-nav-item">下一篇</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+                <div class="comment-container">
+                    <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;评论
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-pjax>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">Java SSM框架</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring"><span class="nav-number">1.</span> <span class="nav-text">Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Framework%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">Spring Framework系统架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring%E6%A0%B8%E5%BF%83"><span class="nav-number">1.2.</span> <span class="nav-text">Spring核心</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IoC%EF%BC%88Inversion-of-Control%EF%BC%89%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC"><span class="nav-number">1.2.1.</span> <span class="nav-text">IoC（Inversion of Control）控制反转</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DI-Dependency-Injection-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="nav-number">1.2.2.</span> <span class="nav-text">DI (Dependency Injection) 依赖注入</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean%E5%AE%9E%E4%BE%8B%E5%8C%96%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Bean实例化方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">Bean的生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">依赖注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">容器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91"><span class="nav-number">1.2.3.</span> <span class="nav-text">注解开发</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91%E5%AE%9A%E4%B9%89bean"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">注解开发定义bean</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AOP%EF%BC%88Aspect-Oriented-Programming%EF%BC%89%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B"><span class="nav-number">1.2.4.</span> <span class="nav-text">AOP（Aspect Oriented Programming）面向切面编程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">核心概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">工作流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%87%E5%85%A5%E7%82%B9%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">切入点表达式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%9A%E7%9F%A5%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.4.4.</span> <span class="nav-text">通知获取数据</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.2.5.</span> <span class="nav-text">Spring事务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC"><span class="nav-number">1.3.</span> <span class="nav-text">SpringMVC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SpringMVC%E7%AE%80%E4%BB%8B"><span class="nav-number">1.3.1.</span> <span class="nav-text">SpringMVC简介</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">入门案例</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#SpringMVC%E5%85%A5%E9%97%A8%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%EF%BC%881-N%EF%BC%89"><span class="nav-number">1.3.1.1.1.</span> <span class="nav-text">SpringMVC入门程序开发总结（1+N）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number">1.3.1.1.2.</span> <span class="nav-text">入门案例工作流程分析</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bean%E5%8A%A0%E8%BD%BD%E6%8E%A7%E5%88%B6"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">Bean加载控制</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94"><span class="nav-number">1.3.2.</span> <span class="nav-text">请求与响应</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%98%A0%E5%B0%84%E8%B7%AF%E5%BE%84"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">请求映射路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">请求方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">请求参数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E5%8F%82%E6%95%B0"><span class="nav-number">1.3.2.3.1.</span> <span class="nav-text">普通参数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#JSON%E6%95%B0%E6%8D%AE%E5%8F%82%E6%95%B0"><span class="nav-number">1.3.2.3.2.</span> <span class="nav-text">JSON数据参数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%AF%94%E8%BE%83-RequestBody%E4%B8%8E-RequestParam"><span class="nav-number">1.3.2.3.3.</span> <span class="nav-text">比较@RequestBody与@RequestParam</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0"><span class="nav-number">1.3.2.3.4.</span> <span class="nav-text">日期类型参数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="nav-number">1.3.2.3.5.</span> <span class="nav-text">类型转换器</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>2023</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">宣胤</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a> 驱动</span>
+                <br>
+            <span class="theme-version-container">主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.1.4</a>
+        </div>
+        
+        
+        
+            <div id="start_div" style="display:none">
+                2023/4/13 00:00:00
+            </div>
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/layouts/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+    <div id="aplayer"></div>
+
+<script src="/js/libs/APlayer.min.js"></script>
+
+
+<script src="/js/plugins/aplayer.js"></script>
+
+
+</body>
+</html>

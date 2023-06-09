@@ -25,11 +25,13 @@
 <meta property="og:site_name" content="宣胤星球">
 <meta property="og:description" content="介绍了一项非常好用的技术--Clickhouse">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xuanyin02.github.io/%E5%85%B3%E4%BA%8E%E5%88%97%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93ClickHouse%E7%9F%A5%E8%AF%86%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230530170059453.png">
 <meta property="article:published_time" content="2023-05-11T01:56:02.000Z">
-<meta property="article:modified_time" content="2023-05-21T06:45:29.344Z">
+<meta property="article:modified_time" content="2023-05-30T10:32:54.258Z">
 <meta property="article:author" content="宣胤">
 <meta property="article:tag" content="clickhouse">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://xuanyin02.github.io/%E5%85%B3%E4%BA%8E%E5%88%97%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93ClickHouse%E7%9F%A5%E8%AF%86%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230530170059453.png">
     
     
     <!--- Icon Part-->
@@ -332,8 +334,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-05-21 14:45:29</span>
-            <span class="mobile">2023-05-21 14:45</span>
+            <span class="desktop">2023-05-30 18:32:54</span>
+            <span class="mobile">2023-05-30 18:32</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -365,9 +367,13 @@
 
     
     
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1k 字</span>
+        </span>
+    
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>1 分钟</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>3 分钟</span>
         </span>
     
     
@@ -383,7 +389,38 @@
             
 
             <div class="article-content markdown-body">
-                
+                <p>Clickhouse 是一款<strong>列式存储数据库</strong>，主要用于<strong>在线分析处理查询</strong>（OLAP），能够使用SQL查询实时生成分析数据报告，可以说的非常好用！下文我就将介绍此门技术。</p>
+<h3 id="1-Clickhouse-入门"><a href="#1-Clickhouse-入门" class="headerlink" title="1 Clickhouse 入门"></a>1 Clickhouse 入门</h3><h4 id="1-1-Clickhouse的特点"><a href="#1-1-Clickhouse的特点" class="headerlink" title="1.1 Clickhouse的特点"></a>1.1 Clickhouse的特点</h4><h5 id="1-1-1-列式存储"><a href="#1-1-1-列式存储" class="headerlink" title="1.1.1 列式存储"></a>1.1.1 列式存储</h5><p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="/./%E5%85%B3%E4%BA%8E%E5%88%97%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93ClickHouse%E7%9F%A5%E8%AF%86%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230530170059453.png" alt="image-20230530170059453"><figcaption>image-20230530170059453</figcaption></figure></p>
+<p>好处：</p>
+<ul>
+<li>对于列的聚合，技术，求和等统计操作优于行时存储</li>
+<li>由于某一列的数据类型是相同的，针对于数据存储更容易进行数据压缩，每一列选择更优的数据压缩算法，大大提高了数据的压缩比重</li>
+<li>由于数据压缩比更好，一方面节省了磁盘空间，另一方面对于cache也有了更大的发挥空间</li>
+</ul>
+<h5 id="1-1-2-DBMS的功能"><a href="#1-1-2-DBMS的功能" class="headerlink" title="1.1.2 DBMS的功能"></a>1.1.2 DBMS的功能</h5><p>几乎覆盖了标准SQL的大部分语法，包括DDL和DML，以及配套的各种函数，用户管理及权限管理，数据的备份与恢复。</p>
+<h5 id="1-1-3-多样化引擎"><a href="#1-1-3-多样化引擎" class="headerlink" title="1.1.3 多样化引擎"></a>1.1.3 多样化引擎</h5><p>Clickhouse 和 MySQL 类似，把表级的存储引擎插件化，根据表的不同需求可以设定不同的存储引擎。目前包括合并书、日志、接口和其他四大类20多种引擎。</p>
+<h5 id="1-1-4-高吞吐写入能力"><a href="#1-1-4-高吞吐写入能力" class="headerlink" title="1.1.4 高吞吐写入能力"></a>1.1.4 高吞吐写入能力</h5><p>Clickhouse 采用类<strong>LSM Tree</strong>的结构，数据写入后定期在后台compaction。通过类LSM Tree的结构，Clickhouse在数据导入时全部是顺序append写，写入后数据段不可更改，在后台compaction时也是多个段merge sort后顺序写回磁盘。顺序写的特性，充分利用了磁盘的吞吐能力，即便在HDD上也有着优异的写入性能</p>
+<p>官方公开 benchmark测试显式能够达到50MB-200MB&#x2F;s的写入吞吐能力，按照每行100Byte估算，大约相当于50W-200W条&#x2F;s的写入速度。</p>
+<h5 id="1-1-5-数据分区与线程级并行"><a href="#1-1-5-数据分区与线程级并行" class="headerlink" title="1.1.5 数据分区与线程级并行"></a>1.1.5 数据分区与线程级并行</h5><p>Clickhouse 将数据划分为多个partition，每个partition再进一步划分为多个index granularity（索引粒度），然后通过多个CPU核心分别处理其中的一部分来实现并行数据处理。在这种设计下，单条Query就能利用整机所有CPU。极致的并行处理能力，极大的降低了查询延时。</p>
+<p>所以，Clickhouse即使对于大量数据的查询也能够化整为零平行处理。但是有一个弊端就是对于单条查询使用多CPU，就不利于同时并发多条查询。所以对于高qps的查询业务，Clickhouse并不是强项。</p>
+<h5 id="1-1-6-查询性能"><a href="#1-1-6-查询性能" class="headerlink" title="1.1.6 查询性能"></a>1.1.6 查询性能</h5><p>Clickhouse 像很多OLAP数据库一样，单表查询速度优于关联查询。</p>
+<h3 id="3-Click-house-表引擎"><a href="#3-Click-house-表引擎" class="headerlink" title="3 Click house 表引擎"></a>3 Click house 表引擎</h3><h4 id="3-1-表引擎的使用"><a href="#3-1-表引擎的使用" class="headerlink" title="3.1 表引擎的使用"></a>3.1 表引擎的使用</h4><p>表引擎是Clickhouse的一大特色。可以说表引擎决定了如何存储表的数据。包括：</p>
+<ul>
+<li>数据的存储方式和位置，写到哪里以及从哪里读取数据。</li>
+<li>支持哪些查询以及如何支持。</li>
+<li>并发数据访问。</li>
+<li>索引的使用（如果存在）。</li>
+<li>是否可以执行多线程请求。</li>
+<li>数据复制参数。</li>
+</ul>
+<blockquote>
+<p>表引擎的使用方式就是必须显式在创建表时定义该表使用的引擎，以及引擎使用的相关参数。</p>
+</blockquote>
+<h4 id="3-2-TinyLog"><a href="#3-2-TinyLog" class="headerlink" title="3.2 TinyLog"></a>3.2 TinyLog</h4><p>以列文件的形式保存在磁盘上，不支持索引，没有并发控制。一般保存少量数据的小表，生成环境上作用有限。可以用于平时练习测试用。</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span> t_tinylog <span class="token punctuation">(</span> id string<span class="token punctuation">,</span> name string <span class="token punctuation">)</span> <span class="token keyword">engine</span><span class="token operator">=</span>TinyLog<span class="token punctuation">;</span>
+</code></pre>
+<h4 id="3-3-Memory"><a href="#3-3-Memory" class="headerlink" title="3.3 Memory"></a>3.3 Memory</h4><p>内存引擎，数据以未压缩的原始形式直接保存在内存当中，服务器重启数据就会消失。读写操作不会相互阻塞，不支持索引。简单查询下有非常非常高的性能表现（超过10G&#x2F;s）。<br>一般用到它的地方不多，除了用来测试，就是在需要非常高的性能，同时数据量又不太大（上限大概1亿行）的场景。</p>
+
             </div>
 
             
@@ -395,7 +432,7 @@
         <li><strong>创建于:</strong> 2023-05-11 09:56:02</li>
         
             <li>
-                <strong>更新于:</strong> 2023-05-21 14:45:29
+                <strong>更新于:</strong> 2023-05-30 18:32:54
             </li>
         
         <li>
@@ -513,7 +550,7 @@
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">关于列式数据库ClickHouse知识的学习</div>
-        
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Clickhouse-%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">1 Clickhouse 入门</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-Clickhouse%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Clickhouse的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-1-%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1 列式存储</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-2-DBMS%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2 DBMS的功能</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-3-%E5%A4%9A%E6%A0%B7%E5%8C%96%E5%BC%95%E6%93%8E"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.1.3 多样化引擎</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-4-%E9%AB%98%E5%90%9E%E5%90%90%E5%86%99%E5%85%A5%E8%83%BD%E5%8A%9B"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.1.4 高吞吐写入能力</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-5-%E6%95%B0%E6%8D%AE%E5%88%86%E5%8C%BA%E4%B8%8E%E7%BA%BF%E7%A8%8B%E7%BA%A7%E5%B9%B6%E8%A1%8C"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.1.5 数据分区与线程级并行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-6-%E6%9F%A5%E8%AF%A2%E6%80%A7%E8%83%BD"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.1.6 查询性能</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Click-house-%E8%A1%A8%E5%BC%95%E6%93%8E"><span class="nav-number">2.</span> <span class="nav-text">3 Click house 表引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E8%A1%A8%E5%BC%95%E6%93%8E%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">3.1 表引擎的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-TinyLog"><span class="nav-number">2.2.</span> <span class="nav-text">3.2 TinyLog</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-Memory"><span class="nav-number">2.3.</span> <span class="nav-text">3.3 Memory</span></a></li></ol></li></ol>
 
     </div>
 </div>
