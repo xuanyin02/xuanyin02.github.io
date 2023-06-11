@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230608182540016.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230608182558126.png">
 <meta property="article:published_time" content="2023-06-08T08:39:36.000Z">
-<meta property="article:modified_time" content="2023-06-09T14:08:24.190Z">
+<meta property="article:modified_time" content="2023-06-11T09:02:46.496Z">
 <meta property="article:author" content="宣胤">
 <meta property="article:tag" content="算法与数据结构">
 <meta name="twitter:card" content="summary">
@@ -337,8 +337,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-06-09 22:08:24</span>
-            <span class="mobile">2023-06-09 22:08</span>
+            <span class="desktop">2023-06-11 17:02:46</span>
+            <span class="mobile">2023-06-11 17:02</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -371,12 +371,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3k 字</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.2k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>12 分钟</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>13 分钟</span>
         </span>
     
     
@@ -687,7 +687,27 @@
         sorted_li<span class="token punctuation">.</span>extend<span class="token punctuation">(</span>buc<span class="token punctuation">)</span>
     <span class="token keyword">return</span> sorted_li
 </code></pre>
-<h4 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h4>
+<h4 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h4><p>多关键字排序：假如现在有一个员工表，要求按照年龄排序，年龄相同的员工按照工资排序<br>先按照年龄进行排序，再按照薪资进行稳定的排序</p>
+<p>数字的排序也可以看作是多关键字排序：比如两位数的数字进行比较，先比较十位，再比较个位 …</p>
+<p>但是在此算法中，我们是先从最后一位开始排序，再一次排序前一位</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">radix_sort</span><span class="token punctuation">(</span>li<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    max_num <span class="token operator">=</span> max<span class="token punctuation">(</span>li<span class="token punctuation">)</span><span class="token comment" spellcheck="true">#最大值 9->1位数，99->2位数，999->3位数，1000->4位数</span>
+    it <span class="token operator">=</span> <span class="token number">0</span>	<span class="token comment" spellcheck="true">#位数标志符</span>
+    <span class="token keyword">while</span> <span class="token number">10</span> <span class="token operator">**</span> it <span class="token operator">&lt;=</span> max_num<span class="token punctuation">:</span>
+        buckets <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token keyword">for</span> _ <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+        <span class="token keyword">for</span> val <span class="token keyword">in</span> li<span class="token punctuation">:</span>
+            <span class="token comment" spellcheck="true">#987 it=0 987%10->7;    it=1 987//10->98 98%10->8;  it=2 987//100->9</span>
+            digit <span class="token operator">=</span> <span class="token punctuation">(</span>val <span class="token operator">//</span> <span class="token number">10</span> <span class="token operator">**</span> it<span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">10</span>
+            buckets<span class="token punctuation">[</span>digit<span class="token punctuation">]</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>val<span class="token punctuation">)</span>
+        <span class="token comment" spellcheck="true">#分桶完成</span>
+        li<span class="token punctuation">.</span>clear<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> buc <span class="token keyword">in</span> buckets<span class="token punctuation">:</span>
+            <span class="token comment" spellcheck="true"># 把数重新写回li</span>
+            li<span class="token punctuation">.</span>extend<span class="token punctuation">(</span>buc<span class="token punctuation">)</span>
+        it <span class="token operator">+=</span> <span class="token number">1</span>
+</code></pre>
+<p>时间复杂度：O(max_num*n)</p>
+
             </div>
 
             
@@ -699,7 +719,7 @@
         <li><strong>创建于:</strong> 2023-06-08 16:39:36</li>
         
             <li>
-                <strong>更新于:</strong> 2023-06-09 22:08:24
+                <strong>更新于:</strong> 2023-06-11 17:02:46
             </li>
         
         <li>
