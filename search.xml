@@ -1546,7 +1546,36 @@ getAll()<span class="token entity" title="&#123;">&amp;#123;</span>
 <li>在redis-spring-boot-autoconfigure模块中初始化Jedis的Bean。并定义META-INF&#x2F;spring.factories文件</li>
 <li>在测试模块中引入自定义的redis-starter依赖，测试获取Jedis的Bean，操作redis</li>
 </ol>
-<h4 id="SpringBoot监听机制"><a href="#SpringBoot监听机制" class="headerlink" title="SpringBoot监听机制"></a>SpringBoot监听机制</h4><h4 id="SpringBoot启动流程分析"><a href="#SpringBoot启动流程分析" class="headerlink" title="SpringBoot启动流程分析"></a>SpringBoot启动流程分析</h4>]]></content>
+<h4 id="SpringBoot监听机制"><a href="#SpringBoot监听机制" class="headerlink" title="SpringBoot监听机制"></a>SpringBoot监听机制</h4><p>SpringBoot的监听机制，其实是对Java提供的事件监听机制的封装</p>
+<p>Java中的事件监听机制定义了以下几个角色：</p>
+<ol>
+<li>事件：Event，继承java.util.EventObject类的对象</li>
+<li>事件源：Source，任意对象Object</li>
+<li>监听器：Listener，实现java.util.EventListener接口的对象</li>
+</ol>
+<p>SpringBoot在项目启动时，会对几个监听器进行回调，我们可以实现这些监听器接口，在项目启动时完成一些操作：</p>
+<p>ApplicationContextInitializer、SpringApplicationRunListener、CommandLineRunner、ApplicationRunner</p>
+<h4 id="SpringBoot启动流程分析"><a href="#SpringBoot启动流程分析" class="headerlink" title="SpringBoot启动流程分析"></a>SpringBoot启动流程分析</h4><h4 id="SpringBoot监控"><a href="#SpringBoot监控" class="headerlink" title="SpringBoot监控"></a>SpringBoot监控</h4><p>SpringBoot自带监控功能Actuator，可以帮助实现对程序内部运行情况监控，比如监控情况、Bean加载情况、配置属性、日志信息等</p>
+<p>使用步骤：</p>
+<ol>
+<li><p>导入依赖坐标：</p>
+<pre><code>&lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+</li>
+<li><p>访问–<a class="link" href="http://localhost:8080/actuator">http://localhost:8080/actuator <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</li>
+</ol>
+<p>图形化监控–Spring Boot Admin</p>
+<p>Spring Boot Admin是一个开源社区项目，用于管理和监控SpringBoot应用程序<br>Spring Boot Admin有两个角色，客户端（Client）和服务端（Server）<br>应用程序作为Spring Boot Admin Client向Spring Boot Admin Server注册<br>Spring Boot Admin Server的UI界面将Spring Boot Admin Client的Actuator Endpoint的一些监控信息展示</p>
+<p>使用步骤：</p>
+<figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="https://cdn.jsdelivr.net/gh/xuanyin02/ImgHosting/article_img/image-20230620234404139.png" alt="image-20230620234404139" style="zoom:67%;"><figcaption>image-20230620234404139</figcaption></figure>
+
+
+
+]]></content>
       <categories>
         <category>Java开发</category>
       </categories>
