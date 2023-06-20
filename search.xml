@@ -1517,8 +1517,7 @@ getAll()<span class="token entity" title="&#123;">&amp;#123;</span>
 <li>编写dao和mapper文件&#x2F;纯注解开发</li>
 <li>测试</li>
 </ol>
-<h3 id="SpringBoot高级"><a href="#SpringBoot高级" class="headerlink" title="SpringBoot高级"></a>SpringBoot高级</h3><h4 id="SpringBoot自动配置"><a href="#SpringBoot自动配置" class="headerlink" title="SpringBoot自动配置"></a>SpringBoot自动配置</h4><p>Condition</p>
-<p>Codition是在Spring4.0增加的条件判断功能，通过这个功能可以实现选择性的创建Bean操作</p>
+<h3 id="SpringBoot高级"><a href="#SpringBoot高级" class="headerlink" title="SpringBoot高级"></a>SpringBoot高级</h3><h4 id="SpringBoot自动配置"><a href="#SpringBoot自动配置" class="headerlink" title="SpringBoot自动配置"></a>SpringBoot自动配置</h4><h5 id="Condition"><a href="#Condition" class="headerlink" title="Condition"></a>Condition</h5><p>Codition是在Spring4.0增加的条件判断功能，通过这个功能可以实现选择性的创建Bean操作</p>
 <blockquote>
 <p>思考：SpringBoot是如何知道要创建哪个Bean的？比如SpringBoot是如何知道要创建RedisTemplate的？</p>
 </blockquote>
@@ -1528,6 +1527,25 @@ getAll()<span class="token entity" title="&#123;">&amp;#123;</span>
 <li>将类的判断定义为动态的。判断哪个字节码文件存在可以动态指定</li>
 </ol>
 <p><figure class="image-caption"><img lazyload src="/images/loading.svg" data-src="/./Java-SSM%E6%A1%86%E6%9E%B6/image-20230618004958445.png" alt="image-20230618004958445"><figcaption>image-20230618004958445</figcaption></figure></p>
+<h5 id="Enable-注解"><a href="#Enable-注解" class="headerlink" title="@Enable*注解"></a>@Enable*注解</h5><p>SpringBoot中提供了很多Enable开头的注解，这些注解都是用于动态启用某些功能的。而其底层原理是使用@Import注解导入一些配置类，实现Bean的动态加载</p>
+<p>@Enable*底层依赖于@Import注解导入一些类，使用@Import导入的类会被Spring加载到IOC容器中。而@Import提供4种用法：</p>
+<ol>
+<li>导入Bean</li>
+<li>导入配置类</li>
+<li>导入ImportSelector实现类，一般用于加载配置文件中的类</li>
+<li>导入ImportBeanDefinitionRegistrar实现类</li>
+</ol>
+<h5 id="EnableAutoConfiguration注解"><a href="#EnableAutoConfiguration注解" class="headerlink" title="@EnableAutoConfiguration注解"></a>@EnableAutoConfiguration注解</h5><p>@EnableAutoConfiguration注解内部使用@Import（AutoConfigurationImportSelector.class）来加载配置类</p>
+<p>配置文件位置：META-INF&#x2F;spring.factories，该配置文件种定义了大量的配置类，当SpringBoot应用启动时，会自动加载这些配置类，初始化Bean</p>
+<p>并不是所有的Bean都会被初始化，在配置类中使用Condition来加载满足条件的Bean</p>
+<h5 id="自定义配置案例"><a href="#自定义配置案例" class="headerlink" title="自定义配置案例"></a>自定义配置案例</h5><p>需求：自定义redis-starter。要求当导入redis坐标时，SpringBoot自动创建Jedis的Bean</p>
+<p>实现步骤：</p>
+<ol>
+<li>创建redis-spring-boot-autoconfigure模块</li>
+<li>创建redis-spring-boot-starter模块，依赖redis-spring-boot-autoconfigure的模块</li>
+<li>在redis-spring-boot-autoconfigure模块中初始化Jedis的Bean。并定义META-INF&#x2F;spring.factories文件</li>
+<li>在测试模块中引入自定义的redis-starter依赖，测试获取Jedis的Bean，操作redis</li>
+</ol>
 <h4 id="SpringBoot监听机制"><a href="#SpringBoot监听机制" class="headerlink" title="SpringBoot监听机制"></a>SpringBoot监听机制</h4><h4 id="SpringBoot启动流程分析"><a href="#SpringBoot启动流程分析" class="headerlink" title="SpringBoot启动流程分析"></a>SpringBoot启动流程分析</h4>]]></content>
       <categories>
         <category>Java开发</category>
